@@ -1,0 +1,5 @@
+13-06-2018
+Añadidos los sigueintes campos a la tabla 'transactions':
+-real(int)
+-rate(float)
+
