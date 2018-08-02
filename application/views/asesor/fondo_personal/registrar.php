@@ -144,7 +144,7 @@
 							<div class="col-sm-10">
 								<div class="i-checks">
 									<label>
-										<input type="checkbox" name="real" id="real" value="">
+										<input type="checkbox" name="real" id="real">
 									</label>
 								</div>
 							</div>
