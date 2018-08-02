@@ -24,6 +24,16 @@ class Migration_create_table_transactions extends CI_Migration
 					"constraint" => 11,
 					"null" => TRUE
 				),
+				"user_create_id" => array(
+					"type" => "INT",
+					"constraint" => 11,
+					"null" => TRUE
+				),
+				"project_id" => array(
+					"type" => "INT",
+					"constraint" => 11,
+					"null" => TRUE
+				),
 				"account_id" => array(
 					"type" => "INT",
 					"constraint" => 11,

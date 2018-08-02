@@ -155,6 +155,7 @@ Class CLogin extends CI_Controller {
 						'admin' => 1,
 						'password' => 'pbkdf2_sha256$12000$a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
 						'status' => 1,
+						'coin_id' => 1,
 						'd_create' => date('Y-m-d H:i:s')
 						//~ 'd_update' => date('Y-m-d H:i:s')
 					);

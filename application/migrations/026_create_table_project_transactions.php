@@ -29,7 +29,7 @@ class Migration_create_table_project_transactions extends CI_Migration
 					"constraint" => 11,
 					"null" => TRUE
 				),
-				"cuenta_id" => array(
+				"account_id" => array(
 					"type" => "INT",
 					"constraint" => 11,
 					"null" => TRUE
@@ -53,7 +53,7 @@ class Migration_create_table_project_transactions extends CI_Migration
 					"type" => "TEXT",
 					"null" => TRUE
 				),
-				"monto" => array(
+				"amount" => array(
 					"type" => "FLOAT",
 					"null" => TRUE
 				),
