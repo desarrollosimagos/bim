@@ -1,22 +1,22 @@
 .DS_Store
 
-application/cache/*
-!application/cache/index.html
-!application/cache/.htaccess
+#application/cache/*
+#!application/cache/index.html
+#!application/cache/.htaccess
 
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
+#application/logs/*
+#!application/logs/index.html
+#!application/logs/.htaccess
+#/vendor/
 
-application/config/database.php
-application/config/config.php
+#application/config/database.php
+#application/config/config.php
 
-*.sql
-*.htaccess
-index.php
+#*.sql
+#*.htaccess
+#index.php
 
-assets/img/logos/
-assets/img/projects/
-assets/documents/
-assets/readings/
+#assets/img/logos/
+#assets/img/projects/
+#assets/documents/
+#assets/readings/
