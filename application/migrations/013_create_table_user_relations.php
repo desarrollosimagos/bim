@@ -40,14 +40,14 @@ class Migration_create_table_user_relations extends CI_Migration
 		
 		$this->dbforge->add_key('investor_id');  // Establecemos el investor_id como key
 		
-		$this->dbforge->create_table('relate_users', TRUE);
+		$this->dbforge->create_table('user_relations', TRUE);
 		
 	}
 	
 	public function down(){
 		
 		// Eliminamos la tabla 'relate_users'
-		$this->dbforge->drop_table('relate_users', TRUE);
+		$this->dbforge->drop_table('user_relations', TRUE);
 		
 	}
 	
