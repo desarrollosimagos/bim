@@ -34,6 +34,30 @@
 
 <div class="wrapper wrapper-content animated fadeInUp">
 	
+	<!-- Alerta para el mensaje de la api de openexchangerates -->
+	<?php if($openexchangerates_message['type'] == 'error'){ ?>
+	<div class="col-lg-12 alert alert-danger alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<?php 
+		echo $this->lang->line('openexchangerates_message_error');
+		?>
+	</div>
+	<?php }else if($openexchangerates_message['type'] == 'message1'){ ?>
+	<div class="col-lg-12 alert alert-success alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<?php 
+		echo $this->lang->line('openexchangerates_message');
+		?>
+	</div>
+	<?php }else{ ?>
+		<div class="col-lg-12 alert alert-success alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<?php 
+		echo $this->lang->line('openexchangerates_message2');
+		?>
+	</div>
+	<?php } ?>
+	
 	<!-- Alerta para cuando el mensaje de la api de dolartoday es un error -->
 	<?php if($coin_rate_message['type'] == 'error'){ ?>
 	<div class="col-lg-12 alert alert-danger alert-dismissable">
