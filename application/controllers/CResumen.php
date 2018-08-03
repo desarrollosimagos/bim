@@ -621,7 +621,7 @@ class CResumen extends CI_Controller {
 					$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
 					// Si la moneda de la transacción difiere de la del proyecto
-					if($currency != $data_project[0]->coin_avr){
+					if(count($data_project) > 0 && $currency != $data_project[0]->coin_avr){
 						
 						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
 						if (in_array($currency, $rates)) {
@@ -933,7 +933,7 @@ class CResumen extends CI_Controller {
 					$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
 					// Si la moneda de la transacción difiere de la del proyecto
-					if($currency != $data_project[0]->coin_avr){
+					if(count($data_project) > 0 && $currency != $data_project[0]->coin_avr){
 						
 						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
 						if (in_array($currency, $rates)) {
@@ -1307,7 +1307,7 @@ class CResumen extends CI_Controller {
 							$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
 							// Si la moneda de la transacción difiere de la del proyecto
-							if($currency != $data_project[0]->coin_avr){
+							if(count($data_project) > 0 && $currency != $data_project[0]->coin_avr){
 								
 								// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
 								if (in_array($currency, $rates)) {
@@ -1709,7 +1709,7 @@ class CResumen extends CI_Controller {
 							$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
 							// Si la moneda de la transacción difiere de la del proyecto
-							if($currency != $data_project[0]->coin_avr){
+							if(count($data_project) > 0 && $currency != $data_project[0]->coin_avr){
 								
 								// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
 								if (in_array($currency, $rates)) {
