@@ -10,7 +10,7 @@ $lang['heading_subtitle_projects'] = ' Projects';
 // Botón de registro
 $lang['btn_registry_projects'] = 'Create new project';
 
-// Listado de cuentas
+// Listado de proyectos
 $lang['list_title_projects'] = 'All projects assigned to this account';
 $lang['list_status1_projects'] = 'Active';
 $lang['list_status2_projects'] = 'Unactive';
@@ -30,6 +30,9 @@ $lang['heading_subtitle_projects_view'] = 'Projects';
 $lang['btn_edit_projects_view'] = 'Edit project';
 
 // Panel de resumen
+$lang['project_openexchangerates_message'] = 'The api is being used with the primary account...';
+$lang['project_openexchangerates_message2'] = 'The api is being used with the secondary account...';
+$lang['project_openexchangerates_message_error'] = 'There has been a failure to load the openexchangerates api...';
 $lang['view_description_projects'] = 'Project description';
 $lang['view_status_projects'] = 'Status';
 $lang['view_status1_projects'] = 'Active';

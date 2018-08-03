@@ -5,8 +5,16 @@ class CProjects extends CI_Controller {
 	
 	private $coin_rate;  // Para almacenar la tasa de cambio del dólar a bolívares
 	
+	private $coin_openexchangerates;  // Para almacenar la tasa de cambio del dólar a las distintas divisas
+	
 	// Mensaje de resultado de api de dolartoday
 	private $coin_rate_message = array(
+		'type' => '',
+		'message' => ''
+	);
+	
+	// Mensaje de resultado de api de dolartoday
+	private $openexchangerates_message = array(
 		'type' => '',
 		'message' => ''
 	);
@@ -23,6 +31,7 @@ class CProjects extends CI_Controller {
         // Load coin rate
         $this->load_rate();  // Load coin rate from api
         $this->coin_rate = $this->show_rate();  // Load coin rate from database
+        $this->coin_openexchangerates = $this->load_openexchangerates();  // Load rates from openexchangerates api
 		
     }
 	
@@ -341,6 +350,9 @@ class CProjects extends CI_Controller {
 		// Mensaje de la api de dolartoday
 		$data['coin_rate_message'] = $this->coin_rate_message;
 		
+		// Mensaje de la api de openexchangerates
+		$data['openexchangerates_message'] = $this->openexchangerates_message;
+		
 		// Proceso de búsqueda de los inversores asociados al proyecto
 		$investors = $this->MProjects->buscar_inversores($data['id']);
 		$num_investors = count($investors);
@@ -372,18 +384,19 @@ class CProjects extends CI_Controller {
 		
 		
 		// Obtenemos el valor en dólares de las distintas divisas
-		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-		if($ct){
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		} else {
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		}
+		//~ // Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+		//~ if($ct){
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ } else {
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ }
 		// Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
+		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
 		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
@@ -773,17 +786,18 @@ class CProjects extends CI_Controller {
 		
 		// Obtenemos el valor en dólares de las distintas divisas
 		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-		if($ct){
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		} else {
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		}
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+		//~ if($ct){
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ } else {
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ }
 		// Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
+		$exchangeRates = $this->coin_openexchangerates;
 		
 		//~ // Valor de 1 btc en dólares
 		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
@@ -1031,17 +1045,18 @@ class CProjects extends CI_Controller {
 		
 		// Obtenemos el valor en dólares de las distintas divisas
 		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-		if($ct){
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		} else {
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		}
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+		//~ if($ct){
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ } else {
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ }
 		// Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
+		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
 		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
@@ -2554,17 +2569,18 @@ class CProjects extends CI_Controller {
 		
 		// Obtenemos el valor en dólares de las distintas divisas
 		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-		if($ct){
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		} else {
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
-			//~ // Se decodifica la respuesta JSON
-			$exchangeRates = json_decode($get, true);
-		}
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+		//~ if($ct){
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ } else {
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
+			// Se decodifica la respuesta JSON
+			//~ $exchangeRates = json_decode($get, true);
+		//~ }
 		// Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
+		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
 		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
@@ -2754,6 +2770,50 @@ class CProjects extends CI_Controller {
 		}
 			
 		return number_format($valor_actual, 2, '.', '');
+		
+	}
+	
+    
+    // Método para obtener el valor del dólar en las distintas divisas tomando como referencia la api de openexchangerates
+    public function load_openexchangerates(){
+		
+		$exchangeRates = array();
+		
+		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
+		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+		
+		if($ct){
+			
+			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
+			//~ // Se decodifica la respuesta JSON
+			$exchangeRates = json_decode($get, true);
+			
+			$this->openexchangerates_message['type'] = 'message1';
+			$this->openexchangerates_message['message'] = '1';
+			
+		} else {
+			
+			// Si ha fallado la carga de la api con la key primaria intentamos con la key secundaria
+			$ct2 = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
+			
+			if($ct2){
+				
+				$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
+				//~ // Se decodifica la respuesta JSON
+				$exchangeRates = json_decode($get, true);
+				
+				$this->openexchangerates_message['type'] = 'message2';
+				$this->openexchangerates_message['message'] = '2';
+				
+			}else{
+				
+				$this->openexchangerates_message['type'] = 'error';
+				$this->openexchangerates_message['message'] = '3';
+				
+			}
+		}
+		
+		return $exchangeRates;
 		
 	}
 	
