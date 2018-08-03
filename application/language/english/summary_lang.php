@@ -5,6 +5,9 @@ $lang['page_heading_home'] = 'Home';
 $lang['page_heading_subtitle'] = 'Financial Summary';
 
 // Resumen de disponibilidad
+$lang['openexchangerates_message'] = 'The api is being used with the primary account...';
+$lang['openexchangerates_message2'] = 'The api is being used with the secondary account...';
+$lang['openexchangerates_message_error'] = 'There has been a failure to load the openexchangerates api...';
 $lang['coin_rate_message'] = 'The value of the dollar in bolivars has been charged with the default amount ...';
 $lang['balance_error_message'] = 'Your General Balance is inconsistent with the total of transactions for an amount of';
 $lang['capital_project_error_message'] = 'The project ';
