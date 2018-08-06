@@ -7,14 +7,22 @@ class CResumen extends CI_Controller {
 	
 	private $coin_openexchangerates;  // Para almacenar la tasa de cambio del dólar a las distintas divisas
 	
+	private $coin_coinmarketcap;  // Para almacenar la tasa de cambio del dólar a las distintas divisas
+	
 	// Mensaje de resultado de api de dolartoday
 	private $coin_rate_message = array(
 		'type' => '',
 		'message' => ''
 	);
 	
-	// Mensaje de resultado de api de dolartoday
+	// Mensaje de resultado de api de openexchangerates
 	private $openexchangerates_message = array(
+		'type' => '',
+		'message' => ''
+	);
+	
+	// Mensaje de resultado de api de coinmarketcap
+	private $coinmarketcap_message = array(
 		'type' => '',
 		'message' => ''
 	);
@@ -33,6 +41,7 @@ class CResumen extends CI_Controller {
         $this->load_rate();  // Load coin rate from api
         $this->coin_rate = $this->show_rate();  // Load coin rate from database
         $this->coin_openexchangerates = $this->load_openexchangerates();  // Load rates from openexchangerates api
+        $this->coin_coinmarketcap = $this->load_rates_coinmarketcap();  // Load rates from coinmarketcap api
 		
     }
 	
@@ -49,6 +58,9 @@ class CResumen extends CI_Controller {
 		// Mensaje de la api de openexchangerates
 		$data['openexchangerates_message'] = $this->openexchangerates_message;
 		
+		// Mensaje de la api de coinmarketcap
+		$data['coinmarketcap_message'] = $this->coinmarketcap_message;
+		
 		// Obtenemos el valor en dólares de las distintas divisas
 		//~ // Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
 		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
@@ -64,8 +76,9 @@ class CResumen extends CI_Controller {
 		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $this->session->userdata('logged_in')['coin_iso'];
@@ -263,8 +276,9 @@ class CResumen extends CI_Controller {
 		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $this->session->userdata('logged_in')['coin_iso'];
@@ -2890,8 +2904,9 @@ class CResumen extends CI_Controller {
 		//~ $valor1btc = $exchangeRates2[0]['price_usd'];
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $this->session->userdata('logged_in')['coin_iso'];
@@ -3131,15 +3146,10 @@ class CResumen extends CI_Controller {
 		//~ }
 		$exchangeRates = $this->coin_openexchangerates;
 		
-		//~ // Valor de 1 btc en dólares
+		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
 		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
 		//~ $exchangeRates2 = json_decode($get2, true);
-		//~ // Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
-		//~ $valor1btc = $exchangeRates2[0]['price_usd'];
-		
-		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $this->session->userdata('logged_in')['coin_iso'];
@@ -3384,8 +3394,9 @@ class CResumen extends CI_Controller {
 		//~ $valor1btc = $exchangeRates2[0]['price_usd'];
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $this->session->userdata('logged_in')['coin_iso'];
@@ -3613,8 +3624,9 @@ class CResumen extends CI_Controller {
 		//~ $valor1btc = $exchangeRates2[0]['price_usd'];
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $this->session->userdata('logged_in')['coin_iso'];
@@ -3920,6 +3932,35 @@ class CResumen extends CI_Controller {
 		}
 		
 		return $exchangeRates;
+		
+	}
+    
+    
+    // Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
+    public function load_rates_coinmarketcap(){
+		
+		$exchangeRates2 = array();
+		
+		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
+		$ct = @file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		
+		if($ct){
+			
+			$get = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+			//~ // Se decodifica la respuesta JSON
+			$exchangeRates2 = json_decode($get, true);
+			
+			$this->coinmarketcap_message['type'] = 'message1';
+			$this->coinmarketcap_message['message'] = '1';
+			
+		} else {
+			
+			$this->coinmarketcap_message['type'] = 'error';
+			$this->coinmarketcap_message['message'] = '2';
+			
+		}
+		
+		return $exchangeRates2;
 		
 	}
 	
