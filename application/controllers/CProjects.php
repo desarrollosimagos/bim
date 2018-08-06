@@ -7,14 +7,22 @@ class CProjects extends CI_Controller {
 	
 	private $coin_openexchangerates;  // Para almacenar la tasa de cambio del dólar a las distintas divisas
 	
+	private $coin_coinmarketcap;  // Para almacenar la tasa de cambio del dólar a las distintas divisas
+	
 	// Mensaje de resultado de api de dolartoday
 	private $coin_rate_message = array(
 		'type' => '',
 		'message' => ''
 	);
 	
-	// Mensaje de resultado de api de dolartoday
+	// Mensaje de resultado de api de openexchangerates
 	private $openexchangerates_message = array(
+		'type' => '',
+		'message' => ''
+	);
+	
+	// Mensaje de resultado de api de coinmarketcap
+	private $coinmarketcap_message = array(
 		'type' => '',
 		'message' => ''
 	);
@@ -32,6 +40,7 @@ class CProjects extends CI_Controller {
         $this->load_rate();  // Load coin rate from api
         $this->coin_rate = $this->show_rate();  // Load coin rate from database
         $this->coin_openexchangerates = $this->load_openexchangerates();  // Load rates from openexchangerates api
+        $this->coin_coinmarketcap = $this->load_rates_coinmarketcap();  // Load rates from coinmarketcap api
 		
     }
 	
@@ -353,6 +362,9 @@ class CProjects extends CI_Controller {
 		// Mensaje de la api de openexchangerates
 		$data['openexchangerates_message'] = $this->openexchangerates_message;
 		
+		// Mensaje de la api de coinmarketcap
+		$data['coinmarketcap_message'] = $this->coinmarketcap_message;
+		
 		// Proceso de búsqueda de los inversores asociados al proyecto
 		$investors = $this->MProjects->buscar_inversores($data['id']);
 		$num_investors = count($investors);
@@ -399,8 +411,9 @@ class CProjects extends CI_Controller {
 		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$rate = $data['ver'][0]->coin_avr;
 		$rates = array();
@@ -806,8 +819,9 @@ class CProjects extends CI_Controller {
 		//~ $valor1btc = $exchangeRates2[0]['price_usd'];
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $data_project[0]->coin_avr;
@@ -1059,8 +1073,9 @@ class CProjects extends CI_Controller {
 		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $data_project[0]->coin_avr;
@@ -2583,8 +2598,9 @@ class CProjects extends CI_Controller {
 		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		$get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		$exchangeRates2 = json_decode($get2, true);
+		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		//~ $exchangeRates2 = json_decode($get2, true);
+		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
 		$rate = $data_project[0]->coin_avr;
@@ -2814,6 +2830,35 @@ class CProjects extends CI_Controller {
 		}
 		
 		return $exchangeRates;
+		
+	}
+	
+    
+    // Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
+    public function load_rates_coinmarketcap(){
+		
+		$exchangeRates2 = array();
+		
+		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
+		$ct = @file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+		
+		if($ct){
+			
+			$get = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
+			//~ // Se decodifica la respuesta JSON
+			$exchangeRates2 = json_decode($get, true);
+			
+			$this->coinmarketcap_message['type'] = 'message1';
+			$this->coinmarketcap_message['message'] = '1';
+			
+		} else {
+			
+			$this->coinmarketcap_message['type'] = 'error';
+			$this->coinmarketcap_message['message'] = '2';
+			
+		}
+		
+		return $exchangeRates2;
 		
 	}
 	

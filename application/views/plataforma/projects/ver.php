@@ -68,6 +68,16 @@ th {
 	</div>
 	<?php } ?>
 	
+	<!-- Alerta para cuando el mensaje de la api de coinmarketcap es un error -->
+	<?php if($coinmarketcap_message['type'] == 'error'){ ?>
+	<div class="col-lg-12 alert alert-danger alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<?php 
+		echo $this->lang->line('project_coinmarketcap_message_error');
+		?>
+	</div>
+	<?php } ?>
+	
 	<!-- Alerta para cuando el mensaje de la api de dolartoday es un error -->
 	<?php if($coin_rate_message['type'] == 'error'){ ?>
 	<div class="col-lg-12 alert alert-danger alert-dismissable">
