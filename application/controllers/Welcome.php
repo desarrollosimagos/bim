@@ -30,6 +30,7 @@ class Welcome extends CI_Controller {
         $this->load->model('MCoins');
         $this->load->model('MTiposCuenta');
         $this->load->model('MWelcome');
+        $this->load->model('MProjects');
     }
 	 
 	public function index()
@@ -45,9 +46,9 @@ class Welcome extends CI_Controller {
 		$this->load->view('base');
 	}
 
-	public function detail_projects()
+	public function detail_projects($id)
 	{
-		$id         = $this->input->get('id');
+		//~ $id         = $this->input->get('id');
 		$get_detail = $this->MWelcome->get_slider_detail($id);
 		$this->load->view('publico/detail_projects', compact('get_detail'));
 	}
@@ -72,7 +73,90 @@ class Welcome extends CI_Controller {
 	public function investments()
 	{
 		$this->load->view('base');
-		$this->load->view('publico/investments');
+		$data['ident'] = "Inversiones";
+		$data['ident_sub'] = "Inversiones";
+		
+		$listar = array();
+		
+		$proyectos = $this->MProjects->listar();
+		
+		foreach($proyectos as $proyecto){
+			
+			// Proceso de búsqueda de fotos asociadas al proyecto
+			$num_fotos = $this->MProjects->buscar_photos($proyecto->id);
+			$num_fotos = count($num_fotos);
+			$fotos_asociadas = $this->MProjects->obtenerFotos($proyecto->id);
+			
+			// Proceso de búsqueda de notificaciones asociadas al proyecto
+			$num_news = $this->MProjects->buscar_noticias($proyecto->id);
+			$num_news = count($num_news);
+			
+			// Proceso de búsqueda de documentos asociados al proyecto
+			$num_docs = $this->MProjects->buscar_documentos($proyecto->id);
+			$num_docs = count($num_docs);
+			
+			// Proceso de búsqueda de lecturas recomendadas asociadas al proyecto
+			$num_readings = $this->MProjects->buscar_lecturas($proyecto->id);
+			$num_readings = count($num_readings);
+			
+			// Proceso de búsqueda de grupos de inversores asociados al proyecto
+			$groups = $this->MProjects->buscar_grupos($proyecto->id);
+			$groups_names = "";
+			foreach($groups as $group){
+				$groups_names .= $group->name.",";
+			}
+			$groups_names = substr($groups_names, 0, -1);
+			
+			// Proceso de búsqueda de transacciones asociados al proyecto para calcular el porcentaje recaudado
+			$transacctions = $this->MProjects->buscar_transacciones($proyecto->id);
+			if($proyecto->amount_r != null && $proyecto->amount_r > 0){
+				$porcentaje = (float)$transacctions[0]->ingresos/(float)$proyecto->amount_r*100;
+			}else{
+				$porcentaje = "null";
+			}
+			
+			$data_proyecto = array(
+				'id' => $proyecto->id,
+				'name' => $proyecto->name,
+				'description' => $proyecto->description,
+				'type' => $proyecto->type,
+				'valor' => $proyecto->valor,
+				'amount_r' => $proyecto->amount_r,
+				'amount_min' => $proyecto->amount_min,
+				'amount_max' => $proyecto->amount_max,
+				'date' => $proyecto->date,
+				'date_r' => $proyecto->date_r,
+				'date_v' => $proyecto->date_v,
+				'coin' => $proyecto->coin_avr." (".$proyecto->coin.")",
+				'status' => $proyecto->status,
+				'fotos_asociadas' => $fotos_asociadas,
+				'num_fotos' => $num_fotos,
+				'num_news' => $num_news,
+				'num_docs' => $num_docs,
+				'num_readings' => $num_readings,
+				'groups_names' => $groups_names,
+				'percentage_collected' => $porcentaje
+			);
+			
+			// Incluimos sólo los proyecto públicos y activos
+			if($proyecto->public > 0 && $proyecto->status > 0){
+				
+				$listar[] = $data_proyecto;
+				
+			}
+			
+		}
+		
+		// Conversión a objeto
+		$listar = json_decode( json_encode( $listar ), false );
+		
+		//~ print_r($listar);
+		
+		$data['listar'] = $listar;
+		
+		$this->load->view('publico/investments', $data);
+		$this->load->view('footer');
+		
 	}
 	
 	public function contacts()
