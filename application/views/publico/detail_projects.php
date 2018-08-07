@@ -60,7 +60,11 @@
         <div class="item active">
             <!-- Set background for slide in css -->
             <div class="header-back one">
+				<?php if($get_detail->image != null){ ?>
                 <img class='img-fluid' src="<?php echo assets_url("img/projects/$get_detail->image");?>" alt="laptop" style='width: 100%;height: 100%;'/>
+                <?php }else{ ?>
+				<img class='img-fluid' src="<?php echo assets_url("img/landing/shattered.png");?>" alt="laptop" style='width: 100%;height: 100%;'/>
+                <?php } ?>
             </div>
         </div>
     </div>

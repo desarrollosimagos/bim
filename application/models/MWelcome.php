@@ -26,7 +26,7 @@ class MWelcome extends CI_Model {
         $this->db->where('a.id =', $id);
         $this->db->select('a.id, a.name, a.description, b.photo as image');
         $this->db->from('projects a');
-        $this->db->join('photos b', 'b.project_id = a.id');
+        $this->db->join('project_photos b', 'b.project_id = a.id', 'left');
         $result = $this->db->get();
         return $result->row();
     }

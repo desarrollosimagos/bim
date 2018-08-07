@@ -13,7 +13,7 @@ class MProjects extends CI_Model {
 
     // Método público para obterner todos los proyectos
     public function listar() {
-        $this->db->select('pj.id, pj.name, pj.description, p_t.type as type, pj.valor, pj.amount_r, pj.amount_min, pj.amount_max, pj.date, pj.date_r, pj.date_v, pj.status, c.description as coin, c.abbreviation as coin_avr, c.symbol as coin_symbol');
+        $this->db->select('pj.id, pj.name, pj.description, p_t.type as type, pj.valor, pj.amount_r, pj.amount_min, pj.amount_max, pj.date, pj.date_r, pj.date_v, pj.public, pj.status, c.description as coin, c.abbreviation as coin_avr, c.symbol as coin_symbol');
 		$this->db->from('projects pj', 'pj.id = ig_p.project_id');
 		$this->db->join('project_types p_t', 'p_t.id = pj.type');
 		$this->db->join('coins c', 'c.id = pj.coin_id');

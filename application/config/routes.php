@@ -130,6 +130,7 @@ $route['projects/delete/(:num)'] = 'CProjects/delete/$1';
 $route['start'] = 'Welcome/start';
 $route['possibilities'] = 'Welcome/possibilities';
 $route['investments'] = 'Welcome/investments';
+$route['investments/detail/(:num)'] = 'Welcome/detail_projects/$1';
 $route['contacts'] = 'Welcome/contacts';
 
 /*   Bitácora */
