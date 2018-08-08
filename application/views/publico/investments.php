@@ -75,7 +75,8 @@
 						<div class="row user-button">
 							<div class="row">
 								<div class="col-md-12" align="center">
-									<a type="button" href="<?php echo base_url();?>investments/detail/<?php echo $proyecto->id?>" class="btn btn-primary btn-sm btn-block b-r-xl learn-more"><i class="fa fa-envelope"></i> 
+									<a type="button" href="<?php echo base_url();?>investments/detail/<?php echo $proyecto->id?>" class="btn btn-primary btn-sm btn-block b-r-xl learn-more">
+									<i class="fa fa-info-circle fa-1.5x"></i>
 									<?php echo $this->lang->line('public_list_learn_more_projects'); ?>
 									</a>
 								</div>
