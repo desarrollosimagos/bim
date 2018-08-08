@@ -48,9 +48,12 @@ class Welcome extends CI_Controller {
 
 	public function detail_projects($id)
 	{
+		$this->load->view('base');
 		//~ $id         = $this->input->get('id');
 		$get_detail = $this->MWelcome->get_slider_detail($id);
-		$this->load->view('publico/detail_projects', compact('get_detail'));
+		$fotos_asociadas = $this->MProjects->obtenerFotos($id);
+		$this->load->view('publico/detail_projects', compact('get_detail', 'fotos_asociadas'));
+		$this->load->view('footer');
 	}
 	
 	public function admin()
