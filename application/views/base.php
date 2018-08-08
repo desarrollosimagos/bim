@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo assets_url('css/dataTables.responsive.css'); ?>">
     <link href="<?php echo assets_url('js/datatables.net-responsive-bs/css/responsive.bootstrap.min.css'); ?>" rel="stylesheet">
     <!-- Toastr style -->
-    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="<?php echo assets_url('css/plugins/toastr/toastr.min.css');?>" rel="stylesheet">
 	<link href="<?php echo assets_url('css/animate.css');?>" rel="stylesheet">
     <link href="<?php echo assets_url('css/style.css');?>" rel="stylesheet">
 	<link href="<?php echo assets_url('css/plugins/datapicker/datepicker3.css');?>" rel="stylesheet">
@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="<?php echo assets_url('js/datatables.net-responsive/js/dataTables.responsive.min.js'); ?>"></script>
 	<script src="<?php echo assets_url('js/inspinia.js');?>"></script>
 	<script src="<?php echo assets_url('js/plugins/pace/pace.min.js');?>"></script>
-	<script src="<?php echo assets_url('js/plugins/slimscroll/jquery.slimscroll.min.js');?>"></script>
+	<!--<script src="<?php echo assets_url('js/plugins/slimscroll/jquery.slimscroll.min.js');?>"></script>-->
 	<!-- Sweet alert -->
     <script src="<?php echo assets_url('js/plugins/sweetalert/sweetalert.min.js');?>"></script>
 	<!-- Custom and plugin javascript -->

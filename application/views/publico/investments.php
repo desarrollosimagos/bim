@@ -26,10 +26,6 @@
     </div>
 </div>
 
-<!--
-<?php print_r($listar);?>
--->
-
 <div class="wrapper wrapper-content animated fadeInRight">
 	
 	<div class="row"><!-- Apertura de línea -->
