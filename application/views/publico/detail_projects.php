@@ -212,4 +212,45 @@
 	</div>
 	<!-- Cierre de la sección de descripción del proyecto -->
 	
+	<!-- Apertura de la sección de documentos y lecturas recomendadas -->
+	<div class="row article">
+		<div class="col-lg-12">
+			<div class="col-md-2">
+			
+			</div>
+			<div class="col-md-4">
+				<h2><?php echo $this->lang->line('public_view_documents_projects'); ?></h2>
+				<?php if(count($documentos_asociados) > 0){ ?>
+				<ul class="list-unstyled project-files">
+					<?php foreach($documentos_asociados as $doc){ ?>
+					<li>
+						<a target="_blank" href="<?php echo base_url(); ?>assets/documents/<?php echo $doc->description; ?>">
+							<i class="fa fa-file"></i> <?php echo $doc->description; ?>
+						</a>
+					</li>
+					<?php } ?>
+				</ul>
+				<?php } ?>
+			</div>
+			<div class="col-md-4">
+				<h2><?php echo $this->lang->line('public_view_readings_projects'); ?></h2>
+				<?php if(count($lecturas_asociadas) > 0){ ?>
+				<ul class="list-unstyled project-files">
+					<?php foreach($lecturas_asociadas as $reading){ ?>
+					<li>
+						<a target="_blank" href="<?php echo base_url(); ?>assets/readings/<?php echo $reading->description; ?>">
+							<i class="fa fa-file"></i> <?php echo $reading->description; ?>
+						</a>
+					</li>
+					<?php } ?>
+				</ul>
+				<?php } ?>
+			</div>
+			<div class="col-md-2">
+			
+			</div>
+		</div>
+	</div>
+	<!-- Cierre de la sección de documentos y lecturas recomendadas -->
+	
 </div>
