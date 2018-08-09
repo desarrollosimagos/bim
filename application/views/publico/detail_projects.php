@@ -5,36 +5,77 @@
 <br>
 -->
 
+<?php if(count($detalles_asociados) > 0){ ?>
 <style>
 	.learn-more {
 		background-color: #1B426C !important;
 		width: 90%;
 	}
+	
+	.sidenav {
+		height: 100%;
+		width: 200px;
+		position: fixed;
+		z-index: 1;
+		top: 10;
+		left: 0;
+		background-color: #FFFFFF;
+		border: #111 solid;
+		border-width: 1px;
+		overflow-x: hidden;
+		padding-top: 20px;
+	}
+
+	.sidenav a {
+		padding: 6px 6px 6px 32px;
+		text-decoration: none;
+		font-size: 15px;
+		font-weight: bold;
+		color: #1B426C;
+		display: block;
+	}
+
+	.sidenav a:hover {
+		color: #1B426C;
+	}
+
+	.main {
+		margin-left: 180px !important; /* Same as the width of the sidenav */
+	}
+	
+	.footer {
+		margin-left: 200px !important; /* Same as the width of the sidenav */
+	}
+
+	@media screen and (max-height: 480px) {
+	  .sidenav {visibility: hidden;}
+	  /*.sidenav {padding-top: 15px;}
+	  .sidenav a {font-size: 18px;}*/
+	  .main {margin-left: 0px !important;}
+	  .footer {margin-left: 0px !important;}
+	}
 </style>
 
-<div class="row wrapper border-bottom white-bg page-heading">
+<div class='sidenav'><!-- Apertura del sidenav -->
+	<?php
+	$i = 0;
+	foreach($detalles_asociados as $detalle){
+		?>
+		<a href="#<?php echo $detalle->button; ?>"><?php echo $detalle->button; ?></a>
+		<?php
+		$i++;
+	}
+	?>
+</div><!-- Cierre del sidenav -->
+<?php } ?>
+
+<div class="row wrapper border-bottom white-bg page-heading main">
     <div class="col-lg-10">
         <h1><?php echo $get_detail->name;?></h1>
     </div>
 </div>
 
-<div class="wrapper wrapper-content animated fadeInRight">
-	
-<!--
-	<div id="inSlider" class="carousel carousel-fade" data-ride="carousel">
-		<div class="carousel-inner" role="listbox">
-			<div class="item active">
-				<div class="header-back one">
-					<?php if($get_detail->image != null){ ?>
-					<img class='img-fluid' src="<?php echo assets_url("img/projects/$get_detail->image");?>" alt="laptop" style='width: 100%;height: 100%;'/>
-					<?php }else{ ?>
-					<img class='img-fluid' src="<?php echo assets_url("img/landing/shattered.png");?>" alt="laptop" style='width: 100%;height: 100%;'/>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
-	</div>
--->
+<div class="wrapper wrapper-content animated fadeInRight main">
 	
 	<!-- Apertura de la sección de datos estadísticos del proyecto -->
 	<div class="row">
@@ -218,15 +259,19 @@
 	if(count($detalles_asociados) > 0){
 		$i = 0;
 		foreach($detalles_asociados as $detalle){
-			if($i == $detalle->order){
 			?>
+			<div id="<?php echo $detalle->button; ?>"></div>
+			<br>
+			<br>
+			<br>
+			<br>
 			<div class="row article">
 				<div class="col-lg-12">
 					<div class="ibox">
 						<div class="ibox-title">
 								<span><h2><?php echo $detalle->title;?></h2></span>
 								<hr>
-								<span><?php echo $detalle->title;?></span>
+								<span><?php echo $detalle->subtitle;?></span>
 						</div>
 						<div class="ibox-content">
 							<p>
@@ -237,7 +282,6 @@
 				</div>
 			</div>
 			<?php
-			}
 			$i++;
 		}
 	}
