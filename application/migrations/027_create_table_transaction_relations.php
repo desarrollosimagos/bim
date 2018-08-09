@@ -15,12 +15,12 @@ class Migration_create_table_transaction_relations extends CI_Migration
 					"auto_increment" => TRUE,
 					"null" => FALSE
 				),
-				"transaction_id" => array(
+				"transaction_from_id" => array(
 					"type" => "INT",
 					"constraint" => 11,
 					"null" => TRUE
 				),
-				"projects_transactions_id" => array(
+				"transactions_to_id" => array(
 					"type" => "INT",
 					"constraint" => 11,
 					"null" => TRUE
