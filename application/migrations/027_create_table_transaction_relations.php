@@ -25,6 +25,11 @@ class Migration_create_table_transaction_relations extends CI_Migration
 					"constraint" => 11,
 					"null" => TRUE
 				),
+				"type" => array(
+					"type" => "VARCHAR",
+					"constraint" => 20,
+					"null" => TRUE
+				),
 				"d_create" => array(
 					"type" => "TIMESTAMP",
 					"null" => TRUE
