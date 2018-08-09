@@ -212,6 +212,39 @@
 	</div>
 	<!-- Cierre de la sección de descripción del proyecto -->
 	
+	
+	<!-- Apertura de la sección de detalles del proyecto -->
+	<?php 
+	if(count($detalles_asociados) > 0){
+		$i = 0;
+		foreach($detalles_asociados as $detalle){
+			if($i == $detalle->order){
+			?>
+			<div class="row article">
+				<div class="col-lg-12">
+					<div class="ibox">
+						<div class="ibox-title">
+								<span><h2><?php echo $detalle->title;?></h2></span>
+								<hr>
+								<span><?php echo $detalle->title;?></span>
+						</div>
+						<div class="ibox-content">
+							<p>
+								<?php echo $detalle->content;?>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			}
+			$i++;
+		}
+	}
+	?>
+	<!-- Cierre de la sección de detalles del proyecto -->
+	
+	
 	<!-- Apertura de la sección de documentos y lecturas recomendadas -->
 	<div class="row article">
 		<div class="col-lg-12">
