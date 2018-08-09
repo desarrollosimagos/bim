@@ -30,6 +30,13 @@
 	
 	<div class="row"><!-- Apertura de línea -->
 		
+		<div class="col-lg-12">
+			<h2><?php echo $this->lang->line('public_list_title_projects'); ?> (<?php echo count($listar); ?>)</h2>
+		</div>
+		
+		<br>
+		<br>
+		
 		<!-- Apertura de ciclo -->
 		<?php foreach($listar as $proyecto){ ?>
 		<div class="col-lg-3">

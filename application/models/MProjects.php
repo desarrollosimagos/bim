@@ -286,6 +286,16 @@ class MProjects extends CI_Model {
             return $query->result();
     }
     
+    // Public method to obtain the photos by project_id
+    public function obtenerDetalles($project_id) {
+        $this->db->where('project_id', $project_id);
+        $query = $this->db->get('project_detail');
+        if ($query->num_rows() > 0)
+            return $query->result();
+        else
+            return $query->result();
+    }
+    
     // Public method to obtain the documentos by project_id
     public function obtenerDocumentos($project_id) {
         $this->db->where('project_id', $project_id);
