@@ -20,7 +20,7 @@ class Migration_create_table_transaction_relations extends CI_Migration
 					"constraint" => 11,
 					"null" => TRUE
 				),
-				"transactions_to_id" => array(
+				"transaction_to_id" => array(
 					"type" => "INT",
 					"constraint" => 11,
 					"null" => TRUE
