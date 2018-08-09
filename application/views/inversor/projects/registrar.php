@@ -476,7 +476,7 @@ function valida_tipo_document(input) {
 	//~ alert(input.attr("id"));
 	//~ alert(input[0].files[0].size);
 	
-	if(input[0].files[0].size > 2000000){
+	if(input[0].files[0].size > 10000000){
 		swal("Disculpe,", "los archivos no deben exceder los 2 MB");
 		input.val('');
 		input.parent('div').addClass('has-error');
