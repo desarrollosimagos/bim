@@ -27,25 +27,25 @@ class LanguageLoader
             $ci->lang->load('change_passwd',$siteLang);
             $ci->lang->load('public_projects',$siteLang);
         } else {
-            $ci->lang->load('header','spanish');
-            $ci->lang->load('login','spanish');
-            $ci->lang->load('footer','spanish');
-            $ci->lang->load('menus','spanish');
-            $ci->lang->load('submenus','spanish');
-            $ci->lang->load('summary','spanish');
-            $ci->lang->load('transactions','spanish');
-            $ci->lang->load('coins','spanish');
-            $ci->lang->load('accounts','spanish');
-            $ci->lang->load('projects','spanish');
-            $ci->lang->load('profiles','spanish');
-            $ci->lang->load('users','spanish');
-            $ci->lang->load('associations','spanish');
-            $ci->lang->load('investor_groups','spanish');
-            $ci->lang->load('menus_module','spanish');
-            $ci->lang->load('submenus_module','spanish');
-            $ci->lang->load('actions','spanish');
-            $ci->lang->load('change_passwd','spanish');
-            $ci->lang->load('public_projects','spanish');
+            $ci->lang->load('header','english');
+            $ci->lang->load('login','english');
+            $ci->lang->load('footer','english');
+            $ci->lang->load('menus','english');
+            $ci->lang->load('submenus','english');
+            $ci->lang->load('summary','english');
+            $ci->lang->load('transactions','english');
+            $ci->lang->load('coins','english');
+            $ci->lang->load('accounts','english');
+            $ci->lang->load('projects','english');
+            $ci->lang->load('profiles','english');
+            $ci->lang->load('users','english');
+            $ci->lang->load('associations','english');
+            $ci->lang->load('investor_groups','english');
+            $ci->lang->load('menus_module','english');
+            $ci->lang->load('submenus_module','english');
+            $ci->lang->load('actions','english');
+            $ci->lang->load('change_passwd','english');
+            $ci->lang->load('public_projects','english');
         }
     }
 }
