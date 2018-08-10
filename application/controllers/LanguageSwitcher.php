@@ -7,7 +7,7 @@ class LanguageSwitcher extends CI_Controller
  
     function switchLang($language = "") {
         
-        $language = ($language != "" && $language != "seleccione") ? $language : "spanish";
+        $language = ($language != "" && $language != "seleccione") ? $language : "english";
         $this->session->set_userdata('site_lang', $language);
         
         redirect($_SERVER['HTTP_REFERER']);
