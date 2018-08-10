@@ -44,6 +44,7 @@ class Welcome extends CI_Controller {
 		}	
 		// Cargamos la plantilla base
 		$this->load->view('base');
+		$this->load->view('publico/inicio');
 	}
 
 	public function detail_projects($id)

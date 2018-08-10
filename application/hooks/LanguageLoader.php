@@ -26,6 +26,7 @@ class LanguageLoader
             $ci->lang->load('actions',$siteLang);
             $ci->lang->load('change_passwd',$siteLang);
             $ci->lang->load('public_projects',$siteLang);
+            $ci->lang->load('public_home',$siteLang);
         } else {
             $ci->lang->load('header','english');
             $ci->lang->load('login','english');
@@ -46,6 +47,7 @@ class LanguageLoader
             $ci->lang->load('actions','english');
             $ci->lang->load('change_passwd','english');
             $ci->lang->load('public_projects','english');
+            $ci->lang->load('public_home','english');
         }
     }
 }
