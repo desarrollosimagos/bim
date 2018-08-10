@@ -19,6 +19,7 @@ $lang['public_list_see_more_projects'] = 'See More Deals';
 // Detalles de proyectos
 $lang['public_view_minimum_projects'] = 'Minimum';
 $lang['public_view_variable_projects'] = 'Variable';
+$lang['public_view_target_projects'] = 'Target Hold';
 $lang['public_view_usage_projects'] = 'Usage';
 $lang['public_view_invest_projects'] = 'Invest';
 $lang['public_view_documents_projects'] = 'Documents';

@@ -62,7 +62,7 @@
 						</p>
 						<div class="row m-t-lg">
 							<div class="col-md-4">
-								<h5><strong>15k</strong></h5>
+								<h5><strong><?php echo number_format($proyecto->amount_min, 2, ',', '.') ?></strong></h5>
 								<span class="label label-success"><?php echo $this->lang->line('public_list_minimum_projects'); ?></span>
 							</div>
 							<div class="col-md-4">
@@ -70,8 +70,8 @@
 								<span class="label label-success"><?php echo $this->lang->line('public_list_variable_projects'); ?></span>
 							</div>
 							<div class="col-md-4">
-								<h5><strong>14m</strong></h5>
-								<span class="label label-success"><?php echo $this->lang->line('public_list_variable_projects'); ?></span>
+								<h5><strong>5yr</strong></h5>
+								<span class="label label-success"><?php echo $this->lang->line('public_view_target_projects'); ?></span>
 							</div>
 						</div>
 						<br>
