@@ -12,6 +12,19 @@
 		width: 90%;
 	}
 	
+	h1 {
+		font-weight: 400;
+	}
+	
+	h3 {
+		font-size: 15px !important;
+		font-weight: normal;
+	}
+	
+	.article p {
+		font-size: 13px !important;
+	}
+	
 	.sidenav {
 		height: 100%;
 		width: 200px;
@@ -27,11 +40,11 @@
 	}
 
 	.sidenav a {
-		padding: 6px 6px 6px 40px;
+		padding: 6px 6px 6px 30px;
 		text-decoration: none;
-		font-size: 18px;
+		font-size: 13px;
 		/*font-weight: bold;*/
-		color: #1B426C;
+		color: #707375;
 		display: block;
 	}
 
@@ -261,17 +274,14 @@
 		foreach($detalles_asociados as $detalle){
 			?>
 			<div id="<?php echo $detalle->button; ?>"></div>
-			<br>
-			<br>
-			<br>
-			<br>
+			
 			<div class="row article">
 				<div class="col-lg-12">
 					<div class="ibox">
 						<div class="ibox-title">
 								<span><h2><?php echo $detalle->title;?></h2></span>
 								<hr>
-								<span><?php echo $detalle->subtitle;?></span>
+								<span><h3><?php echo $detalle->subtitle;?></h3></span>
 						</div>
 						<div class="ibox-content">
 							<p>
