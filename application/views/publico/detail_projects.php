@@ -27,10 +27,10 @@
 	}
 
 	.sidenav a {
-		padding: 6px 6px 6px 32px;
+		padding: 6px 6px 6px 40px;
 		text-decoration: none;
-		font-size: 15px;
-		font-weight: bold;
+		font-size: 18px;
+		/*font-weight: bold;*/
 		color: #1B426C;
 		display: block;
 	}
