@@ -49,5 +49,10 @@ class LanguageLoader
             $ci->lang->load('public_projects','english');
             $ci->lang->load('public_home','english');
         }
+        
+        // Área de carga de idiomas disponibles en la tabla 'lang'
+        $query = $ci->db->get('lang');
+		$languages = $query->result();
+        $ci->session->set_userdata('languages', $languages);
     }
 }

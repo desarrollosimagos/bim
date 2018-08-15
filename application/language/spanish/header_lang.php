@@ -8,5 +8,5 @@ $lang['menu_bar_menu2'] = 'Posibilidades';
 $lang['menu_bar_menu3'] = 'Inversiones';
 $lang['menu_bar_menu4'] = 'Contactos';
 $lang['menu_bar_menu5'] = 'Resumen';
-$lang['language_menu1'] = 'Inglés';
-$lang['language_menu2'] = 'Español';
+$lang['language_english'] = 'Inglés';
+$lang['language_spanish'] = 'Español';
