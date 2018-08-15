@@ -20,7 +20,7 @@ class Migration_create_table_contracts extends CI_Migration
 					"constraint" => 11,
 					"null" => TRUE
 				),
-				"project_transactions_id" => array(
+				"transaction_id" => array(
 					"type" => "INT",
 					"constraint" => 11,
 					"null" => TRUE
