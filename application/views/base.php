@@ -227,23 +227,21 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 								<i class="fa fa-language"></i> <span class="label label-warning" id="span_num_respuestas"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li>
-									<a onclick="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/english';" href="#">
-										<div>
-											<img src="<?php echo assets_url('img/language/United-kingdom_29738.png');?>" style="height:25px;width:25px;"> 
-											<?php echo $this->lang->line('language_menu1'); ?>
-										</div>
-									</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a onclick="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/spanish';" href="#">
-										<div>
-											<img src="<?php echo assets_url('img/language/Spain_29723.png');?>" style="height:25px;width:25px;"> 
-											<?php echo $this->lang->line('language_menu2'); ?>
-										</div>
-									</a>
-								</li>
+								<?php $i = 1; ?>
+								<?php foreach($this->session->userdata['languages'] as $language){ ?>
+									<li>
+										<a onclick="javascript:window.location.href='<?php echo base_url(); ?>LanguageSwitcher/switchLang/<?php echo $language->name; ?>';" href="#">
+											<div>
+												<img src="<?php echo assets_url('img/language/'.$language->name.'.png');?>" style="height:25px;width:25px;"> 
+												<?php echo $this->lang->line('language_'.$language->name); ?>
+											</div>
+										</a>
+									</li>
+									<?php if($i < count($this->session->userdata['languages'])){ ?>
+									<li class="divider"></li>
+									<?php } ?>
+									<?php $i++;?>
+								<?php } ?>
 							</ul>
 						</li>
 			
