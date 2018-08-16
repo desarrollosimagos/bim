@@ -616,7 +616,7 @@ class Welcome extends CI_Controller {
 				'd_update' => date('Y-m-d H:i:s')
 			);
 			
-			$insert_lang = $this->MTiposCuenta->insert($data_lang);
+			$insert_lang = $this->MWelcome->insert($data_lang);
 			
 		}
 		
