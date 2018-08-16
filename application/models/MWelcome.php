@@ -30,6 +30,21 @@ class MWelcome extends CI_Model {
         $result = $this->db->get();
         return $result->row();
     }
+	
+	// Obtiene el id del idioma cargado en sesión
+    public function get_lang_id()
+    {
+		// Capturamos el idioma actual
+		$siteLang = $this->session->userdata('site_lang');
+        if($siteLang) {
+			$lang = $siteLang;
+		}else{
+			$lang = 'english';
+		}
+        $this->db->where('name', $lang);
+        $result = $this->db->get('lang');
+        return $result->result()[0]->id;
+    }
 
 }
 ?>

@@ -286,9 +286,10 @@ class MProjects extends CI_Model {
             return $query->result();
     }
     
-    // Public method to obtain the photos by project_id
-    public function obtenerDetalles($project_id) {
+    // Public method to obtain the project details by project_id and lang_id
+    public function obtenerDetalles($project_id, $lang_id) {
         $this->db->where('project_id', $project_id);
+        $this->db->where('lang_id', $lang_id);
         $this->db->order_by('project_id');
         $this->db->order_by('order');
         $query = $this->db->get('project_detail');
