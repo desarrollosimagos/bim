@@ -15,6 +15,7 @@ Class CLogin extends CI_Controller {
         $this->load->model('MSubMenus');
         $this->load->model('MCoins');
         $this->load->model('MTiposCuenta');
+        $this->load->model('MWelcome');
     }
 
 	// Show login page
