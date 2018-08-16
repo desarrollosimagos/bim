@@ -537,8 +537,8 @@ Class CLogin extends CI_Controller {
 			
 			$data_lang = array(
 				'name' => $data[1],
-				'route' => $data[1],
-				'status' => $data[1],
+				'route' => '',
+				'status' => 1,
 				'd_create' => date('Y-m-d H:i:s'),
 				'd_update' => date('Y-m-d H:i:s')
 			);
