@@ -43,7 +43,7 @@ Class CLogin extends CI_Controller {
 			$respuesta = $this->basicauth->login($usuario, $password);
 			
 			if(!isset($respuesta['error'])){
-				redirect('dashboard');
+				redirect('transactions');
 			}else{
 				$data['error'] = $respuesta['error'];
 				$this->load->view('login_form', $data);
@@ -326,6 +326,22 @@ Class CLogin extends CI_Controller {
 				}
 			
 			}
+			
+			// Verificamos si existe la tabla de idiomas 'lang'
+			$exists_lang = $this->db->table_exists('lang');
+			
+			if($exists_lang){
+			
+				$langs = $this->MWelcome->get_langs();
+				// Creamos los idiomas básicos si éstos no existen
+				if(count($langs) == 0){
+					
+					// Importamos los idiomas básicos
+					$this->import_langs();
+				
+				}
+			
+			}
 		
 		}
 		
@@ -503,6 +519,31 @@ Class CLogin extends CI_Controller {
 			);
 			
 			$insert_type = $this->MTiposCuenta->insert($data_type);
+			
+		}
+		
+		fclose ($fp);
+        
+    }
+    
+    // Método que importa los idiomas desde un csv
+    public function import_langs() {
+        
+        $ruta = getcwd();  // Obtiene el directorio actual en donde se está trabajando
+        
+        $fp = fopen ($ruta."/application/migrations/langs.csv","r");
+        
+        while ($data = fgetcsv ($fp, 1000, ",")) {
+			
+			$data_lang = array(
+				'name' => $data[1],
+				'route' => $data[1],
+				'status' => $data[1],
+				'd_create' => date('Y-m-d H:i:s'),
+				'd_update' => date('Y-m-d H:i:s')
+			);
+			
+			$insert_lang = $this->MTiposCuenta->insert($data_lang);
 			
 		}
 		

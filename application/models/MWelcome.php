@@ -31,6 +31,13 @@ class MWelcome extends CI_Model {
         return $result->row();
     }
 	
+	// Obtiene la lista de idiomas disponibles
+    public function get_langs()
+    {
+        $result = $this->db->get('lang');
+        return $result->result();
+    }
+	
 	// Obtiene el id del idioma cargado en sesión
     public function get_lang_id()
     {
@@ -44,6 +51,15 @@ class MWelcome extends CI_Model {
         $this->db->where('name', $lang);
         $result = $this->db->get('lang');
         return $result->result()[0]->id;
+    }
+    
+    // Public method to insert the data
+    public function insert_lang($datos) {
+		
+		$result = $this->db->insert("lang", $datos);
+		$id = $this->db->insert_id();
+		return $id;
+        
     }
 
 }
