@@ -92,6 +92,17 @@
 								</select>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" ><?php echo $this->lang->line('registry_language_users'); ?> *</label>
+							<div class="col-sm-10">
+								<select class="form-control m-b" name="lang_id" id="lang_id">
+									<option value="0" selected="">Seleccione</option>
+									<?php foreach($idiomas as $idioma){?>
+									<option value="<?php echo $idioma->id; ?>"><?php echo ucfirst($idioma->name); ?></option>
+									<?php }?>
+								</select>
+							</div>
+						</div>
 						<?php if($this->session->userdata('logged_in')['profile_id'] == 1){ ?>
 						<div class="form-group"><label class="col-sm-2 control-label" ><?php echo $this->lang->line('registry_actions_users'); ?></label>
 							<div class="col-sm-10">

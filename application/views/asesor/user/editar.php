@@ -92,6 +92,17 @@
 								</select>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" ><?php echo $this->lang->line('edit_language_users'); ?> *</label>
+							<div class="col-sm-10">
+								<select class="form-control m-b" name="lang_id" id="lang_id">
+									<option value="0" selected="">Seleccione</option>
+									<?php foreach($idiomas as $idioma){?>
+									<option value="<?php echo $idioma->id; ?>"><?php echo ucfirst($idioma->name); ?></option>
+									<?php }?>
+								</select>
+							</div>
+						</div>
 						<?php if($this->session->userdata('logged_in')['id'] == 1){ ?>
 						<div class="form-group"><label class="col-sm-2 control-label" ><?php echo $this->lang->line('edit_actions_users'); ?></label>
 							<div class="col-sm-10">
@@ -203,6 +214,7 @@
 								<input id="base_url" type="hidden" value="<?php echo base_url(); ?>"/>
 								<input id="id_profile" type="hidden" value="<?php echo $editar[0]->profile_id ?>"/>
 								<input id="id_coin" type="hidden" value="<?php echo $editar[0]->coin_id ?>"/>
+								<input id="id_lang" type="hidden" value="<?php echo $editar[0]->lang_id ?>"/>
                                 <input id="id_status" type="hidden" value="<?php echo $editar[0]->status ?>"/>
                                 <input id="ids_actions" type="hidden" value="<?php echo $ids_actions; ?>"/>
                                 <input id="id_image" type="hidden" value="<?php echo $editar[0]->image; ?>"/>

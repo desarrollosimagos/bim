@@ -23,6 +23,7 @@ $(document).ready(function() {
            {"sClass": "registro center", "sWidth": "10%"},
            {"sClass": "none", "sWidth": "8%"},
            {"sClass": "none", "sWidth": "8%"},
+           {"sClass": "none", "sWidth": "8%"},
            {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
            {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
        ]       
@@ -93,30 +94,6 @@ $(document).ready(function() {
         url = base_url+'users/';
         window.location = url;
     });
-    
-	//~ if($("#profile").val() != undefined){
-		//~ $("#profile").select2('val', $("#id_profile").val());
-	//~ }
-	//~ if($("#status").val() != undefined){
-		//~ $("#status").select2('val', $("#id_status").val());
-	//~ }
-	
-	//~ $("#image").fileinput({
-        //~ initialPreview: [
-            //~ '<img src="'+base_url+'assets/img/users/usuario.jpg" class="file-preview-image" alt="Usuario" title="Usuario">',
-        //~ ],
-        //~ browseClass: "btn btn-primary btn-block",
-        //~ browseLabel: "Buscar Imagen",
-        //~ showCaption: false,
-        //~ showRemove: false,
-        //~ maxFileSize: 50,
-        //~ showUpload: false,
-        //~ allowedFileExtensions: ["jpg", "png", "jpeg"],
-        //~ elErrorContainer: "#errorBlock",
-        //~ msgSizeTooLarge: 'Archivo muy pesado "{name}". (<b>{size} KB</b>) excede el tamaño máximo que es de <b>{maxSize} KB',
-        //~ msgInvalidFileExtension: 'Extensiones invalidad "{name}". Solo admite archivos"{extensions}".'
-//~ 
-    //~ });
     
     // Función para la pre-visualización de la imagen a cargar
 	$(function() {
@@ -292,6 +269,11 @@ $(document).ready(function() {
 			
 		  swal("Disculpe,", "para continuar debe seleccionar la moneda");
 	       $('#coin_id').parent('div').addClass('has-error');
+		   
+		} else if ($('#lang_id').val() == '0') {
+			
+		  swal("Disculpe,", "para continuar debe seleccionar el idioma");
+	       $('#lang_id').parent('div').addClass('has-error');
 		   
 		} else {
             

@@ -94,24 +94,8 @@ $(document).ready(function() {
 
 	$("#profile").select2('val', $("#id_profile").val());
 	$("#coin_id").select2('val', $("#id_coin").val());
+	$("#lang_id").select2('val', $("#id_lang").val());
     $("#status").select2('val', $("#id_status").val());
-    
-    //~ $("#image").fileinput({
-        //~ initialPreview: [
-			//~ '<img id="picture" name="picture" src="'+base_url+'assets/img/users/'+$("#id_image").val()+'" style="width: 100%; height:100%" class="file-preview-image" alt="Usuario" title="Usuario">',
-        //~ ],
-        //~ browseClass: "btn btn-primary btn-block",
-        //~ browseLabel: "Buscar Imagen",
-        //~ showCaption: false,
-        //~ showRemove: false,
-        //~ maxFileSize: 50,
-        //~ showUpload: false,
-        //~ allowedFileExtensions: ["jpg", "png"],
-        //~ elErrorContainer: "#errorBlock",
-        //~ msgSizeTooLarge: 'Archivo muy pesado "{name}". (<b>{size} KB</b>) excede el tamaño máximo que es de <b>{maxSize} KB',
-        //~ msgInvalidFileExtension: 'Extensiones invalidad "{name}". Solo admite archivos"{extensions}".'
-//~ 
-    //~ });
     
     // Función para la pre-visualización de la imagen a cargar
 	$(function() {
@@ -326,6 +310,11 @@ $(document).ready(function() {
 			
 		  swal("Disculpe,", "para continuar debe seleccionar la moneda");
 	       $('#coin_id').parent('div').addClass('has-error');
+		   
+		} else if ($('#lang_id').val() == '0') {
+			
+		  swal("Disculpe,", "para continuar debe seleccionar el idioma");
+	       $('#lang_id').parent('div').addClass('has-error');
 		   
 		} else {
 			
