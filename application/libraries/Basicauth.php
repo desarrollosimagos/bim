@@ -95,6 +95,13 @@ Class Basicauth
 				$coin_symbol = $query_coin->row()->symbol;
 				$coin_decimals = $query_coin->row()->decimals;
 				
+				// Sobre escribimos los datos de sesión de idioma con el idioma del usuario logueado
+				// Primero consultamos el nombre del idioma del usuario
+				$query_lang = $this->CI->db->get_where('lang', array('id'=>$query->row()->lang_id));
+				$lang_user = $query_lang->row()->name;
+				// Luego comprobamos los datos de sesión y los sobre escribimos
+				$this->CI->session->set_userdata('site_lang', $lang_user);
+				
 				$fecha_actual = date('Y-m-d H:i:s');
 				// Cargamos los datos de usuario
 				$session_data = array(
