@@ -39,6 +39,7 @@
                                     <th><?php echo $this->lang->line('list_currency_users'); ?></th>
                                     <th><?php echo $this->lang->line('list_profile_users'); ?></th>
                                     <th><?php echo $this->lang->line('list_permissions_users'); ?></th>
+                                    <th><?php echo $this->lang->line('list_language_users'); ?></th>
                                     <th><?php echo $this->lang->line('list_edit_users'); ?></th>
                                     <th><?php echo $this->lang->line('list_active_users'); ?></th>
                                 </tr>
@@ -81,6 +82,9 @@
 												}
 											}
 											?>
+                                        </td>
+                                        <td>
+                                            <?php echo $usuario->lang_name; ?>
                                         </td>
                                         <td style='text-align: center'>
                                             <a href="<?php echo base_url() ?>users/edit/<?= $usuario->id; ?>"  title="<?php echo $this->lang->line('list_edit_users'); ?>"><i class="fa fa-edit fa-2x"></i></a>
