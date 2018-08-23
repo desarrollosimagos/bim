@@ -473,11 +473,16 @@ class CProjects extends CI_Controller {
 			$capital_disponible_moneda_proyecto = 0;
 			if(count($find_transactions) > 0){
 				foreach($find_transactions as $t1){
-					if($t1->status == 'approved' && $t1->project_id == $data['id']){ 
+					if($t1->status == 'approved' && $t1->project_id == $data['id']){
 						if($t1->type == "invest" && $t1->amount < 0){
 							$capital_disponible_moneda_cuenta += 0;
 						}else{
-							$capital_disponible_moneda_cuenta += $t1->amount;
+							// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if($cuenta->coin_avr == 'VEF' && strtotime($t1->date) < strtotime("2018-10-20 00:00:00")){
+								$capital_disponible_moneda_cuenta += ($t1->amount/100000);
+							}else{
+								$capital_disponible_moneda_cuenta += $t1->amount;
+							}
 						}
 					}
 					$relations = $this->MCuentas->buscar_transaction_relation($t1->id);
@@ -917,7 +922,12 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+						}else{
+							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						}
 						
 					}else{
 						
@@ -1186,7 +1196,12 @@ class CProjects extends CI_Controller {
 					
 				}else if($currency == 'VEF'){
 					
-					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+					}else{
+						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					}
 					
 				}else{
 					
@@ -1266,12 +1281,23 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						// Si el campo de tasa 'rate' es mayor a cero
-						if((float)$fondo->rate > 0){
-							$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-							//~ $trans_usd /= (float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}
 						}else{
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 						}
 						
 					}else{
@@ -1308,7 +1334,12 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+						}else{
+							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						}
 						
 					}else{
 						
@@ -1362,7 +1393,12 @@ class CProjects extends CI_Controller {
 					
 				}else if($currency == 'VEF'){
 					
-					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+					}else{
+						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					}
 					
 				}else{
 					
@@ -1419,12 +1455,23 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						// Si el campo de tasa 'rate' es mayor a cero
-						if((float)$fondo->rate > 0){
-							$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-							//~ $trans_usd /= (float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}
 						}else{
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 						}
 						
 					}else{
@@ -1461,7 +1508,12 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+						}else{
+							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						}
 						
 					}else{
 						
@@ -1536,12 +1588,23 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						// Si el campo de tasa 'rate' es mayor a cero
-						if((float)$fondo->rate > 0){
-							$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-							//~ $trans_usd /= (float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}
 						}else{
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 						}
 						
 					}else{
@@ -1578,7 +1641,12 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+						}else{
+							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						}
 						
 					}else{
 						
@@ -1628,7 +1696,12 @@ class CProjects extends CI_Controller {
 					
 				}else if($currency == 'VEF'){
 					
-					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+					}else{
+						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					}
 					
 				}else{
 					
@@ -1687,7 +1760,12 @@ class CProjects extends CI_Controller {
 					
 				}else if($currency == 'VEF'){
 					
-					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+					}else{
+						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					}
 					
 				}else{
 					
@@ -1821,12 +1899,23 @@ class CProjects extends CI_Controller {
 								
 							}else if($currency == 'VEF'){
 								
-								// Si el campo de tasa 'rate' es mayor a cero
-								if((float)$fondo->rate > 0){
-									$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-									//~ $trans_usd /= (float)$valor1vef;
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									// Si el campo de tasa 'rate' es mayor a cero
+									if((float)$fondo->rate > 0){
+										$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+										//~ $trans_usd /= (float)$valor1vef;
+									}else{
+										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+									}
 								}else{
-									$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+									// Si el campo de tasa 'rate' es mayor a cero
+									if((float)$fondo->rate > 0){
+										$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+										//~ $trans_usd /= (float)$valor1vef;
+									}else{
+										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+									}
 								}
 								
 							}else{
@@ -1863,7 +1952,12 @@ class CProjects extends CI_Controller {
 								
 							}else if($currency == 'VEF'){
 								
-								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+								}else{
+									$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+								}
 								
 							}else{
 								
@@ -1920,7 +2014,12 @@ class CProjects extends CI_Controller {
 							
 						}else if($currency == 'VEF'){
 							
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 							
 						}else{
 							
@@ -1982,7 +2081,12 @@ class CProjects extends CI_Controller {
 							
 						}else if($currency == 'VEF'){
 							
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 							
 						}else{
 							
@@ -2059,7 +2163,12 @@ class CProjects extends CI_Controller {
 							
 						}else if($currency == 'VEF'){
 							
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 							
 						}else{
 							
@@ -2110,7 +2219,12 @@ class CProjects extends CI_Controller {
 							
 						}else if($currency == 'VEF'){
 							
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 							
 						}else{
 							
@@ -2208,7 +2322,12 @@ class CProjects extends CI_Controller {
 					
 				}else if($currency == 'VEF'){
 					
-					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+					}else{
+						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					}
 					
 				}else{
 					
@@ -2285,12 +2404,23 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						// Si el campo de tasa 'rate' es mayor a cero
-						if((float)$fondo->rate > 0){
-							$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-							//~ $trans_usd /= (float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}
 						}else{
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 						}
 						
 					}else{
@@ -2327,7 +2457,12 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+						}else{
+							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						}
 						
 					}else{
 						
@@ -2377,7 +2512,12 @@ class CProjects extends CI_Controller {
 					
 				}else if($currency == 'VEF'){
 					
-					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+					}else{
+						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+					}
 					
 				}else{
 					
@@ -2436,12 +2576,23 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						// Si el campo de tasa 'rate' es mayor a cero
-						if((float)$fondo->rate > 0){
-							$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-							//~ $trans_usd /= (float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}
 						}else{
-							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							// Si el campo de tasa 'rate' es mayor a cero
+							if((float)$fondo->rate > 0){
+								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+								//~ $trans_usd /= (float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
 						}
 						
 					}else{
@@ -2478,7 +2629,12 @@ class CProjects extends CI_Controller {
 						
 					}else if($currency == 'VEF'){
 						
-						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+						}else{
+							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+						}
 						
 					}else{
 						
@@ -2583,23 +2739,9 @@ class CProjects extends CI_Controller {
 		$data_project = $this->MProjects->obtenerProyecto($project_id);  // Datos del proyecto
 		
 		// Obtenemos el valor en dólares de las distintas divisas
-		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-		//~ if($ct){
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664");
-			// Se decodifica la respuesta JSON
-			//~ $exchangeRates = json_decode($get, true);
-		//~ } else {
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85");
-			// Se decodifica la respuesta JSON
-			//~ $exchangeRates = json_decode($get, true);
-		//~ }
-		// Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
 		$exchangeRates = $this->coin_openexchangerates;
 		
 		// Colectando los symbolos de todas las cryptomonedas soportadas por la plataforma de coinmarketcap
-		//~ $get2 = file_get_contents("https://api.coinmarketcap.com/v1/ticker/");
-		//~ $exchangeRates2 = json_decode($get2, true);
 		$exchangeRates2 = $this->coin_coinmarketcap;
 		$valor1anycoin = 0;
 		$i = 0;
@@ -2616,10 +2758,6 @@ class CProjects extends CI_Controller {
 		}
 		
 		// Valor de 1 dólar en bolívares
-		//~ $get3 = file_get_contents("https://s3.amazonaws.com/dolartoday/data.json");
-		//~ $exchangeRates3 = json_decode($get3, true);
-		//~ // Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
-		//~ $valor1vef = $exchangeRates3['USD']['transferencia'];
 		$valor1vef = $this->coin_rate;
 		
 		if (in_array($data_project[0]->coin_avr, $rates)) {
@@ -2636,30 +2774,55 @@ class CProjects extends CI_Controller {
 			
 		}
         
-        $fondos_details = $this->MProjects->obtenerTransaccionesPorMoneda($project_id);  // Listado de fondos detallados ya agrupados
+        $fondos_details = $this->MProjects->obtenerTransaccionesPorMoneda($project_id);  // Listado de fondos detallados
+        
+        $avr_coins = array();  // Para almacenar los códigos ISO de las monedas asociadas a los fondos
+        
+        // Colectamos los códigos ISO de las monedas de las transacciones resultantes
+        foreach($fondos_details as $fondo){
+			
+			if(!in_array($fondo->coin_avr, $avr_coins)){
+				$avr_coins[] = $fondo->coin_avr;
+			}
+			
+		}
 		
 		$summary_coins = array();  // Donde almacenaremos la nueva lista de transacciones
 		
 		// Recorrido de las transacciones para agruparlas por moneda 
 		if(count($fondos_details) > 0){
 			
-			foreach($fondos_details as $fondo){
+			// Armamos una lista de fondos por usuario y lo almacenamos en el arreglo '$resumen_users'
+			foreach($avr_coins as $avr_coin){
 				
 				$summary_coin = array(
 					'coin' => "",
 					'amount' => 0,
 					'amount_project' => 0,
 				);
-				
-				// Asignamos el nombre de la moneda
-				$summary_coin['coin'] = $fondo->coin;
-				
-				// Asignamos el monto total de la moneda
-				$summary_coin['amount'] = $fondo->amount;
-				
-				// Formateamos el monto total de la moneda con sus decimales y símbolo correspondiente
-				$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
-				$summary_coin['amount'] = $summary_coin['amount']." ".$fondo->coin_avr;
+			
+				foreach($fondos_details as $fondo){
+					
+					// Si es una transacción de la modela iterada la procesamos y sumamos
+					if($fondo->coin_avr == $avr_coin && $fondo->status == 'approved'){
+					
+						// Asignamos el nombre de la moneda
+						$summary_coin['coin'] = $fondo->coin;
+						
+						// Asignamos el monto total de la moneda
+						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							$summary_coin['amount'] += ($fondo->amount/100000);
+						}else{
+							$summary_coin['amount'] += $fondo->amount;
+						}
+						
+						// Formateamos el monto total de la moneda con sus decimales correspondientes
+						$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
+						
+					}
+					
+				}
 				
 				// Configuraciones de moneda del proyecto
 				$decimals = 2;
@@ -2668,11 +2831,10 @@ class CProjects extends CI_Controller {
 				}
 				$symbol = $data_project[0]->coin_avr;
 				
+				// Conversión de cada monto a dólares
+				$currency_fund = $avr_coin;  // Tipo de moneda del fondo
 				
-				// Conversión de cada monto agrupado por moneda a dólares
-				$currency_fund = $fondo->coin_avr;  // Tipo de moneda del fondo agrupado por moneda
-				
-				// Si el tipo de moneda del fondo agrupado por moneda es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+				// Si el tipo de moneda del fondo es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
 				if (in_array($currency_fund, $rates)) {
 					
 					// Primero convertimos el valor de la cryptodivisa
@@ -2683,30 +2845,38 @@ class CProjects extends CI_Controller {
 						if ($divisa['symbol'] == $rate){
 							$i+=1;
 							
-							// Obtenemos el valor de la cryptomoneda del fondo agrupado por moneda en dólares
+							// Obtenemos el valor de la cryptomoneda en dólares
 							$valor1anycoin = $divisa['price_usd'];
 						}
 					}
 					
-					$fund_usd = (float)$fondo->amount*(float)$valor1anycoin;
+					$fund_usd = (float)$summary_coin['amount']*(float)$valor1anycoin;
 					
 				}else if($currency_fund == 'VEF'){
 					
-					$fund_usd = (float)$fondo->amount/(float)$valor1vef;
+					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						$fund_usd = (float)($summary_coin['amount']/100000)/(float)$valor1vef;
+					}else{
+						$fund_usd = (float)$summary_coin['amount']/(float)$valor1vef;
+					}
 					
 				}else{
 					
-					$fund_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency_fund];
+					$fund_usd = (float)$summary_coin['amount']/$exchangeRates['rates'][$currency_fund];
 					
 				}
 				
-				// Conversión de cada fondo agrupado por moneda a la divisa del proyecto
+				// Formateamos el monto total de la moneda con su símbolo correspondiente
+				$summary_coin['amount'] = $summary_coin['amount']." ".$avr_coin;
+				
+				// Conversión de cada fondo a la divisa del proyecto
 				$summary_coin['amount_project'] = $fund_usd * $currency_project; 
 				$summary_coin['amount_project'] = round($summary_coin['amount_project'], $decimals);
 				$summary_coin['amount_project'] = $summary_coin['amount_project']." ".$symbol;
 				
 				$summary_coins[] = $summary_coin;
-				
+			
 			}
 			
 		}

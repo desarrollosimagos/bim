@@ -365,7 +365,7 @@ class MProjects extends CI_Model {
     // Public method to obtain the documentos by project_id and group by coin
     public function obtenerTransaccionesPorMoneda($project_id) {
 		
-		$select = 'pt.id, pt.project_id, pt.user_id, pt.date, pt.type, pt.description, SUM(pt.amount) AS amount, pt.status, u.username, c.alias, ';
+		$select = 'pt.id, pt.project_id, pt.user_id, pt.date, pt.type, pt.description, pt.amount, pt.status, u.username, c.alias, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, u.name, u.alias as user_alias';
 		
 		$this->db->select($select);
@@ -374,7 +374,8 @@ class MProjects extends CI_Model {
 		$this->db->join('coins cn', 'cn.id = c.coin_id');
 		$this->db->join('users u', 'u.id = pt.user_id', 'left');
 		$this->db->where('pt.project_id', $project_id);
-		$this->db->group_by("cn.description");
+		$this->db->where('pt.status', 'approved');
+		//~ $this->db->group_by("cn.description");
 		$this->db->order_by("pt.date", "desc");
 		$query = $this->db->get();
 		
