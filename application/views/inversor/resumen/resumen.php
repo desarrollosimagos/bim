@@ -201,6 +201,70 @@
 	</div>
 	<!-- Cierre del cuerpo de la sección de cintillo de montos -->
 	
+	<!-- Cuerpo de la sección de montos agrupados por moneda -->
+	<div class="ibox float-e-margins">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('view_list_summary_currency_title_projects'); ?></h5>
+
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_coin">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			
+			<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter_coin>
+				<thead>
+					<tr style="text-align: center">
+						<th><?php echo $this->lang->line('view_list_currency_projects'); ?></th>
+						<th><?php echo $this->lang->line('view_list_currency_amount_projects'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_currency_amountproject_projects'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 1; ?>
+					<?php foreach ($transactions_coins as $transact) { ?>
+						<tr style="text-align: center">
+							<td>
+								<?php echo $transact->coin; ?>
+							</td>
+							<td>
+								<?php echo $transact->amount; ?>
+							</td>
+							<td>
+								<?php echo $transact->amount_user; ?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='3'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+		</div>
+		
+	</div>
+	<!-- Cierre del cuerpo de la sección de montos agrupados por moneda -->
+	
 	<!-- Cuerpo de la sección de resumen por proyecto -->
 	<div class="ibox">
 		<div class="ibox-title">
