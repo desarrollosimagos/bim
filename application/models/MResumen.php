@@ -118,8 +118,8 @@ class MResumen extends CI_Model {
 		
 		$capitalAprobado = 0;
 		
-		$select = 'u.name, u.alias, u.username, f_p.id, f_p.account_id, f_p.project_id, f_p.user_id, f_p.type, f_p.amount, f_p.real, f_p.rate, f_p.status, ';
-		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, pf.id as perfil_id, pf.name as perfil_name, pj.name as project_name, p_t.type as project_type';
+		$select = 'u.name, u.alias, u.username, f_p.id, f_p.account_id, f_p.project_id, f_p.user_id, f_p.type, f_p.amount, f_p.real, f_p.rate, f_p.status, f_p.date, ';
+		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, pf.id as perfil_id, pf.name as perfil_name, pj.name as project_name, p_t.type as project_type';
 		
 		$this->db->select($select);
 		$this->db->from('transactions f_p');
@@ -150,7 +150,7 @@ class MResumen extends CI_Model {
 		}
 		
 		// Consulta a la tabla 'transactions'
-		$select = 'u.name, u.alias, u.username, f_p.project_id, f_p.id, f_p.user_id, f_p.account_id, f_p.type, f_p.amount, f_p.status, ';
+		$select = 'u.name, u.alias, u.username, f_p.project_id, f_p.id, f_p.user_id, f_p.account_id, f_p.type, f_p.amount, f_p.status, f_p.date, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol';
 		
 		$this->db->select($select);
@@ -185,7 +185,7 @@ class MResumen extends CI_Model {
     // Public method to obtain the transactions by project
     public function fondos_json_projects() {
 		
-		$select = 'u.name, u.alias, u.username, f_p.id, f_p.project_id, f_p.user_id, f_p.account_id, f_p.type, f_p.amount, f_p.status, ';
+		$select = 'u.name, u.alias, u.username, f_p.id, f_p.project_id, f_p.user_id, f_p.account_id, f_p.type, f_p.amount, f_p.status, f_p.date, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, p.name, p.description, p_t.type as project_type';
 		
 		$this->db->select($select);
@@ -207,7 +207,7 @@ class MResumen extends CI_Model {
     // Public method to obtain the transactions by project and order it by coin
     public function fondos_json_projects_coin($project_id) {
 		
-		$select = 'u.name, u.alias, u.username, f_p.id, f_p.project_id, f_p.user_id, f_p.account_id, f_p.type, SUM(f_p.amount) as amount, f_p.status, ';
+		$select = 'u.name, u.alias, u.username, f_p.id, f_p.project_id, f_p.user_id, f_p.account_id, f_p.type, SUM(f_p.amount) as amount, f_p.status, f_p.date, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, p.name as project_name, p.description, p_t.type as project_type';
 		
 		$this->db->select($select);
