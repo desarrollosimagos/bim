@@ -4,6 +4,48 @@ $(document).ready(function(){
 	
 	// Capturamos la base_url
     var base_url = $("#base_url").val();
+    
+    
+    $('#tab_transactions').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "iDisplayLength": 50,
+        "iDisplayStart": 0,
+        "sPaginationType": "full_numbers",
+        "aLengthMenu": [10, 50, 100, 150],
+        // Nuevo
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+			"method":"POST",
+			"url": base_url+"dashboard/transactions_json"
+		},
+		"columnDefs": [
+			{
+				//~ "target": [0, 3, 4],
+				"orderable":false,
+			}
+		],
+		//Nuevo
+        "oLanguage": {"sUrl": base_url+"assets/js/es.txt"},
+        "aoColumns": [
+            {"sClass": "registro center", "sWidth": "5%"},
+            {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "none", "sWidth": "30%"},
+            {"sClass": "none", "sWidth": "30%"},
+            {"sClass": "none", "sWidth": "30%"},
+            {"sClass": "registro center", "sWidth": "10%"}
+        ]
+    });
 
 	
 	// Función para validar transacción
