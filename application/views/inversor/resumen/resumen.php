@@ -387,8 +387,7 @@
 			</div>
 			<?php } ?>
 
-			<!--<table id="tab_transactions" <?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ echo "data-filtering='true'"; } ?> data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
-			<table id="tab_transactions" data-page-size="10" data-filter=#filter3 class="footable table table-stripped toggle-arrow-tiny">
+			<table id="tab_transactions" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover">
 				<thead>
 					<tr>
 						<th data-hide="phone,tablet" >Id</th>
@@ -403,10 +402,9 @@
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_reference'); ?></th>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_observations'); ?></th>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_status'); ?></th>
-						<!--<th>Validar</th>-->
 					</tr>
 				</thead>
-				<tbody>
+				<!--<tbody>
 					<?php $i = 1; ?>
 					<?php foreach ($listar as $fondo) { ?>
 						<tr style="text-align: center">
@@ -421,13 +419,6 @@
 							</td>
 							<td>
 								<?php
-								//~ if($fondo->type == 'deposit'){
-									//~ echo "<span style='color:#337AB7;'>Ingreso</span>";
-								//~ }else if($fondo->type == 'withdraw'){
-									//~ echo "<span style='color:#D33333;'>Egreso</span>";
-								//~ }else{
-									//~ echo "";
-								//~ }
 								echo $this->lang->line('transactions_type_'.$fondo->type);
 								?>
 							</td>
@@ -459,38 +450,6 @@
 								}
 								?>
 							</td>
-							<!--<td style='text-align: center'>
-								<?php
-								$class = "";
-								$class_icon_validar = "";
-								$disabled = "";
-								$cursor_style = "";
-								$color_style = "";
-								$title = "";
-								if($fondo->status == 'approved'){
-									$class_icon_validar = "fa-check-circle";
-									$disabled = "disabled='true'";
-									$cursor_style = "cursor:default";
-									$color_style = "";
-									$title = "";
-								}else if($fondo->status == 'waiting'){
-									$class = "validar";
-									$class_icon_validar = "fa-check-circle-o";
-									$cursor_style = "cursor:pointer";
-									$color_style = "";
-									$title = "title='Validar'";
-								}else{
-									$class_icon_validar = "fa-check-circle";
-									$disabled = "disabled='true'";
-									$cursor_style = "cursor:default";
-									$color_style = "color:grey";
-									$title = "";
-								}
-								?>
-								<a class='<?php echo $class; ?>' id='<?php echo $fondo->id.';'.$fondo->account_id.';'.$fondo->amount.';'.$fondo->tipo; ?>' <?php echo $disabled; ?> style='<?php echo $cursor_style; ?>;<?php echo $color_style; ?>' <?php echo $title; ?>>
-									<i class="fa <?php echo $class_icon_validar; ?> fa-2x"></i>
-								</a>
-							</td>-->
 						</tr>
 						<?php $i++ ?>
 					<?php } ?>
@@ -507,7 +466,7 @@
 						</td>
 						<?php } ?>
 					</tr>
-				</tfoot>
+				</tfoot>-->
 			</table>
 					
 		</div>

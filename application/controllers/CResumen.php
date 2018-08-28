@@ -4201,6 +4201,166 @@ class CResumen extends CI_Controller {
     }
     
     
+    // Método de carga de títulos de la tabla de transacciones
+    public function load_columns_transactions(){
+		
+		$titles = array();
+		
+		$id = array('name' => 'id', 'title' => 'ID', 'breakpoints' => 'xs sm', 'type' => 'number');
+		$id['style'] = array('width' => 80, 'maxWidth' => 80);
+		
+		$date = array('name' => 'date', 'title' => $this->lang->line('transactions_date'));
+		
+		$user = array('name' => 'user', 'title' => $this->lang->line('transactions_user'));
+		
+		$type = array('name' => 'type', 'title' => $this->lang->line('transactions_type'));
+		
+		$amount = array('name' => 'amount', 'title' => $this->lang->line('transactions_amount'));
+		
+		$account = array('name' => 'account', 'title' => $this->lang->line('transactions_account'));
+		
+		$description = array('name' => 'description', 'title' => $this->lang->line('transactions_description'));
+		
+		$reference = array('name' => 'reference', 'title' => $this->lang->line('transactions_reference'));
+		
+		$observations = array('name' => 'observations', 'title' => $this->lang->line('transactions_observations'));
+		
+		$status = array('name' => 'status', 'title' => $this->lang->line('transactions_status'));
+		
+		$titles[] = $id;
+		$titles[] = $date;
+		$titles[] = $user;
+		$titles[] = $type;
+		$titles[] = $amount;
+		$titles[] = $account;
+		$titles[] = $description;
+		$titles[] = $reference;
+		$titles[] = $observations;
+		$titles[] = $status;
+		
+		//~ Convertimos los datos resultantes a formato JSON
+		$jsonencoded = json_encode($titles, JSON_UNESCAPED_UNICODE);
+		echo $jsonencoded;
+		
+	}
+    
+    
+    // Método de carga de transacciones optimizado para la tabla con footable
+    public function load_rows_transactions(){
+		
+		$fetch_data = $this->MResumen->obtener();
+		$data = array();
+		$i = 1;
+		foreach($fetch_data as $row){
+						
+			$status;
+			// Validamos los datos corresponientes a las columnas que lo ameriten
+			// Validación de status
+			if($row->status == 'approved'){ 
+				$status = "<span style='color:#337AB7;'>".$this->lang->line('transactions_status_approved')."</span>"; 
+			}else if($row->status == 'waiting'){ 
+				$status = "<span style='color:#A5D353;'>".$this->lang->line('transactions_status_waiting')."</span>"; 
+			}else{
+				$status = "<span style='color:#D33333;'>".$this->lang->line('transactions_status_denied')."</span>";
+			}
+			// Mostramos los datos ya filtrados
+			$sub_array = array(
+				'id' => $row->id, 
+				'date' => $row->date,
+				'user' => $row->user_name,
+				'type' => $this->lang->line('transactions_type_'.$row->type),
+				'amount' => number_format($row->amount, $row->coin_decimals, '.', '')."  ".$row->coin_symbol,
+				'account' => $row->alias." - ".$row->number,
+				'description' => $row->description,
+				'reference' => $row->reference,
+				'observations' => $row->observation,
+				'status' => $status
+			);
+			//~ $sub_array[] = array('date' => $row->date);
+			//~ $sub_array[] = array('user' => $row->user_name);
+			//~ $sub_array[] = array('type' => $this->lang->line('transactions_type_'.$row->type));
+			//~ $sub_array[] = array('amount' => number_format($row->amount, $row->coin_decimals, '.', '')."  ".$row->coin_symbol);
+			//~ if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+				//~ $sub_array[] = array('account' => $row->alias." - ".$row->number);
+			//~ }
+			//~ $sub_array[] = array('description' => $row->description);
+			//~ $sub_array[] = array('reference' => $row->reference);
+			//~ $sub_array[] = array('observations' => $row->observation);
+			//~ $sub_array[] = array('status' => $status);
+			
+			$data[] = $sub_array;
+			
+			$i++;
+		}
+		
+		//~ echo json_encode($data);
+		// Convertimos los datos resultantes a formato JSON
+		$jsonencoded = json_encode($data, JSON_UNESCAPED_UNICODE);
+		echo $jsonencoded;
+		
+	}
+	
+	
+/**
+ * ------------------------------------------------------
+ * Método alternativo para cargar los datos de la tabla de 
+ * transacciones usando ajax.
+ * ------------------------------------------------------
+ * 
+ * Este método permite construir un listado de transacciones adaptado 
+ * a la solicitud realizada con ajax desde la vista por el plugin datatable.
+ */
+    public function ajax_transactions()
+	{
+		
+		$fetch_data = $this->MResumen->make_datatables();
+		$data = array();
+		$i = 1;
+		foreach($fetch_data as $row){
+			$sub_array = array();
+			
+			$usuario; $status; $real; $edit; $delete; $validate;
+			// Validamos los datos corresponientes a las columnas que lo ameriten
+			// Validación de nombre de usuario
+			if($row->usuario == ''){ $usuario = "PLATAFORMA"; }else{ $usuario = $row->usuario; }
+			// Validación de status
+			if($row->status == 'approved'){ 
+				$status = "<span style='color:#337AB7;'>".$this->lang->line('transactions_status_approved')."</span>"; 
+			}else if($row->status == 'waiting'){ 
+				$status = "<span style='color:#A5D353;'>".$this->lang->line('transactions_status_waiting')."</span>"; 
+			}else{
+				$status = "<span style='color:#D33333;'>".$this->lang->line('transactions_status_denied')."</span>";
+			}
+			// Mostramos los datos ya filtrados
+			$sub_array[] = $row->id;
+			$sub_array[] = $row->date;
+			$sub_array[] = $usuario;
+			$sub_array[] = $this->lang->line('transactions_type_'.$row->type);
+			$sub_array[] = number_format($row->amount, $row->coin_decimals, '.', '')."  ".$row->coin_symbol;
+			if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+				$sub_array[] = $row->alias." - ".$row->number;
+			}
+			$sub_array[] = $row->description;
+			$sub_array[] = $row->reference;
+			$sub_array[] = $row->observation;
+			$sub_array[] = $status;
+			
+			$data[] = $sub_array;
+			
+			$i++;
+		}
+		
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->MFondoPersonal->get_all_data(),
+			"recordsFiltered" => $this->MFondoPersonal->get_filtered_data(),
+			"data" => $data
+		);
+		
+		echo json_encode($output);
+	}
+    
+    
     // Método para actualizar el precio del dólar tomando como referencia la api de dolartoday
     public function load_rate(){
 		

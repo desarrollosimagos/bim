@@ -481,7 +481,7 @@
 			</div>-->
 			<?php //} ?>
 			
-			<table id="tab_transactions_user" data-page-size="10" data-filter=#filter_gen class="footable table table-stripped toggle-arrow-tiny">
+			<table id="tab_general_summary" data-page-size="10" data-filter=#filter_gen class="footable table table-stripped toggle-arrow-tiny">
 				<thead>
 					<tr>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_invested'); ?></th>
@@ -571,8 +571,8 @@
 			<?php } ?>
 
 			<?php //~ print_r($fondo_usuarios);	?>
-			<!--<table id="tab_transactions" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
-			<table id="tab_transactions_user" data-page-size="10" data-filter=#filter_platform class="footable table table-stripped toggle-arrow-tiny">
+			<!--<table id="tab_platform_summary" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
+			<table id="tab_platform_summary" data-page-size="10" data-filter=#filter_platform class="footable table table-stripped toggle-arrow-tiny">
 				<thead>
 					<tr>
 						<!--<th>#</th>
@@ -666,7 +666,7 @@
 			</div>
 			<?php } ?>
 
-			<!--<table id="tab_transactions" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
+			<!--<table id="tab_transactions_user" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
 			<table id="tab_transactions_user" data-page-size="10" data-filter=#filter_user class="footable table table-stripped toggle-arrow-tiny">
 				<thead>
 					<tr>
@@ -763,8 +763,8 @@
 			</div>
 			<?php } ?>
 
-			<!--<table id="tab_transactions" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
-			<table id="tab_transactions_user" data-page-size="10" data-filter=#filter_by_project class="footable table table-stripped toggle-arrow-tiny">
+			<!--<table id="tab_project_summary" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
+			<table id="tab_project_summary" data-page-size="10" data-filter=#filter_by_project class="footable table table-stripped toggle-arrow-tiny">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -839,18 +839,17 @@
 		<div class="ibox-content">
 			<?php $filter_profile = array(1, 2, 4); ?>
 			<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ ?> 
-			<div class="col-sm-4 col-md-offset-8">
+			<!--<div class="col-sm-4 col-md-offset-8">
 				<div class="input-group">
 					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter3">
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
 					</span>
 				</div>
-			</div>
+			</div>-->
 			<?php } ?>
 
-			<!--<table id="tab_transactions" <?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ echo "data-filtering='true'"; } ?> data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
-			<table id="tab_transactions" data-page-size="10" data-filter=#filter3 class="footable table table-stripped toggle-arrow-tiny">
+			<table id="tab_transactions" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover">
 				<thead>
 					<tr>
 						<th data-hide="phone,tablet" >Id</th>
@@ -865,10 +864,9 @@
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_reference'); ?></th>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_observations'); ?></th>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_status'); ?></th>
-						<!--<th>Validar</th>-->
 					</tr>
 				</thead>
-				<tbody>
+				<!--<tbody>
 					<?php $i = 1; ?>
 					<?php foreach ($listar as $fondo) { ?>
 						<tr style="text-align: center">
@@ -883,13 +881,6 @@
 							</td>
 							<td>
 								<?php
-								//~ if($fondo->type == 'deposit'){
-									//~ echo "<span style='color:#337AB7;'>Ingreso</span>";
-								//~ }else if($fondo->type == 'withdraw'){
-									//~ echo "<span style='color:#D33333;'>Egreso</span>";
-								//~ }else{
-									//~ echo "";
-								//~ }
 								echo $this->lang->line('transactions_type_'.$fondo->type);
 								?>
 							</td>
@@ -921,38 +912,6 @@
 								}
 								?>
 							</td>
-							<!--<td style='text-align: center'>
-								<?php
-								$class = "";
-								$class_icon_validar = "";
-								$disabled = "";
-								$cursor_style = "";
-								$color_style = "";
-								$title = "";
-								if($fondo->status == 'approved'){
-									$class_icon_validar = "fa-check-circle";
-									$disabled = "disabled='true'";
-									$cursor_style = "cursor:default";
-									$color_style = "";
-									$title = "";
-								}else if($fondo->status == 'waiting'){
-									$class = "validar";
-									$class_icon_validar = "fa-check-circle-o";
-									$cursor_style = "cursor:pointer";
-									$color_style = "";
-									$title = "title='Validar'";
-								}else{
-									$class_icon_validar = "fa-check-circle";
-									$disabled = "disabled='true'";
-									$cursor_style = "cursor:default";
-									$color_style = "color:grey";
-									$title = "";
-								}
-								?>
-								<a class='<?php echo $class; ?>' id='<?php echo $fondo->id.';'.$fondo->account_id.';'.$fondo->amount.';'.$fondo->tipo; ?>' <?php echo $disabled; ?> style='<?php echo $cursor_style; ?>;<?php echo $color_style; ?>' <?php echo $title; ?>>
-									<i class="fa <?php echo $class_icon_validar; ?> fa-2x"></i>
-								</a>
-							</td>-->
 						</tr>
 						<?php $i++ ?>
 					<?php } ?>
@@ -969,7 +928,7 @@
 						</td>
 						<?php } ?>
 					</tr>
-				</tfoot>
+				</tfoot>-->
 			</table>
 					
 		</div>
@@ -981,6 +940,43 @@
 <!-- FooTable -->
 <!--<script src="<?php echo assets_url('js/plugins/footable/footable.js');?>"></script>-->
 <script src="<?php echo assets_url('js/plugins/footable/footable.all.min.js');?>"></script>
+
+<script>
+/*jQuery(function($){
+	$('.table-transactions').footable({
+		"columns": $.ajax({
+			type: "get",
+			dataType: "json",
+			url: '<?php echo base_url() ?>dashboard/transactions_json_columns',
+			async: true
+		})
+		.done(function(coin) {
+			if(coin.error){
+				console.log(coin.error);
+			} else {
+				console.log("Títulos cargados");
+			}				
+		}).fail(function() {
+			console.log("error ajax");
+		}),
+		"rows": $.ajax({
+			type: "get",
+			dataType: "json",
+			url: '<?php echo base_url() ?>dashboard/transactions_json_rows',
+			async: true
+		})
+		.done(function(coin) {
+			if(coin.error){
+				console.log(coin.error);
+			} else {
+				console.log("Transacciones cargadas");
+			}				
+		}).fail(function() {
+			console.log("error ajax");
+		})
+	});
+});*/
+</script>
 
 <!-- ChartJS-->
 <script src="<?php echo assets_url('js/plugins/chartJs/Chart.min.js');?>"></script>

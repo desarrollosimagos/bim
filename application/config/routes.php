@@ -105,6 +105,9 @@ $route['dashboard/register'] = 'CResumen/register';
 $route['dashboard/edit/(:num)'] = 'CResumen/edit/$1';
 $route['dashboard/delete/(:num)'] = 'CResumen/delete/$1';
 $route['dashboard/fondos_json'] = 'CResumen/fondos_json';
+$route['dashboard/transactions_json_columns'] = 'CResumen/load_columns_transactions';
+$route['dashboard/transactions_json_rows'] = 'CResumen/load_rows_transactions';
+$route['dashboard/transactions_json'] = 'CResumen/ajax_transactions';
 /*   Monedas */
 $route['coins'] = 'CCoins';
 $route['coins/register'] = 'CCoins/register';
@@ -126,6 +129,8 @@ $route['projects/register'] = 'CProjects/register';
 $route['projects/view/(:num)'] = 'CProjects/view/$1';
 $route['projects/edit/(:num)'] = 'CProjects/edit/$1';
 $route['projects/delete/(:num)'] = 'CProjects/delete/$1';
+$route['share_profit'] = 'CShareProfit';
+$route['share_profit/share'] = 'CShareProfit/share';
 /*   Público */
 $route['start'] = 'Welcome/start';
 $route['possibilities'] = 'Welcome/possibilities';
