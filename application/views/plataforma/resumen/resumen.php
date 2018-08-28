@@ -849,7 +849,7 @@
 			</div>-->
 			<?php } ?>
 
-			<table id="tab_transactions" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover">
+			<table id="tab_transactions" data-paging="true" class="table table-striped dt-responsive table-hover">
 				<thead>
 					<tr>
 						<th data-hide="phone,tablet" >Id</th>
