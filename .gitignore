@@ -12,6 +12,11 @@ application/logs/*
 application/config/database.php
 application/config/config.php
 
+application/views/publico/home.php
+application/views/publico/start.php
+application/views/publico/contacts.php
+application/views/publico/possibilities.php
+
 *.sql
 *.htaccess
 index.php
@@ -20,4 +25,4 @@ assets/img/logos/
 assets/img/projects/
 assets/documents/
 assets/readings/
-#assets/img/gallery/
+assets/img/gallery/
