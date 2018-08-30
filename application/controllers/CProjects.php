@@ -2243,7 +2243,7 @@ class CProjects extends CI_Controller {
 						// Si tiene retiro pendiente
 						if($fondo->status == 'waiting'){
 							// Suma de depósitos
-							if($fondo->type == 'deposit'){
+							if($fondo->type == 'withdraw'){
 								$withdraw_waiting += $trans_usd;
 							}
 						}
