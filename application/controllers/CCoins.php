@@ -31,6 +31,8 @@ class CCoins extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'coins/lista', $data);
 		$this->load->view('footer');
@@ -53,6 +55,8 @@ class CCoins extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'coins/registrar', $data);
 		$this->load->view('footer');
@@ -103,6 +107,8 @@ class CCoins extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'coins/editar', $data);
 		$this->load->view('footer');

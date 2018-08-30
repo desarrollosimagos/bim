@@ -29,7 +29,7 @@ $hook['post_controller_constructor'] = array(
 //~ );
 
 // Hook de accesos
-$hook['post_controller'][] = array(
+$hook['post_controller'] = array(
 	'class'    => 'Acceso',
 	'function' => 'identificado',
 	'filename' => 'Acceso.php',

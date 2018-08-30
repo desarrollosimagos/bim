@@ -29,6 +29,8 @@ class CAcciones extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'acciones/lista', $data);
 		$this->load->view('footer');
@@ -52,6 +54,8 @@ class CAcciones extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'acciones/registrar', $data);
 		$this->load->view('footer');
@@ -97,6 +101,8 @@ class CAcciones extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'acciones/editar', $data);
         $this->load->view('footer');

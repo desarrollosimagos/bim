@@ -28,6 +28,8 @@ class CChangePasswd extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'change_passwd/change_passwd', $data);
 		$this->load->view('footer');

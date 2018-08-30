@@ -32,6 +32,8 @@ class CPerfil extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'perfiles/lista', $data);
 		$this->load->view('footer');
@@ -55,6 +57,8 @@ class CPerfil extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'perfiles/registrar', $data);
 		$this->load->view('footer');
@@ -132,6 +136,8 @@ class CPerfil extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'perfiles/editar', $data);
 		$this->load->view('footer');

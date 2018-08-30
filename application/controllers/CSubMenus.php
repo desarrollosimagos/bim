@@ -33,6 +33,8 @@ class CSubMenus extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'submenus/lista', $data);
 		$this->load->view('footer');
@@ -57,6 +59,8 @@ class CSubMenus extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'submenus/registrar', $data);
 		$this->load->view('footer');
@@ -129,6 +133,8 @@ class CSubMenus extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'submenus/editar', $data);
         $this->load->view('footer');

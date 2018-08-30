@@ -33,6 +33,8 @@ class CRelateUsers extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'relate_users/lista', $data);
 		$this->load->view('footer');
@@ -76,6 +78,8 @@ class CRelateUsers extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'relate_users/registrar', $data);
 		$this->load->view('footer');
@@ -161,6 +165,8 @@ class CRelateUsers extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'relate_users/editar', $data);
 		$this->load->view('footer');
