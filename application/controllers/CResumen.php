@@ -52,6 +52,23 @@ class CResumen extends CI_Controller {
 		$data['ident_sub'] = "";
 		$data['listar'] = $this->MResumen->obtener();
 		
+		
+		// Filtro para cargar las vistas según el perfil del usuario logueado
+		$perfil_id = $this->session->userdata('logged_in')['profile_id'];
+		$perfil_folder = "";
+		if($perfil_id == 1 || $perfil_id == 2){
+			$perfil_folder = 'plataforma/';
+		}else if($perfil_id == 3){
+			$perfil_folder = 'inversor/';
+		}else if($perfil_id == 4){
+			$perfil_folder = 'asesor/';
+		}else if($perfil_id == 5){
+			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
+		}
+		
+		
 		// Mensaje de la api de dolartoday
 		$data['coin_rate_message'] = $this->coin_rate_message;
 		
@@ -223,18 +240,6 @@ class CResumen extends CI_Controller {
 		$data['transactions_coins'] = $this->fondos_json_coins();
 		$data['fondo_proyectos'] = $this->fondos_json_projects();
 		
-		// Filtro para cargar las vistas según el perfil del usuario logueado
-		$perfil_id = $this->session->userdata('logged_in')['profile_id'];
-		$perfil_folder = "";
-		if($perfil_id == 1 || $perfil_id == 2){
-			$perfil_folder = 'plataforma/';
-		}else if($perfil_id == 3){
-			$perfil_folder = 'inversor/';
-		}else if($perfil_id == 4){
-			$perfil_folder = 'asesor/';
-		}else if($perfil_id == 5){
-			$perfil_folder = 'gestor/';
-		}
 		$this->load->view($perfil_folder.'resumen/resumen', $data);
 		
 		$this->load->view('footer');

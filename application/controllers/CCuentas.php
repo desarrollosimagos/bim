@@ -110,6 +110,8 @@ class CCuentas extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'cuentas/lista', $data);
 		$this->load->view('footer');
@@ -134,6 +136,8 @@ class CCuentas extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
 		$this->load->view($perfil_folder.'cuentas/registrar', $data);
 		$this->load->view('footer');
@@ -221,6 +225,8 @@ class CCuentas extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'cuentas/ver', $data);
 		$this->load->view('footer');
@@ -248,6 +254,8 @@ class CCuentas extends CI_Controller {
 			$perfil_folder = 'asesor/';
 		}else if($perfil_id == 5){
 			$perfil_folder = 'gestor/';
+		}else{
+			redirect('login');
 		}
         $this->load->view($perfil_folder.'cuentas/editar', $data);
 		$this->load->view('footer');
