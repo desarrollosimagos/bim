@@ -59,22 +59,47 @@ $this->load->model('MCuentas');
 						
 						// Cálculo de los capitales disponibles
 						foreach($find_transactions as $transact) {
-							if($transact->status == 'approved'){ 
-								$capital_disponible_total += $transact->amount;  // Disponible total
+							if($transact->status == 'approved'){
+								// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+									$capital_disponible_total += ($transact->amount/100000);
+								}else{
+									$capital_disponible_total += $transact->amount;
+								}
 								if($transact->user_id > 0 && $transact->project_id == 0){
-									$capital_cuenta += $transact->amount;  // En cuenta
+									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+										$capital_cuenta += ($transact->amount/100000);
+									}else{
+										$capital_cuenta += $transact->amount;  // En cuenta
+									}
 								}
 								if($transact->user_id > 0 && $transact->project_id > 0){
-									$capital_proyectos += $transact->amount;  // En proyectos
+									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+										$capital_proyectos += ($transact->amount/100000);
+									}else{
+										$capital_proyectos += $transact->amount;  // En proyectos
+									}
 								}
 							}
 							$relations = $this->MCuentas->buscar_transaction_relation($transact->id);
 							if($transact->type != "invest" && $transact->type != "sell" && $transact->status == 'approved'){
 								if(count($relations) == 0){
-									$capital_disponible_parcial += $transact->amount;  // Disponible parcial
+									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+										$capital_disponible_parcial += ($transact->amount/100000);
+									}else{
+										$capital_disponible_parcial += $transact->amount;  // Disponible parcial
+									}
 								}
 								if(count($relations) > 0 && $relations[0]->type != "distribute"){
-									$capital_disponible_parcial += $transact->amount;  // Disponible parcial
+									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+										$capital_disponible_parcial += ($transact->amount/100000);
+									}else{
+										$capital_disponible_parcial += $transact->amount;  // Disponible parcial
+									}
 								}
 							}
 						}
@@ -98,7 +123,7 @@ $this->load->model('MCuentas');
 								<small><?php echo $this->lang->line('view_capital_available_accounts'); ?></small>
 							</div>
 						</div>
-						<div class="col-md-4 forum-info">
+						<!--<div class="col-md-4 forum-info">
 							<span class="views-number" id="span_retornado">
 								<?php echo $capital_cuenta; ?>
 							</span>
@@ -114,7 +139,7 @@ $this->load->model('MCuentas');
 								<small><?php echo $this->lang->line('view_capital_in_project'); ?></small>
 							</div>
 						</div>
-						<!--<div class="col-md-6 forum-info">
+						<div class="col-md-6 forum-info">
 							<span class="views-number" id="span_aprobado">
 								<?php echo $capital_disponible_parcial; ?>
 							</span>

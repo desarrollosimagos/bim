@@ -45,7 +45,14 @@ class CCuentas extends CI_Controller {
 			$capital_disponible_parcial = 0;
 			if(count($find_transactions) > 0){
 				foreach($find_transactions as $t1){
-					if($t1->status == 'approved'){ $capital_disponible_total += $t1->amount; }
+					if($t1->status == 'approved'){
+						// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if($cuenta->coin_avr == 'VEF' && strtotime($t1->date) < strtotime("2018-10-20 00:00:00")){
+							$capital_disponible_total += ($t1->amount/100000);
+						}else{
+							$capital_disponible_total += $t1->amount;
+						}
+					}
 					$relations = $this->MCuentas->buscar_transaction_relation($t1->id);
 					if($t1->type != "invest" && $t1->type != "sell" && $t1->status == 'approved'){
 						if(count($relations) == 0){
