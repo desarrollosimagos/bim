@@ -361,11 +361,26 @@ class CFondoPersonal extends CI_Controller {
  */
 	function delete($id) {
 		
-        $result = $this->MFondoPersonal->delete($id);
+        //~ $result = $this->MFondoPersonal->delete($id);
+        // Armamos los nuevos datos de la transacción
+		$data_transaccion = array(
+			'id' => $id,
+			'status' => 'denied',
+			'd_update' => date('Y-m-d H:i:s')
+		);
+			
+		// Actualizamos la transacción
+		$update_transaccion = $this->MFondoPersonal->update($data_transaccion);
         
-        if ($result) {
-          /*  $this->libreria->generateActivity('Eliminado País', $this->session->userdata['logged_in']['id']);*/
-        }
+        if ($update_transaccion) {
+			
+			echo '{"response":"ok"}';
+			
+        }else{
+			
+			echo '{"response":"error"}';
+			
+		}
         
     }
 
@@ -473,7 +488,11 @@ class CFondoPersonal extends CI_Controller {
 			}
 			// Validación de botón de borrado
 			if($this->session->userdata('logged_in')['profile_id'] == 1){
-				$delete = "<a class='borrar' id='".$row->id."' title='".$this->lang->line('list_delete')."'><i class='fa fa-trash-o fa-2x a-actions'></i></a>";
+				if($row->status != 'denied'){
+					$delete = "<a class='borrar' id='".$row->id."' title='".$this->lang->line('list_delete')."'><i class='fa fa-toggle-off fa-2x a-actions'></i></a>";
+				}else{
+					$delete = "<a><i class='fa fa-ban fa-2x a-actions' style='color:#D33333;'></i></a>";
+				}
 			}else{
 				$delete = "<a><i class='fa fa-ban fa-2x a-actions' style='color:#D33333;'></i></a>";
 			}

@@ -249,12 +249,12 @@ $(document).ready(function(){
         var id = this.getAttribute('id');
 
         swal({
-            title: "Borrar registro",
-            text: "¿Está seguro de borrar el registro?",
+            title: "Denegar registro",
+            text: "¿Está seguro de denegar el registro?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Eliminar",
+            confirmButtonText: "Denegar",
             cancelButtonText: "Cancelar",
             closeOnConfirm: false,
             closeOnCancel: true
@@ -264,11 +264,11 @@ $(document).ready(function(){
              
                 $.post('<?php echo base_url(); ?>transactions/delete/' + id + '', function (response) {
 
-                    if (response[0] == "e") {
+                    if (response['response'] == "error") {
                        
                          swal({ 
                            title: "Disculpe,",
-                            text: "No se puede eliminar se encuentra asociado a un usuario",
+                            text: "No se puede denegar, contacte con su administrador",
                              type: "warning" 
                            },
                            function(){
@@ -276,16 +276,19 @@ $(document).ready(function(){
                          });
                     }else{
                          swal({ 
-                           title: "Eliminar",
-                            text: "Registro eliminado con exito",
+                           title: "Denegar",
+                            text: "Registro denegado con exito",
                              type: "success" 
                            },
                            function(){
                              window.location.href = '<?php echo base_url(); ?>transactions';
                          });
                     }
-                });
+                    
+                }, 'json');
+                
             } 
+            
         });
     });
     

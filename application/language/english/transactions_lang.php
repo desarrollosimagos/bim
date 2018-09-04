@@ -25,7 +25,7 @@ $lang['list_real'] = 'Real';
 $lang['list_rate'] = 'Rate';
 $lang['list_document'] = 'Document';
 $lang['list_edit'] = 'Edit';
-$lang['list_delete'] = 'Delete';
+$lang['list_delete'] = 'Denied';
 $lang['list_validate'] = 'Validate';
 $lang['list_actions'] = 'Actions';
 
