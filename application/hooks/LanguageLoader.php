@@ -27,6 +27,7 @@ class LanguageLoader
             $ci->lang->load('change_passwd',$siteLang);
             $ci->lang->load('public_projects',$siteLang);
             $ci->lang->load('public_home',$siteLang);
+            $ci->lang->load('share_profit',$siteLang);
         } else {
             $ci->lang->load('header','english');
             $ci->lang->load('login','english');
@@ -48,11 +49,22 @@ class LanguageLoader
             $ci->lang->load('change_passwd','english');
             $ci->lang->load('public_projects','english');
             $ci->lang->load('public_home','english');
+            $ci->lang->load('share_profit','english');
         }
         
         // Área de carga de idiomas disponibles en la tabla 'lang'
-        $query = $ci->db->get('lang');
-		$languages = $query->result();
-        $ci->session->set_userdata('languages', $languages);
+        // Si no existe la tabla 'lang' cargamos los idiomas por defecto de forma manual(inglés y español)
+		if($ci->db->table_exists('lang') == FALSE){
+			$languages = array(
+				array('id' => 1, 'name' => 'english', 'route' => null, 'status' => 1, 'd_create' => '2018-08-15 14:03:29', 'd_update' => '2018-08-15 14:03:29'),
+				array('id' => 2, 'name' => 'spanish', 'route' => null, 'status' => 1, 'd_create' => '2018-08-15 14:03:29', 'd_update' => '2018-08-15 14:03:29')
+			);
+			$languages = json_decode(json_encode($languages), false);
+			$ci->session->set_userdata('languages', $languages);
+		}else{
+			$query = $ci->db->get('lang');
+			$languages = $query->result();
+			$ci->session->set_userdata('languages', $languages);
+		}
     }
 }
