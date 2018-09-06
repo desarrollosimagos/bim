@@ -27,7 +27,6 @@ class LanguageLoader
             $ci->lang->load('change_passwd',$siteLang);
             $ci->lang->load('public_projects',$siteLang);
             $ci->lang->load('public_home',$siteLang);
-            $ci->lang->load('share_profit',$siteLang);
         } else {
             $ci->lang->load('header','english');
             $ci->lang->load('login','english');
@@ -49,7 +48,6 @@ class LanguageLoader
             $ci->lang->load('change_passwd','english');
             $ci->lang->load('public_projects','english');
             $ci->lang->load('public_home','english');
-            $ci->lang->load('share_profit','english');
         }
         
         // Área de carga de idiomas disponibles en la tabla 'lang'
