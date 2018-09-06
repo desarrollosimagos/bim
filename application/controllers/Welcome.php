@@ -179,7 +179,7 @@ class Welcome extends CI_Controller {
 		
 		$this->load->dbutil();
 		
-		// Obtenemos el nobre de la base de datos desde database.php con $this->db->database
+		// Obtenemos el nombre de la base de datos desde database.php con $this->db->database
 		if ($this->dbutil->database_exists($this->db->database))
 		{
 			
