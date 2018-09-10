@@ -507,7 +507,7 @@ th {
 							</td>
 							<td>
 								<?php $monto = number_format($cuenta->capital_disponible_moneda_cuenta, $cuenta->coin_decimals, '.', ''); ?>
-								<?php echo $monto." ".$cuenta->coin_symbol ?>
+								<?php echo $monto."  ".$cuenta->coin_symbol; ?>
 							</td>
 							<td>
 								<?php echo $cuenta->capital_disponible_moneda_proyecto; ?>
