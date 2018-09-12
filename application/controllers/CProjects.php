@@ -2785,12 +2785,14 @@ class CProjects extends CI_Controller {
         $fondos_details = $this->MProjects->obtenerTransaccionesPorMoneda($project_id);  // Listado de fondos detallados
         
         $avr_coins = array();  // Para almacenar los códigos ISO de las monedas asociadas a los fondos
+        $avr_coins_decimals = array();  // Para almacenar los códigos ISO y decimales de las monedas asociadas a los fondos
         
-        // Colectamos los códigos ISO de las monedas de las transacciones resultantes
+        // Colectamos los códigos ISO y los decimales de las monedas de las transacciones resultantes
         foreach($fondos_details as $fondo){
 			
 			if(!in_array($fondo->coin_avr, $avr_coins)){
-				$avr_coins[] = $fondo->coin_avr;
+				$avr_coins[] = $fondo->coin_avr;  // Sólo los códigos iso
+				$avr_coins_decimals[] = array($fondo->coin_avr => $fondo->coin_decimals);  // Códigos iso y los decimales soportados
 			}
 			
 		}
@@ -2801,7 +2803,7 @@ class CProjects extends CI_Controller {
 		if(count($fondos_details) > 0){
 			
 			// Armamos una lista de fondos por usuario y lo almacenamos en el arreglo '$resumen_users'
-			foreach($avr_coins as $avr_coin){
+			foreach($avr_coins_decimals as $avr_coin){
 				
 				$summary_coin = array(
 					'coin' => "",
@@ -2812,7 +2814,7 @@ class CProjects extends CI_Controller {
 				foreach($fondos_details as $fondo){
 					
 					// Si es una transacción de la modela iterada la procesamos y sumamos
-					if($fondo->coin_avr == $avr_coin && $fondo->status == 'approved'){
+					if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved'){
 					
 						// Asignamos el nombre de la moneda
 						$summary_coin['coin'] = $fondo->coin;
@@ -2840,7 +2842,8 @@ class CProjects extends CI_Controller {
 				$symbol = $data_project[0]->coin_avr;
 				
 				// Conversión de cada monto a dólares
-				$currency_fund = $avr_coin;  // Tipo de moneda del fondo
+				$currency_fund = key($avr_coin);  // Tipo de moneda del fondo
+				$currency_decimals = $avr_coin[$currency_fund];  // Cantidad de decimales de la moneda
 				
 				// Si el tipo de moneda del fondo es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
 				if (in_array($currency_fund, $rates)) {
@@ -2876,7 +2879,7 @@ class CProjects extends CI_Controller {
 				}
 				
 				// Formateamos el monto total de la moneda con su símbolo correspondiente
-				$summary_coin['amount'] = $summary_coin['amount']." ".$avr_coin;
+				$summary_coin['amount'] = number_format($summary_coin['amount'], $currency_decimals, '.', '')." ".key($avr_coin);
 				
 				// Conversión de cada fondo a la divisa del proyecto
 				$summary_coin['amount_project'] = $fund_usd * $currency_project; 
