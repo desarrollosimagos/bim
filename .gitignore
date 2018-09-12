@@ -17,6 +17,9 @@ application/views/publico/start.php
 application/views/publico/contacts.php
 application/views/publico/possibilities.php
 
+application/language/spanish/public_home_lang.php
+application/language/english/public_home_lang.php
+
 *.sql
 *.htaccess
 index.php
