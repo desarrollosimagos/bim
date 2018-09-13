@@ -24,8 +24,8 @@ application/language/english/public_home_lang.php
 *.htaccess
 index.php
 
-assets/img/logos/
-assets/img/projects/
-assets/documents/
-assets/readings/
-assets/img/gallery/
+assets/img/logos/*
+assets/img/projects/*
+assets/documents/*
+assets/readings/*
+assets/img/gallery/portfolio_EN_arte.jpg
