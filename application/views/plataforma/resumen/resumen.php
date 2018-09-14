@@ -240,6 +240,8 @@
 		<input id="graph_egreso_pendiente" type="hidden" value="<?php echo $fondo_resumen['resumen_general']->pending_exit; ?>">
 		<!-- Campos ocultos para almacenamiento del idioma en sesión -->
 		<input id="lang_session" type="hidden" value="<?php echo $this->session->userdata('site_lang'); ?>">
+		<!-- Campos ocultos para almacenamiento del perfil del usuario -->
+		<input id="profile_id" type="hidden" value="<?php echo $this->session->userdata('logged_in')['profile_id']; ?>">
 		
 	</div>
 	
@@ -666,7 +668,6 @@
 			</div>
 			<?php } ?>
 
-			<!--<table id="tab_transactions_user" data-paging="true" class="table table-striped table-bordered dt-responsive table-hover footable toggle-arrow-tiny">-->
 			<table id="tab_transactions_user" data-page-size="10" data-filter=#filter_user class="footable table table-stripped toggle-arrow-tiny">
 				<thead>
 					<tr>

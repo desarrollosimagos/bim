@@ -5,6 +5,36 @@ $(document).ready(function(){
 	// Capturamos la base_url
     var base_url = $("#base_url").val();
     
+    // Definición de columnas según el perfil del usuario logueado
+    var aoColumns;
+    
+    if($("#profile_id").val().trim() == '1' || $("#profile_id").val().trim() == '2'){
+		aoColumns = [
+			{"sClass": "registro center", "sWidth": "5%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "registro center", "sWidth": "10%"}
+		];
+	}else{
+		aoColumns = [
+			{"sClass": "registro center", "sWidth": "5%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			//~ {"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "registro center", "sWidth": "10%"}
+		];
+	}
     
     $('#tab_transactions').DataTable({
         "paging": true,
@@ -33,18 +63,7 @@ $(document).ready(function(){
 		],
 		//Nuevo
         "oLanguage": {"sUrl": base_url+"assets/js/es.txt"},
-        "aoColumns": [
-            {"sClass": "registro center", "sWidth": "5%"},
-            {"sClass": "registro center", "sWidth": "10%"},
-            {"sClass": "registro center", "sWidth": "10%"},
-            {"sClass": "registro center", "sWidth": "10%"},
-            {"sClass": "registro center", "sWidth": "10%"},
-            {"sClass": "registro center", "sWidth": "10%"},
-            {"sClass": "none", "sWidth": "30%"},
-            {"sClass": "none", "sWidth": "30%"},
-            {"sClass": "none", "sWidth": "30%"},
-            {"sClass": "registro center", "sWidth": "10%"}
-        ]
+        "aoColumns": aoColumns
     });
 
 	
