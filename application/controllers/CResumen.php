@@ -3184,23 +3184,45 @@ class CResumen extends CI_Controller {
 			
 				foreach($fondos_details as $fondo){
 					
-					// Si es una transacción de la modela iterada la procesamos y sumamos
-					if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved'){
-					
-						// Asignamos el nombre de la moneda
-						$summary_coin['coin'] = $fondo->coin;
+					// Si el usuario es de perfil 'ADMINISTRADOR' o 'PLATAFORMA'
+					if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+						// Si es una transacción de la modela iterada la procesamos y sumamos
+						if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved'){
 						
-						// Asignamos el monto total de la moneda
-						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-						if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
-							$summary_coin['amount'] += ($fondo->amount/100000);
-						}else{
-							$summary_coin['amount'] += $fondo->amount;
+							// Asignamos el nombre de la moneda
+							$summary_coin['coin'] = $fondo->coin;
+							
+							// Asignamos el monto total de la moneda
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+								$summary_coin['amount'] += ($fondo->amount/100000);
+							}else{
+								$summary_coin['amount'] += $fondo->amount;
+							}
+							
+							// Formateamos el monto total de la moneda con sus decimales correspondientes
+							$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
+							
 						}
+					}else{
+						// Si es una transacción de la moneda iterada y del usuario logueado la procesamos y sumamos
+						if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
 						
-						// Formateamos el monto total de la moneda con sus decimales correspondientes
-						$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
-						
+							// Asignamos el nombre de la moneda
+							$summary_coin['coin'] = $fondo->coin;
+							
+							// Asignamos el monto total de la moneda
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+								$summary_coin['amount'] += ($fondo->amount/100000);
+							}else{
+								$summary_coin['amount'] += $fondo->amount;
+							}
+							
+							// Formateamos el monto total de la moneda con sus decimales correspondientes
+							$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
+							
+						}
 					}
 					
 				}

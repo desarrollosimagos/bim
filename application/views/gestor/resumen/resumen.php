@@ -151,6 +151,10 @@
 		<input id="graph_aprobado" type="hidden" value="<?php echo $fondo_resumen['resumen_general']->approved_capital; ?>">
 		<input id="graph_ingreso_pendiente" type="hidden" value="<?php echo $fondo_resumen['resumen_general']->pending_entry; ?>">
 		<input id="graph_egreso_pendiente" type="hidden" value="<?php echo $fondo_resumen['resumen_general']->pending_exit; ?>">
+		<!-- Campos ocultos para almacenamiento del idioma en sesión -->
+		<input id="lang_session" type="hidden" value="<?php echo $this->session->userdata('site_lang'); ?>">
+		<!-- Campos ocultos para almacenamiento del perfil del usuario -->
+		<input id="profile_id" type="hidden" value="<?php echo $this->session->userdata('logged_in')['profile_id']; ?>">
 		
 	</div>
 	
