@@ -143,7 +143,7 @@ class CResumen extends CI_Controller {
 				foreach($find_transactions as $t1){
 					if($t1->status == 'approved'){
 						// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-						if($cuenta->coin_avr == 'VEF' && strtotime($t1->date) < strtotime("2018-10-20 00:00:00")){
+						if($cuenta->coin_avr == 'VEF' && strtotime($t1->date) < strtotime("2018-08-20 00:00:00")){
 							$capital_disponible_total += ($t1->amount/100000); 
 							$total_cuentas += ($t1->amount/100000);
 						}else{
@@ -368,7 +368,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -439,7 +439,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -527,7 +527,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -610,7 +610,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -696,7 +696,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								
 								// Si el campo de tasa 'rate' es mayor a cero
 								if((float)$fondo->rate > 0){
@@ -753,7 +753,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -810,7 +810,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -862,7 +862,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -914,7 +914,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -966,7 +966,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1048,7 +1048,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								
 								// Si el campo de tasa 'rate' es mayor a cero
 								if((float)$fondo->rate > 0){
@@ -1105,7 +1105,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1159,7 +1159,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1222,7 +1222,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1306,7 +1306,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1457,7 +1457,7 @@ class CResumen extends CI_Controller {
 								}else if($currency == 'VEF'){
 									
 									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 										
 										// Si el campo de tasa 'rate' es mayor a cero
 										if((float)$fondo->rate > 0){
@@ -1514,7 +1514,7 @@ class CResumen extends CI_Controller {
 								}else if($currency == 'VEF'){
 									
 									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 									}else{
 										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1570,7 +1570,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1637,7 +1637,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1724,7 +1724,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -1894,7 +1894,7 @@ class CResumen extends CI_Controller {
 								}else if($currency == 'VEF'){
 									
 									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 										
 										// Si el campo de tasa 'rate' es mayor a cero
 										if((float)$fondo->rate > 0){
@@ -1951,7 +1951,7 @@ class CResumen extends CI_Controller {
 								}else if($currency == 'VEF'){
 									
 									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 									}else{
 										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2011,7 +2011,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2078,7 +2078,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2192,7 +2192,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2263,7 +2263,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2346,7 +2346,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2431,7 +2431,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								// Si el campo de tasa 'rate' es mayor a cero
 								if((float)$fondo->rate > 0){
 									$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
@@ -2484,7 +2484,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2538,7 +2538,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2590,7 +2590,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2642,7 +2642,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2694,7 +2694,7 @@ class CResumen extends CI_Controller {
 				}else if($currency == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 					}else{
 						$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2797,7 +2797,7 @@ class CResumen extends CI_Controller {
 								}else if($currency == 'VEF'){
 									
 									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 										// Si el campo de tasa 'rate' es mayor a cero
 										if((float)$fondo->rate > 0){
 											$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
@@ -2850,7 +2850,7 @@ class CResumen extends CI_Controller {
 								}else if($currency == 'VEF'){
 									
 									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 									}else{
 										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2907,7 +2907,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -2974,7 +2974,7 @@ class CResumen extends CI_Controller {
 						}else if($currency == 'VEF'){
 							
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 							}else{
 								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -3194,7 +3194,7 @@ class CResumen extends CI_Controller {
 							
 							// Asignamos el monto total de la moneda
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$summary_coin['amount'] += ($fondo->amount/100000);
 							}else{
 								$summary_coin['amount'] += $fondo->amount;
@@ -3213,7 +3213,7 @@ class CResumen extends CI_Controller {
 							
 							// Asignamos el monto total de la moneda
 							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 								$summary_coin['amount'] += ($fondo->amount/100000);
 							}else{
 								$summary_coin['amount'] += $fondo->amount;
@@ -3259,7 +3259,7 @@ class CResumen extends CI_Controller {
 				}else if($currency_fund == 'VEF'){
 					
 					// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-					if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+					if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 						$fund_usd = (float)($summary_coin['amount']/100000)/(float)$valor1vef;
 					}else{
 						$fund_usd = (float)$summary_coin['amount']/(float)$valor1vef;
@@ -3391,7 +3391,7 @@ class CResumen extends CI_Controller {
 					}else if($currency == 'VEF'){
 						
 						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 						}else{
 							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -3638,7 +3638,7 @@ class CResumen extends CI_Controller {
 					}else if($currency == 'VEF'){
 						
 						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 						}else{
 							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -3888,7 +3888,7 @@ class CResumen extends CI_Controller {
 					}else if($currency == 'VEF'){
 						
 						// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-						if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+						if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 							$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 						}else{
 							$trans_usd = (float)$fondo->amount/(float)$valor1vef;
@@ -4102,7 +4102,7 @@ class CResumen extends CI_Controller {
 			}else if($currency == 'VEF'){
 				
 				// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-				if(strtotime($fondo->date) < strtotime("2018-10-20 00:00:00")){
+				if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
 					$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 				}else{
 					$trans_usd = (float)$fondo->amount/(float)$valor1vef;
