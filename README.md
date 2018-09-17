@@ -1,4 +1,4 @@
-# invision
+# BIM - Business Investment Management
 
 Archivos de configuración para los ajustes de la aplicación:
 
