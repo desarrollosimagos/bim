@@ -61,14 +61,14 @@ $this->load->model('MCuentas');
 						foreach($find_transactions as $transact) {
 							if($transact->status == 'approved'){
 								// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-								if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+								if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
 									$capital_disponible_total += ($transact->amount/100000);
 								}else{
 									$capital_disponible_total += $transact->amount;
 								}
 								if($transact->user_id > 0 && $transact->project_id == 0){
 									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
 										$capital_cuenta += ($transact->amount/100000);
 									}else{
 										$capital_cuenta += $transact->amount;  // En cuenta
@@ -76,7 +76,7 @@ $this->load->model('MCuentas');
 								}
 								if($transact->user_id > 0 && $transact->project_id > 0){
 									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
 										$capital_proyectos += ($transact->amount/100000);
 									}else{
 										$capital_proyectos += $transact->amount;  // En proyectos
@@ -87,7 +87,7 @@ $this->load->model('MCuentas');
 							if($transact->type != "invest" && $transact->type != "sell" && $transact->status == 'approved'){
 								if(count($relations) == 0){
 									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
 										$capital_disponible_parcial += ($transact->amount/100000);
 									}else{
 										$capital_disponible_parcial += $transact->amount;  // Disponible parcial
@@ -95,7 +95,7 @@ $this->load->model('MCuentas');
 								}
 								if(count($relations) > 0 && $relations[0]->type != "distribute"){
 									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-10-20 00:00:00")){
+									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
 										$capital_disponible_parcial += ($transact->amount/100000);
 									}else{
 										$capital_disponible_parcial += $transact->amount;  // Disponible parcial
@@ -344,12 +344,12 @@ $this->load->model('MCuentas');
 				</tbody>
 				<tfoot>
 					<tr>
-						<td class='text-center' colspan='6'>
+						<td class='text-center' colspan='9'>
 							<ul class='pagination'></ul>
 						</td>
-						<td class='text-right' colspan='1'>
-							<span style="font-weight:bold;">Total: <?php echo $total."  ".$ver[0]->coin_avr; ?></span>
-						</td>
+						<!--<td class='text-right' colspan='1'>
+							<span style="font-weight:bold;">Total: <?php echo $capital_disponible_total."  ".$ver[0]->coin_avr; ?></span>
+						</td>-->
 					</tr>
 				</tfoot>
 			</table>
