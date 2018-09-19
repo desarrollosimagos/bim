@@ -351,6 +351,9 @@ class MProjects extends CI_Model {
 		$this->db->join('accounts c', 'c.id = pt.account_id');
 		$this->db->join('coins cn', 'cn.id = c.coin_id');
 		$this->db->join('users u', 'u.id = pt.user_id', 'left');
+		if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+			$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+		}
 		$this->db->where('pt.project_id', $project_id);
 		$this->db->order_by("pt.date", "desc");
 		$query = $this->db->get();

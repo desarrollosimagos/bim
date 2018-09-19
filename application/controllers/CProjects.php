@@ -2652,7 +2652,7 @@ class CProjects extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved'){
+				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
 					// Suma de ganancias
 					if($fondo->type == 'expense'){
 						$expense_approved += $trans_usd;
