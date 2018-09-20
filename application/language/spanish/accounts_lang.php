@@ -27,6 +27,7 @@ $lang['heading_home_accounts_view'] = 'Inicio';
 $lang['heading_subtitle_accounts_view'] = 'Cuentas';
 
 // Panel de resumen
+$lang['view_alert_message'] = 'Existe una diferencia de "valor" entre las transacciones reales y las Transacciones de Ajuste';
 $lang['view_capital_available_accounts'] = 'Capital Disponible Total';
 $lang['view_capital_in_count'] = 'Capital en Cuenta';
 $lang['view_capital_in_project'] = 'Capital en Proyectos';
