@@ -40,7 +40,95 @@ $this->load->model('MCuentas');
 <input type="hidden" id="ident" value="<?php echo $ident; ?>">
 <input type="hidden" id="ident_sub" value="<?php echo $ident_sub; ?>">
 
+<!-- Cálculo de los valores del cintillo de totales -->
+<?php 
+$capital_disponible_total = 0;
+$capital_disponible_real = 0;
+$capital_cuenta = 0;
+$capital_proyectos = 0;
+$capital_disponible_parcial = 0;
+$depósito_pendiente = 0;
+$capital_diferido = 0;
+
+// Cálculo de los capitales disponibles
+foreach($find_transactions as $transact) {
+	if($transact->status == 'approved'){
+		// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+		if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
+			$capital_disponible_total += ($transact->amount/100000);
+			// Capital real
+			if($transact->real == 1){
+				$capital_disponible_real += ($transact->amount/100000);
+			}
+		}else{
+			$capital_disponible_total += $transact->amount;
+			// Capital real
+			if($transact->real == 1){
+				$capital_disponible_real += $transact->amount;
+			}
+		}
+		if($transact->user_id > 0 && $transact->project_id == 0){
+			// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+			if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
+				$capital_cuenta += ($transact->amount/100000);
+			}else{
+				$capital_cuenta += $transact->amount;  // En cuenta
+			}
+		}
+		if($transact->user_id > 0 && $transact->project_id > 0){
+			// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+			if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
+				$capital_proyectos += ($transact->amount/100000);
+			}else{
+				$capital_proyectos += $transact->amount;  // En proyectos
+			}
+		}
+	}
+	$relations = $this->MCuentas->buscar_transaction_relation($transact->id);
+	if($transact->type != "invest" && $transact->type != "sell" && $transact->status == 'approved'){
+		if(count($relations) == 0){
+			// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+			if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
+				$capital_disponible_parcial += ($transact->amount/100000);
+			}else{
+				$capital_disponible_parcial += $transact->amount;  // Disponible parcial
+			}
+		}
+		if(count($relations) > 0 && $relations[0]->type != "distribute"){
+			// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+			if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
+				$capital_disponible_parcial += ($transact->amount/100000);
+			}else{
+				$capital_disponible_parcial += $transact->amount;  // Disponible parcial
+			}
+		}
+	}
+}
+//~ foreach($find_transactions_project as $transact_project) {
+	//~ if($transact_project->status == 'approved'){ $capital_disponible_total += $transact_project->monto; }
+	//~ $relations = $this->MCuentas->buscar_project_transaction_relation($transact_project->id);
+	//~ if(count($relations) == 0){
+		//~ if($transact_project->type == "profit" || $transact_project->type == "expense"){
+			//~ if($transact_project->status == 'approved'){
+				//~ $capital_disponible_parcial += $transact_project->monto;
+			//~ }
+		//~ }
+	//~ }
+//~ }
+?>
+<!-- Fin del cálculo de los valores del cintillo de totales -->
+
 <div class="wrapper wrapper-content animated fadeInUp">
+	
+	<!-- Alerta para cuando el mensaje de la api de coinmarketcap es un error -->
+	<?php if(($capital_disponible_total - $capital_disponible_real) != 0){ ?>
+	<div class="col-lg-12 alert alert-danger alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+		<?php 
+		echo $this->lang->line('view_alert_message');
+		?>
+	</div>
+	<?php } ?>
 	
 	<!-- Cuerpo de la sección de cintillo de montos -->
 	<div class="row">
@@ -49,72 +137,6 @@ $this->load->model('MCuentas');
 				
 				<div class="contact-box-footer" style="border-top:0px;">
 					<div>
-						<?php 
-						$capital_disponible_total = 0;
-						$capital_cuenta = 0;
-						$capital_proyectos = 0;
-						$capital_disponible_parcial = 0;
-						$depósito_pendiente = 0;
-						$capital_diferido = 0;
-						
-						// Cálculo de los capitales disponibles
-						foreach($find_transactions as $transact) {
-							if($transact->status == 'approved'){
-								// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-								if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
-									$capital_disponible_total += ($transact->amount/100000);
-								}else{
-									$capital_disponible_total += $transact->amount;
-								}
-								if($transact->user_id > 0 && $transact->project_id == 0){
-									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
-										$capital_cuenta += ($transact->amount/100000);
-									}else{
-										$capital_cuenta += $transact->amount;  // En cuenta
-									}
-								}
-								if($transact->user_id > 0 && $transact->project_id > 0){
-									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
-										$capital_proyectos += ($transact->amount/100000);
-									}else{
-										$capital_proyectos += $transact->amount;  // En proyectos
-									}
-								}
-							}
-							$relations = $this->MCuentas->buscar_transaction_relation($transact->id);
-							if($transact->type != "invest" && $transact->type != "sell" && $transact->status == 'approved'){
-								if(count($relations) == 0){
-									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
-										$capital_disponible_parcial += ($transact->amount/100000);
-									}else{
-										$capital_disponible_parcial += $transact->amount;  // Disponible parcial
-									}
-								}
-								if(count($relations) > 0 && $relations[0]->type != "distribute"){
-									// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if($ver[0]->coin_avr == 'VEF' && strtotime($transact->date) < strtotime("2018-08-20 00:00:00")){
-										$capital_disponible_parcial += ($transact->amount/100000);
-									}else{
-										$capital_disponible_parcial += $transact->amount;  // Disponible parcial
-									}
-								}
-							}
-						}
-						//~ foreach($find_transactions_project as $transact_project) {
-							//~ if($transact_project->status == 'approved'){ $capital_disponible_total += $transact_project->monto; }
-							//~ $relations = $this->MCuentas->buscar_project_transaction_relation($transact_project->id);
-							//~ if(count($relations) == 0){
-								//~ if($transact_project->type == "profit" || $transact_project->type == "expense"){
-									//~ if($transact_project->status == 'approved'){
-										//~ $capital_disponible_parcial += $transact_project->monto;
-									//~ }
-								//~ }
-							//~ }
-						//~ }
-						?>
 						<div class="col-md-4 forum-info">
 							<span class="views-number" id="span_retornado">
 								<?php echo $capital_disponible_total; ?>
