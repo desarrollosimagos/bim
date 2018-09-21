@@ -534,16 +534,12 @@ class CFondoPersonal extends CI_Controller {
 			$sub_array[] = $row->description;
 			$sub_array[] = number_format($row->amount, $row->coin_decimals, '.', '')."  ".$row->coin_symbol;
 			$sub_array[] = $status;
-			if($this->session->userdata('logged_in')['profile_id'] != 3){
-				$sub_array[] = $row->alias." - ".$row->number;
-			}
+			$sub_array[] = $row->alias." - ".$row->number;
 			$sub_array[] = $row->reference;
 			$sub_array[] = $row->observation;
-			if($this->session->userdata('logged_in')['profile_id'] != 3){
-				$sub_array[] = $real;
-				$sub_array[] = $row->rate;
-				$sub_array[] = "<a target='_blank' href='".base_url()."assets/docs_trans/".$row->document."'>".$row->document."</a>";
-			}
+			$sub_array[] = $real;
+			$sub_array[] = $row->rate;
+			$sub_array[] = "<a target='_blank' href='".base_url()."assets/docs_trans/".$row->document."'>".$row->document."</a>";
 			$sub_array[] = $edit." ".$delete." ".$validate;
 			
 			$data[] = $sub_array;
