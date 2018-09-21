@@ -16,7 +16,19 @@ $(document).ready(function(){
 			{"sClass": "registro center", "sWidth": "10%"},
 			{"sClass": "registro center", "sWidth": "10%"},
 			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
 			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "registro center", "sWidth": "10%"}
+		];
+	}else if($("#profile_id").val().trim() == '3'){
+		aoColumns = [
+			{"sClass": "registro center", "sWidth": "5%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
+			//~ {"sClass": "registro center", "sWidth": "10%"},
+			{"sClass": "registro center", "sWidth": "10%"},
 			{"sClass": "none", "sWidth": "30%"},
 			{"sClass": "none", "sWidth": "30%"},
 			{"sClass": "registro center", "sWidth": "10%"}
@@ -29,7 +41,7 @@ $(document).ready(function(){
 			{"sClass": "registro center", "sWidth": "10%"},
 			{"sClass": "registro center", "sWidth": "10%"},
 			//~ {"sClass": "registro center", "sWidth": "10%"},
-			{"sClass": "none", "sWidth": "30%"},
+			{"sClass": "registro center", "sWidth": "10%"},
 			{"sClass": "none", "sWidth": "30%"},
 			{"sClass": "none", "sWidth": "30%"},
 			{"sClass": "registro center", "sWidth": "10%"}

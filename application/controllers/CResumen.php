@@ -4364,7 +4364,9 @@ class CResumen extends CI_Controller {
 			// Mostramos los datos ya filtrados
 			$sub_array[] = $row->id;
 			$sub_array[] = $row->date;
-			$sub_array[] = $usuario;
+			if($this->session->userdata('logged_in')['profile_id'] != 3){
+				$sub_array[] = $usuario;
+			}
 			$sub_array[] = $this->lang->line('transactions_type_'.$row->type);
 			$sub_array[] = number_format($row->amount, $row->coin_decimals, '.', '')."  ".$row->coin_symbol;
 			if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
