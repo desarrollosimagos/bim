@@ -235,7 +235,6 @@ foreach($find_transactions as $transact) {
 					<tr>
 						<th data-hide="phone,tablet">Id</th>
 						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_date_accounts'); ?></th>
-						<th><?php echo $this->lang->line('view_list_username_accounts'); ?></th>
 						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_type_accounts'); ?></th>
 						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_description_accounts'); ?></th>
 						<th><?php echo $this->lang->line('view_list_amount_accounts'); ?></th>
@@ -272,9 +271,6 @@ foreach($find_transactions as $transact) {
 							</td>
 							<td>
 								<?php echo $transact->date; echo count($relations); ?>
-							</td>
-							<td>
-								<?php echo $transact->name_user; ?>
 							</td>
 							<td>
 								<?php echo $transact->type; ?>

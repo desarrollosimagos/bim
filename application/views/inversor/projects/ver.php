@@ -581,7 +581,6 @@ th {
 					<tr>
 						<th data-hide="phone,tablet">Id</th>
 						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_transactions_date_projects'); ?></th>
-						<th><?php echo $this->lang->line('view_list_transactions_username_projects'); ?></th>
 						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_transactions_type_projects'); ?></th>
 						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_transactions_description_projects'); ?></th>
 						<th><?php echo $this->lang->line('view_list_transactions_amount_projects'); ?></th>
@@ -600,9 +599,6 @@ th {
 							</td>
 							<td>
 								<?php echo $transact->date; ?>
-							</td>
-							<td>
-								<?php echo $transact->name; ?>
 							</td>
 							<td>
 								<?php echo $transact->type; ?>
