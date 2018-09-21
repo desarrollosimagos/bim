@@ -525,19 +525,25 @@ class CFondoPersonal extends CI_Controller {
 			$validate = "<a class='".$class." a-actions' id='".$row->id.';'.$row->account_id.';'.$row->amount.';'.$row->type."' ".$disabled." style='".$cursor_style.";".$color_style."' ".$title.">";
 				$validate .= "<i class='fa ".$class_icon_validar." fa-2x'></i>";
 			$validate .= "</a>";
-			// Mostramos los datos ya filtrados
+			// Mostramos los datos ya filtrados. Tomando en cuenta el perfil del usuario, se eliminan algunas columnas
 			$sub_array[] = $row->id;
-			$sub_array[] = $usuario;
+			if($this->session->userdata('logged_in')['profile_id'] != 3){
+				$sub_array[] = $usuario;
+			}
 			$sub_array[] = $this->lang->line('transactions_type_'.$row->type);
 			$sub_array[] = $row->description;
 			$sub_array[] = number_format($row->amount, $row->coin_decimals, '.', '')."  ".$row->coin_symbol;
 			$sub_array[] = $status;
-			$sub_array[] = $row->alias." - ".$row->number;
+			if($this->session->userdata('logged_in')['profile_id'] != 3){
+				$sub_array[] = $row->alias." - ".$row->number;
+			}
 			$sub_array[] = $row->reference;
 			$sub_array[] = $row->observation;
-			$sub_array[] = $real;
-			$sub_array[] = $row->rate;
-			$sub_array[] = "<a target='_blank' href='".base_url()."assets/docs_trans/".$row->document."'>".$row->document."</a>";
+			if($this->session->userdata('logged_in')['profile_id'] != 3){
+				$sub_array[] = $real;
+				$sub_array[] = $row->rate;
+				$sub_array[] = "<a target='_blank' href='".base_url()."assets/docs_trans/".$row->document."'>".$row->document."</a>";
+			}
 			$sub_array[] = $edit." ".$delete." ".$validate;
 			
 			$data[] = $sub_array;
