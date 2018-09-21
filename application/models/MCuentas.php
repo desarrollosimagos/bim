@@ -49,18 +49,29 @@ class MCuentas extends CI_Model {
         //~ if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
 			//~ $this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
 		//~ }
-		$this->db->from('investorgroups ig');
-		$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
-		$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
-		$this->db->join('accounts f_p', 'f_p.id = ig_a.account_id', 'right');
-		$this->db->join('account_type t_c', 't_c.id = f_p.type', 'right');
-		$this->db->join('users u', 'u.id = f_p.user_id');
-		$this->db->join('coins c', 'c.id = f_p.coin_id');
-		// Si el usuario corresponde al de un administrador quitamos el filtro de usuario
-        //if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+		// Si el usuario logueado es de perfil administrador o plataforma tomamos sólo las cuentas de su grupo de inversores
+		if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts f_p', 'f_p.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = f_p.type', 'right');
+			$this->db->join('users u', 'u.id = f_p.user_id');
+			$this->db->join('coins c', 'c.id = f_p.coin_id');
 			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
-			$this->db->or_where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
-		//}
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from('accounts f_p');
+			$this->db->join('users u', 'u.id = f_p.user_id');
+			$this->db->join('coins c', 'c.id = f_p.coin_id');
+			$this->db->join('account_type t_c', 't_c.id = f_p.type');
+			$this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
+		}else{
+			$this->db->from('accounts f_p');
+			$this->db->join('users u', 'u.id = f_p.user_id');
+			$this->db->join('coins c', 'c.id = f_p.coin_id');
+			$this->db->join('account_type t_c', 't_c.id = f_p.type');
+			$this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
+		}
 		$this->db->order_by("f_p.id", "desc");
 		$query = $this->db->get();
 		//~ $query = $this->db->get('accounts');
