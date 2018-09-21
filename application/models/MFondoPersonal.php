@@ -112,47 +112,77 @@ class MFondoPersonal extends CI_Model {
  */
     public function obtener_cuentas_group($tipo) {
 		
-		// Si el usuario corresponde al de un administrador quitamos el filtro de usuario
-        /*if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
-			if($tipo == 'deposit'){*/
-				$this->db->select('c.id, c.alias, c.number, cn.abbreviation as coin_avr');
-				$this->db->from('users u');
-				$this->db->join('investorgroups_users i_g_u', 'i_g_u.user_id=u.id');
-				$this->db->join('investorgroups i_g', 'i_g.id=i_g_u.group_id');
-				$this->db->join('investorgroups_accounts i_g_a', 'i_g_a.group_id=i_g.id');
-				$this->db->join('accounts c', 'c.id=i_g_a.account_id');
-				$this->db->join('coins cn', 'cn.id = c.coin_id');
-				$this->db->where('u.id =', $this->session->userdata('logged_in')['id']);
-				$this->db->group_by(array("c.id", "c.alias", "c.number", "cn.abbreviation"));
-				$this->db->order_by("c.alias", "desc");
-			/*}else if($tipo == 'withdraw'){
-				$this->db->select('c.id, c.alias, c.number, cn.abbreviation as coin_avr');
-				$this->db->from('accounts c');
-				$this->db->join('users u', 'u.id=c.user_id');
-				$this->db->join('coins cn', 'cn.id = c.coin_id');
-				$this->db->where('c.user_id =', $this->session->userdata('logged_in')['id']);
-				$this->db->order_by("c.alias", "desc");
-			}
+		$this->db->select('c.id, c.alias, c.number, cn.abbreviation as coin_avr');
+		if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('users u');
+			$this->db->join('investorgroups_users i_g_u', 'i_g_u.user_id=u.id');
+			$this->db->join('investorgroups i_g', 'i_g.id=i_g_u.group_id');
+			$this->db->join('investorgroups_accounts i_g_a', 'i_g_a.group_id=i_g.id');
+			$this->db->join('accounts c', 'c.id=i_g_a.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('i_g_u.user_id =', $this->session->userdata('logged_in')['id']);
+			$this->db->group_by(array("c.id", "c.alias", "c.number", "cn.abbreviation"));
+			$this->db->order_by("c.alias", "desc");
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from('accounts c');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('c.user_id =', $this->session->userdata('logged_in')['id']);
+			$this->db->group_by(array("c.id", "c.alias", "c.number", "cn.abbreviation"));
+			$this->db->order_by("c.alias", "desc");
 		}else{
-			if($tipo == 'deposit'){
-				$this->db->select('c.id, c.alias, c.number, cn.abbreviation as coin_avr');
-				$this->db->from('accounts c');
-				$this->db->join('coins cn', 'cn.id = c.coin_id');
-				$this->db->order_by("c.alias", "desc");
-			}else if($tipo == 'withdraw'){
-				$this->db->select('c.id, c.alias, c.number, cn.abbreviation as coin_avr');
-				$this->db->from('accounts c');
-				$this->db->join('coins cn', 'cn.id = c.coin_id');
-				$this->db->where('c.user_id =', $this->session->userdata('logged_in')['id']);
-				$this->db->order_by("c.alias", "desc");
-			}
-		}*/
+			$this->db->from('accounts c');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('c.user_id =', $this->session->userdata('logged_in')['id']);
+			$this->db->group_by(array("c.id", "c.alias", "c.number", "cn.abbreviation"));
+			$this->db->order_by("c.alias", "desc");
+		}
+			
         $query = $this->db->get();
 
         if ($query->num_rows() > 0)
             return $query->result();
         else
             return $query->result();
+            
+    }
+
+/**
+ * ------------------------------------------------------
+ * Public method to obtain the associated projects
+ * ------------------------------------------------------
+ */
+    public function obtener_proyectos_group() {
+		
+		$this->db->select('pj.id, pj.name, pj.description, p_t.type as type, pj.valor, pj.amount_r, pj.amount_min, pj.amount_max, pj.date, pj.date_r, pj.date_v, pj.status, c.description as coin, c.abbreviation as coin_avr, c.symbol as coin_symbol');
+		// Si el usuario logueado es de perfil administrador o plataforma tomamos sólo los proyectos de su grupo de inversores
+		if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_projects ig_p', 'ig_p.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('projects pj', 'pj.id = ig_p.project_id');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type');
+			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('ig_u.user_id', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_projects ig_p', 'ig_p.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('projects pj', 'pj.id = ig_p.project_id');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type');
+			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('ig_u.user_id', $this->session->userdata('logged_in')['id']);
+		}else{
+			$this->db->from('projects pj');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type');
+			$this->db->join('coins c', 'c.id = pj.coin_id');
+		}
+		$this->db->order_by("pj.id", "desc");
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0)
+			return $query->result();
+		else
+			return $query->result();
             
     }
 
