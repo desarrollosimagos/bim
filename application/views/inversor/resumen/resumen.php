@@ -395,7 +395,7 @@
 					<tr>
 						<th data-hide="phone,tablet" >Id</th>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_date'); ?></th>
-						<th ><?php echo $this->lang->line('transactions_user'); ?></th>
+						<!--<th ><?php echo $this->lang->line('transactions_user'); ?></th>-->
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_type'); ?></th>
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_amount'); ?></th>
 						<?php if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){ ?>
