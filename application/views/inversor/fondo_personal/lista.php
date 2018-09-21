@@ -60,8 +60,12 @@
                                     <th><?php echo $this->lang->line('list_description'); ?></th>
                                     <th><?php echo $this->lang->line('list_amount'); ?></th>
                                     <th><?php echo $this->lang->line('list_status'); ?></th>
+                                    <th><?php echo $this->lang->line('list_account'); ?></th>
                                     <th><?php echo $this->lang->line('list_reference'); ?></th>
                                     <th><?php echo $this->lang->line('list_observations'); ?></th>
+                                    <th><?php echo $this->lang->line('list_real'); ?></th>
+                                    <th><?php echo $this->lang->line('list_rate'); ?></th>
+                                    <th><?php echo $this->lang->line('list_document'); ?></th>
                                     <th><?php echo $this->lang->line('list_actions'); ?></th>
                                 </tr>
                             </thead>
@@ -216,6 +220,10 @@ $(document).ready(function(){
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "none", "sWidth": "30%"},
+            {"sClass": "none", "sWidth": "30%"},
+            {"sClass": "none", "sWidth": "30%"},
+            {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sWidth": "10%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
