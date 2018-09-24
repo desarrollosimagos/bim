@@ -89,7 +89,7 @@ class MFondoPersonal extends CI_Model {
 		$this->db->distinct();
 		// Si el usuario logueado es de perfil administrador tomamos todas las transacciones.
 		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
-		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones generadas por él.
+		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones asociadas a él.
 		// Si el usuario logueado es de perfil gestor tomamos todas las transacciones generadas por él.
 		if($this->session->userdata('logged_in')['profile_id'] == 1){
 			$this->db->from('transactions f_p');
@@ -117,7 +117,7 @@ class MFondoPersonal extends CI_Model {
 			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
 			$this->db->join('accounts c', 'c.id = f_p.account_id');
 			$this->db->join('coins cn', 'cn.id = c.coin_id');
-			$this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
+			$this->db->where('f_p.user_create_id =', $this->session->userdata('logged_in')['id']);
 		}else{
 			$this->db->from('transactions f_p');
 			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
