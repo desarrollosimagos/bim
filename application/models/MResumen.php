@@ -99,21 +99,21 @@ class MResumen extends CI_Model {
 			$this->db->from('investorgroups ig');
 			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
 			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
-			$this->db->join('accounts acc', 'acc.id = ig_a.account_id', 'right');
-			$this->db->join('account_type t_c', 't_c.id = acc.type', 'right');
-			$this->db->join('transactions f_p', 'f_p.account_id = acc.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join('transactions f_p', 'f_p.account_id = c.id');
 			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
-			$this->db->join('coins c', 'c.id = acc.coin_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
 			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
 		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
 			$this->db->from('investorgroups ig');
 			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
 			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
-			$this->db->join('accounts acc', 'acc.id = ig_a.account_id', 'right');
-			$this->db->join('account_type t_c', 't_c.id = acc.type', 'right');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
 			$this->db->join('transactions f_p', 'f_p.account_id = acc.id');
 			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
-			$this->db->join('coins c', 'c.id = acc.coin_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
 			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
 		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
 			$this->db->from('transactions f_p');
