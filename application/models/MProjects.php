@@ -34,8 +34,17 @@ class MProjects extends CI_Model {
 		//~ $this->db->join('project_types p_t', 'p_t.id = pj.type');
 		//~ $this->db->join('coins c', 'c.id = pj.coin_id');
 		$this->db->select('pj.id, pj.name, pj.description, p_t.type as type, pj.valor, pj.amount_r, pj.amount_min, pj.amount_max, pj.date, pj.date_r, pj.date_v, pj.status, c.description as coin, c.abbreviation as coin_avr, c.symbol as coin_symbol');
-		// Si el usuario logueado es de perfil administrador o plataforma tomamos sólo los proyectos de su grupo de inversores
-		if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
+		// Si el usuario logueado es de perfil administrador, plataforma o gestor tomamos sólo los proyectos de su grupo de inversores.
+		// Si el usuario logueado es de perfil inversor tomamos sólo los proyectos en los que tiene transacciones.
+		if($this->session->userdata('logged_in')['profile_id'] == 1){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_projects ig_p', 'ig_p.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('projects pj', 'pj.id = ig_p.project_id');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type');
+			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('ig_u.user_id', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
 			$this->db->from('investorgroups ig');
 			$this->db->join('investorgroups_projects ig_p', 'ig_p.group_id = ig.id');
 			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
@@ -47,6 +56,14 @@ class MProjects extends CI_Model {
 			$this->db->from('projects pj');
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
 			$this->db->join('coins c', 'c.id = pj.coin_id');
+		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_projects ig_p', 'ig_p.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('projects pj', 'pj.id = ig_p.project_id');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type');
+			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('ig_u.user_id', $this->session->userdata('logged_in')['id']);
 		}else{
 			$this->db->from('projects pj');
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
@@ -362,8 +379,16 @@ class MProjects extends CI_Model {
 		$this->db->join('accounts c', 'c.id = pt.account_id');
 		$this->db->join('coins cn', 'cn.id = c.coin_id');
 		$this->db->join('users u', 'u.id = pt.user_id', 'left');
+		// Si el usuario logueado es de perfil inversor tomamos sólo las transacciones asignadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos sólo las transacciones generadas por él.
 		if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
-			$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			if($this->session->userdata('logged_in')['profile_id'] == 3){
+				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+				$this->db->where('pt.user_create_id =', $this->session->userdata('logged_in')['id']);
+			}else{
+				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			}
 		}
 		$this->db->where('pt.project_id', $project_id);
 		$this->db->order_by("pt.date", "desc");
