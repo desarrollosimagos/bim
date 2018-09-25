@@ -2398,109 +2398,113 @@ class CResumen extends CI_Controller {
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción				
 				
 				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
-					
+					//~ echo "Proyecto: ".$fondo->project_id;
+					//~ exit();
 					$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
-					// Si la moneda de la transacción difiere de la del proyecto
-					if($currency != $data_project[0]->coin_avr){
-						
-						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
-						if (in_array($currency, $rates)) {
+					// Si el proyecto existe
+					if(count($data_project) > 0){ 
+						// Si la moneda de la transacción difiere de la del proyecto
+						if($currency != $data_project[0]->coin_avr){
 							
-							// Primero convertimos el valor de la cryptodivisa
-							$valor1anycoin = 0;
-							$i = 0;
-							$rate = $currency;
-							foreach($exchangeRates2 as $divisa){
-								if ($divisa['symbol'] == $rate){
-									$i+=1;
-									
-									// Obtenemos el valor de la cryptomoneda de la transacción en dólares
-									$valor1anycoin = $divisa['price_usd'];
+							// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+							if (in_array($currency, $rates)) {
+								
+								// Primero convertimos el valor de la cryptodivisa
+								$valor1anycoin = 0;
+								$i = 0;
+								$rate = $currency;
+								foreach($exchangeRates2 as $divisa){
+									if ($divisa['symbol'] == $rate){
+										$i+=1;
+										
+										// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+										$valor1anycoin = $divisa['price_usd'];
+									}
 								}
-							}
-							
-							// Si el campo de tasa 'rate' es mayor a cero
-							if((float)$fondo->rate > 0){
-								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-								//~ $trans_usd *= (float)$valor1anycoin;
-							}else{
-								$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
-							}
-							
-						}else if($currency == 'VEF'){
-							
-							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
-								// Si el campo de tasa 'rate' es mayor a cero
-								if((float)$fondo->rate > 0){
-									$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
-									//~ $trans_usd /= (float)$valor1vef;
-								}else{
-									$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
-								}
-							}else{
+								
 								// Si el campo de tasa 'rate' es mayor a cero
 								if((float)$fondo->rate > 0){
 									$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-									//~ $trans_usd /= (float)$valor1vef;
+									//~ $trans_usd *= (float)$valor1anycoin;
+								}else{
+									$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+								}
+								
+							}else if($currency == 'VEF'){
+								
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+									// Si el campo de tasa 'rate' es mayor a cero
+									if((float)$fondo->rate > 0){
+										$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+										//~ $trans_usd /= (float)$valor1vef;
+									}else{
+										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+									}
+								}else{
+									// Si el campo de tasa 'rate' es mayor a cero
+									if((float)$fondo->rate > 0){
+										$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+										//~ $trans_usd /= (float)$valor1vef;
+									}else{
+										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+									}
+								}
+								
+							}else{
+								
+								// Si el campo de tasa 'rate' es mayor a cero
+								if((float)$fondo->rate > 0){
+									$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+									//~ $trans_usd /= (float)$exchangeRates['rates'][$currency];
+								}else{
+									$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+								}
+								
+							}
+							
+						}else{
+							
+							// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+							if (in_array($currency, $rates)) {
+								
+								// Primero convertimos el valor de la cryptodivisa
+								$valor1anycoin = 0;
+								$i = 0;
+								$rate = $currency;
+								foreach($exchangeRates2 as $divisa){
+									if ($divisa['symbol'] == $rate){
+										$i+=1;
+										
+										// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+										$valor1anycoin = $divisa['price_usd'];
+									}
+								}
+								
+								$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+								
+							}else if($currency == 'VEF'){
+								
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+									$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 								}else{
 									$trans_usd = (float)$fondo->amount/(float)$valor1vef;
 								}
-							}
-							
-						}else{
-							
-							// Si el campo de tasa 'rate' es mayor a cero
-							if((float)$fondo->rate > 0){
-								$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-								//~ $trans_usd /= (float)$exchangeRates['rates'][$currency];
+								
 							}else{
+								
 								$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+								
 							}
 							
 						}
 						
-					}else{
-						
-						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
-						if (in_array($currency, $rates)) {
-							
-							// Primero convertimos el valor de la cryptodivisa
-							$valor1anycoin = 0;
-							$i = 0;
-							$rate = $currency;
-							foreach($exchangeRates2 as $divisa){
-								if ($divisa['symbol'] == $rate){
-									$i+=1;
-									
-									// Obtenemos el valor de la cryptomoneda de la transacción en dólares
-									$valor1anycoin = $divisa['price_usd'];
-								}
-							}
-							
-							$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
-							
-						}else if($currency == 'VEF'){
-							
-							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
-								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
-							}else{
-								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
-							}
-							
-						}else{
-							
-							$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
-							
+						// Suma de depósitos
+						if($fondo->type == 'invest'){
+							$deposit_approved += $trans_usd;
 						}
-						
-					}
-					
-					// Suma de depósitos
-					if($fondo->type == 'invest'){
-						$deposit_approved += $trans_usd;
 					}
 					
 				}
@@ -2766,107 +2770,110 @@ class CResumen extends CI_Controller {
 						if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
 							
 							$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
-					
-							// Si la moneda de la transacción difiere de la del proyecto
-							if($currency != $data_project[0]->coin_avr){
-								
-								// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
-								if (in_array($currency, $rates)) {
+							
+							// Si el proyecto existe
+							if(count($data_project) > 0){
+								// Si la moneda de la transacción difiere de la del proyecto
+								if($currency != $data_project[0]->coin_avr){
 									
-									// Primero convertimos el valor de la cryptodivisa
-									$valor1anycoin = 0;
-									$i = 0;
-									$rate = $currency;
-									foreach($exchangeRates2 as $divisa){
-										if ($divisa['symbol'] == $rate){
-											$i+=1;
-											
-											// Obtenemos el valor de la cryptomoneda de la transacción en dólares
-											$valor1anycoin = $divisa['price_usd'];
+									// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+									if (in_array($currency, $rates)) {
+										
+										// Primero convertimos el valor de la cryptodivisa
+										$valor1anycoin = 0;
+										$i = 0;
+										$rate = $currency;
+										foreach($exchangeRates2 as $divisa){
+											if ($divisa['symbol'] == $rate){
+												$i+=1;
+												
+												// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+												$valor1anycoin = $divisa['price_usd'];
+											}
 										}
-									}
-									
-									// Si el campo de tasa 'rate' es mayor a cero
-									if((float)$fondo->rate > 0){
-										$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-										//~ $trans_usd *= (float)$valor1anycoin;
-									}else{
-										$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
-									}
-									
-								}else if($currency == 'VEF'){
-									
-									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
-										// Si el campo de tasa 'rate' es mayor a cero
-										if((float)$fondo->rate > 0){
-											$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
-											//~ $trans_usd /= (float)$valor1vef;
-										}else{
-											$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
-										}
-									}else{
+										
 										// Si el campo de tasa 'rate' es mayor a cero
 										if((float)$fondo->rate > 0){
 											$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-											//~ $trans_usd /= (float)$valor1vef;
+											//~ $trans_usd *= (float)$valor1anycoin;
+										}else{
+											$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+										}
+										
+									}else if($currency == 'VEF'){
+										
+										// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+										if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+											// Si el campo de tasa 'rate' es mayor a cero
+											if((float)$fondo->rate > 0){
+												$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+												//~ $trans_usd /= (float)$valor1vef;
+											}else{
+												$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+											}
+										}else{
+											// Si el campo de tasa 'rate' es mayor a cero
+											if((float)$fondo->rate > 0){
+												$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+												//~ $trans_usd /= (float)$valor1vef;
+											}else{
+												$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+											}
+										}
+										
+									}else{
+										
+										// Si el campo de tasa 'rate' es mayor a cero
+										if((float)$fondo->rate > 0){
+											$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+											//~ $trans_usd /= (float)$exchangeRates['rates'][$currency];
+										}else{
+											$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+										}
+										
+									}
+									
+								}else{
+									
+									// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+									if (in_array($currency, $rates)) {
+										
+										// Primero convertimos el valor de la cryptodivisa
+										$valor1anycoin = 0;
+										$i = 0;
+										$rate = $currency;
+										foreach($exchangeRates2 as $divisa){
+											if ($divisa['symbol'] == $rate){
+												$i+=1;
+												
+												// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+												$valor1anycoin = $divisa['price_usd'];
+											}
+										}
+										
+										$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+										
+									}else if($currency == 'VEF'){
+										
+										// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+										if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+											$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
 										}else{
 											$trans_usd = (float)$fondo->amount/(float)$valor1vef;
 										}
-									}
-									
-								}else{
-									
-									// Si el campo de tasa 'rate' es mayor a cero
-									if((float)$fondo->rate > 0){
-										$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
-										//~ $trans_usd /= (float)$exchangeRates['rates'][$currency];
+										
 									}else{
+										
 										$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+										
 									}
 									
 								}
-								
-							}else{
-								
-								// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
-								if (in_array($currency, $rates)) {
-									
-									// Primero convertimos el valor de la cryptodivisa
-									$valor1anycoin = 0;
-									$i = 0;
-									$rate = $currency;
-									foreach($exchangeRates2 as $divisa){
-										if ($divisa['symbol'] == $rate){
-											$i+=1;
-											
-											// Obtenemos el valor de la cryptomoneda de la transacción en dólares
-											$valor1anycoin = $divisa['price_usd'];
-										}
-									}
-									
-									$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
-									
-								}else if($currency == 'VEF'){
-									
-									// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-									if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
-										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
-									}else{
-										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
-									}
-									
-								}else{
-									
-									$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
-									
+						
+								// Suma de depósitos
+								if($fondo->type == 'invest'){
+									$deposit_approved += $trans_usd;
 								}
-								
-							}
-					
-							// Suma de depósitos
-							if($fondo->type == 'invest'){
-								$deposit_approved += $trans_usd;
 							}
 						}
 						

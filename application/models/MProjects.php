@@ -285,6 +285,10 @@ class MProjects extends CI_Model {
 		$this->db->join('coins c', 'c.id = p.coin_id');
 		$this->db->where('p.id', $id);
 		$query = $this->db->get();
+		
+		//~ echo $this->db->last_query();
+		//~ exit();
+		
         if ($query->num_rows() > 0)
             return $query->result();
         else
