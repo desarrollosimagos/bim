@@ -216,20 +216,90 @@ class MResumen extends CI_Model {
     // Public method to obtain the transactions by id
     public function fondos_json() {
 		
+		// Almacenamos los ids de los inversores asociados al asesor más su id propio en un array
+		$ids = array($this->session->userdata('logged_in')['id']);
+		$this->db->where('adviser_id', $this->session->userdata('logged_in')['id']);
+        $query_asesor_inversores = $this->db->get('user_relations');
+        if ($query_asesor_inversores->num_rows() > 0) {
+            foreach($query_asesor_inversores->result() as $relacion){
+				$ids[] = $relacion->investor_id;
+			}
+		}
+		
 		$capitalAprobado = 0;
 		
 		$select = 'u.name, u.alias, u.username, f_p.id, f_p.account_id, f_p.project_id, f_p.user_id, f_p.type, f_p.amount, f_p.real, f_p.rate, f_p.status, f_p.date, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, pf.id as perfil_id, pf.name as perfil_name, pj.name as project_name, p_t.type as project_type';
 		
 		$this->db->select($select);
-		$this->db->from('transactions f_p');
-		$this->db->join('accounts c', 'c.id = f_p.account_id');
-		$this->db->join('coins cn', 'cn.id = c.coin_id');
-		$this->db->join('users u', 'u.id = f_p.user_id', 'left');
-		$this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
-		$this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
-		$this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
-		//~ $this->db->where_in('cn.abbreviation', array('USD','BTC','VEF'));
+		//~ $this->db->from('transactions f_p');
+		//~ $this->db->join('accounts c', 'c.id = f_p.account_id');
+		//~ $this->db->join('coins cn', 'cn.id = c.coin_id');
+		//~ $this->db->join('users u', 'u.id = f_p.user_id', 'left');
+		//~ $this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
+		//~ $this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
+		//~ $this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
+		//~ // $this->db->where_in('cn.abbreviation', array('USD','BTC','VEF'));
+		
+		// Si el usuario logueado es de perfil administrador tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones asociadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos todas las transacciones generadas por él.
+		if($this->session->userdata('logged_in')['profile_id'] == 1){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join('transactions f_p', 'f_p.account_id = c.id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
+			$this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join('transactions f_p', 'f_p.account_id = c.id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
+			$this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from('transactions f_p');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
+			$this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
+			$this->db->where('f_p.user_id', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 4){
+			$this->db->from('transactions f_p');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
+			$this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
+			$this->db->where_in('f_p.user_id', $ids);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->from('transactions f_p');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('profile pf', 'pf.id = u.profile_id', 'left');
+			$this->db->join('projects pj', 'pj.id = f_p.project_id', 'left');
+			$this->db->join('project_types p_t', 'p_t.id = pj.type', 'left');
+			$this->db->where('f_p.user_create_id', $this->session->userdata('logged_in')['id']);
+		}
+		
         $query = $this->db->get();
         
         return $query->result();
