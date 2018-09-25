@@ -403,13 +403,48 @@ class MResumen extends CI_Model {
 		
         $this->db->select($this->select_column);
         $this->db->distinct();
-		$this->db->from($this->table);
-		$this->db->join('users u', 'u.id = f_p.user_id', 'left');
-		$this->db->join('accounts c', 'c.id = f_p.account_id');
-		$this->db->join('coins cn', 'cn.id = c.coin_id');
-        // Si el usuario corresponde al de un administrador o plataforma quitamos el filtro de usuarios
-        if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+        // Si el usuario logueado es de perfil administrador tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones asociadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos todas las transacciones generadas por él.
+		if($this->session->userdata('logged_in')['profile_id'] == 1){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join($this->table, 'f_p.account_id = c.id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join($this->table, 'f_p.account_id = acc.id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from($this->table);
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('f_p.user_id', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 4){
+			$this->db->from($this->table);
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
 			$this->db->where_in('f_p.user_id', $ids);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->from($this->table);
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('f_p.user_create_id', $this->session->userdata('logged_in')['id']);
 		}
 		if(isset($_POST["search"]["value"]) && $_POST["search"]["value"] != ""){
 			// Filtro para traducir el valor de las búsquedas de estatus en español que coincidan con el equivalente en inglés
@@ -494,13 +529,48 @@ class MResumen extends CI_Model {
 		}
 		
 		$this->db->select($this->select_column);
-		$this->db->from($this->table);
-		$this->db->join('users u', 'u.id = f_p.user_id', 'left');
-		$this->db->join('accounts c', 'c.id = f_p.account_id');
-		$this->db->join('coins cn', 'cn.id = c.coin_id');
-		// Si el usuario corresponde al de un administrador o plataforma quitamos el filtro de usuarios
-        if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+		// Si el usuario logueado es de perfil administrador tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones asociadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos todas las transacciones generadas por él.
+		if($this->session->userdata('logged_in')['profile_id'] == 1){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join($this->table, 'f_p.account_id = c.id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join($this->table, 'f_p.account_id = acc.id');
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from($this->table);
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('f_p.user_id', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 4){
+			$this->db->from($this->table);
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
 			$this->db->where_in('f_p.user_id', $ids);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->from($this->table);
+			$this->db->join('users u', 'u.id = f_p.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = f_p.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('f_p.user_create_id', $this->session->userdata('logged_in')['id']);
 		}
 		return $this->db->count_all_results();
 	}
