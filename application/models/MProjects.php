@@ -71,6 +71,9 @@ class MProjects extends CI_Model {
 		}
 		$this->db->order_by("pj.id", "desc");
 		$query = $this->db->get();
+		
+		//~ echo $this->db->last_query();
+		//~ exit();
 
 		if ($query->num_rows() > 0)
 			return $query->result();
