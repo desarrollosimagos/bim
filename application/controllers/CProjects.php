@@ -116,8 +116,8 @@ class CProjects extends CI_Controller {
 				'percentage_collected' => $porcentaje
 			);
 			
-			// Si el perfil no es de administrador ni plataforma verificamos si el proyecto tiene transacciones asociadas al usuario logueado
-			if($perfil_id != 1 && $perfil_id != 2){
+			// Si el perfil no es de administrador ni plataforma ni gestor verificamos si el proyecto tiene transacciones asociadas al usuario logueado
+			if($perfil_id != 1 && $perfil_id != 2 && $perfil_id != 5){
 				// Buscamos si hay transacciones ligadas al usuario logueado y a la vez al proyecto actual
 				$existencia = $this->MProjects->buscar_transacciones_user_project($user_id, $proyecto->id);
 				
