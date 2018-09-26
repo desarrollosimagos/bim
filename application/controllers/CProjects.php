@@ -2343,30 +2343,61 @@ class CProjects extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
-					// Suma de depósitos
-					if($fondo->type == 'deposit'){
-						$deposit_approved += $trans_usd;
+				// Si el usuario es de perfil GESTOR tomamos en cuenta sólo las transacciones realizadas por él (user_create_id).
+				// Si el usuario no es de perfil GESTOR tomamos en cuenta sólo las transacciones asociadas a él (user_id).
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					if($fondo->status == 'approved' && $fondo->user_create_id == $this->session->userdata('logged_in')['id']){
+						// Suma de depósitos
+						if($fondo->type == 'deposit'){
+							$deposit_approved += $trans_usd;
+						}
+						// Suma de gastos
+						if($fondo->type == 'expense'){
+							$expense_approved += $trans_usd;
+						}
+						// Suma de ganancias
+						if($fondo->type == 'profit'){
+							$profit_approved += $trans_usd;
+						}
+						// Suma de retiros
+						if($fondo->type == 'withdraw'){
+							$withdraw_approved += $trans_usd;
+						}
+						// Suma de inversiones
+						if($fondo->type == 'invest'){
+							$invest_approved += $trans_usd;
+						}
+						// Suma de ventas
+						if($fondo->type == 'sell'){
+							$sell_approved += $trans_usd;
+						}
 					}
-					// Suma de gastos
-					if($fondo->type == 'expense'){
-						$expense_approved += $trans_usd;
-					}
-					// Suma de ganancias
-					if($fondo->type == 'profit'){
-						$profit_approved += $trans_usd;
-					}
-					// Suma de retiros
-					if($fondo->type == 'withdraw'){
-						$withdraw_approved += $trans_usd;
-					}
-					// Suma de inversiones
-					if($fondo->type == 'invest'){
-						$invest_approved += $trans_usd;
-					}
-					// Suma de ventas
-					if($fondo->type == 'sell'){
-						$sell_approved += $trans_usd;
+				}else{
+					if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						// Suma de depósitos
+						if($fondo->type == 'deposit'){
+							$deposit_approved += $trans_usd;
+						}
+						// Suma de gastos
+						if($fondo->type == 'expense'){
+							$expense_approved += $trans_usd;
+						}
+						// Suma de ganancias
+						if($fondo->type == 'profit'){
+							$profit_approved += $trans_usd;
+						}
+						// Suma de retiros
+						if($fondo->type == 'withdraw'){
+							$withdraw_approved += $trans_usd;
+						}
+						// Suma de inversiones
+						if($fondo->type == 'invest'){
+							$invest_approved += $trans_usd;
+						}
+						// Suma de ventas
+						if($fondo->type == 'sell'){
+							$sell_approved += $trans_usd;
+						}
 					}
 				}
 				
@@ -2480,10 +2511,21 @@ class CProjects extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
-					// Suma de depósitos
-					if($fondo->type == 'invest'){
-						$deposit_approved += $trans_usd;
+				// Si el usuario es de perfil GESTOR tomamos en cuenta sólo las transacciones realizadas por él (user_create_id).
+				// Si el usuario no es de perfil GESTOR tomamos en cuenta sólo las transacciones asociadas a él (user_id).
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					if($fondo->status == 'approved' && $fondo->user_create_id == $this->session->userdata('logged_in')['id']){
+						// Suma de depósitos
+						if($fondo->type == 'invest'){
+							$deposit_approved += $trans_usd;
+						}
+					}
+				}else{
+					if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						// Suma de depósitos
+						if($fondo->type == 'invest'){
+							$deposit_approved += $trans_usd;
+						}
 					}
 				}
 				
@@ -2533,10 +2575,19 @@ class CProjects extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
-					// Suma de ganancias
-					if($fondo->type == 'profit'){
-						if($fondo->user_id == $this->session->userdata('logged_in')['id']){
+				// Si el usuario es de perfil GESTOR tomamos en cuenta sólo las transacciones realizadas por él (user_create_id).
+				// Si el usuario no es de perfil GESTOR tomamos en cuenta sólo las transacciones asociadas a él (user_id).
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					if($fondo->status == 'approved' && $fondo->user_create_id == $this->session->userdata('logged_in')['id']){
+						// Suma de ganancias
+						if($fondo->type == 'profit'){
+							$profit_approved += $trans_usd;
+						}
+					}
+				}else{
+					if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						// Suma de ganancias
+						if($fondo->type == 'profit'){
 							$profit_approved += $trans_usd;
 						}
 					}
@@ -2652,10 +2703,21 @@ class CProjects extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
-					// Suma de ganancias
-					if($fondo->type == 'expense'){
-						$expense_approved += $trans_usd;
+				// Si el usuario es de perfil GESTOR tomamos en cuenta sólo las transacciones realizadas por él (user_create_id).
+				// Si el usuario no es de perfil GESTOR tomamos en cuenta sólo las transacciones asociadas a él (user_id).
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					if($fondo->status == 'approved' && $fondo->user_create_id == $this->session->userdata('logged_in')['id']){
+						// Suma de ganancias
+						if($fondo->type == 'expense'){
+							$expense_approved += $trans_usd;
+						}
+					}
+				}else{
+					if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						// Suma de ganancias
+						if($fondo->type == 'expense'){
+							$expense_approved += $trans_usd;
+						}
 					}
 				}
 				
@@ -2834,23 +2896,46 @@ class CProjects extends CI_Controller {
 							
 						}
 					}else{
-						// Si es una transacción de la moneda iterada y del usuario logueado la procesamos y sumamos
-						if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
-						
-							// Asignamos el nombre de la moneda
-							$summary_coin['coin'] = $fondo->coin;
+						// Si el usuario es de perfil GESTOR tomamos en cuenta sólo las transacciones realizadas por él (user_create_id).
+						// Si el usuario no es de perfil GESTOR tomamos en cuenta sólo las transacciones asociadas a él (user_id).
+						if($this->session->userdata('logged_in')['profile_id'] == 5){
+							// Si es una transacción de la moneda iterada y del usuario logueado la procesamos y sumamos
+							if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved' && $fondo->user_create_id == $this->session->userdata('logged_in')['id']){
 							
-							// Asignamos el monto total de la moneda
-							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
-							if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
-								$summary_coin['amount'] += ($fondo->amount/100000);
-							}else{
-								$summary_coin['amount'] += $fondo->amount;
+								// Asignamos el nombre de la moneda
+								$summary_coin['coin'] = $fondo->coin;
+								
+								// Asignamos el monto total de la moneda
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+									$summary_coin['amount'] += ($fondo->amount/100000);
+								}else{
+									$summary_coin['amount'] += $fondo->amount;
+								}
+								
+								// Formateamos el monto total de la moneda con sus decimales correspondientes
+								$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
+								
 							}
+						}else{
+							// Si es una transacción de la moneda iterada y del usuario logueado la procesamos y sumamos
+							if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
 							
-							// Formateamos el monto total de la moneda con sus decimales correspondientes
-							$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
-							
+								// Asignamos el nombre de la moneda
+								$summary_coin['coin'] = $fondo->coin;
+								
+								// Asignamos el monto total de la moneda
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if($fondo->coin_avr == 'VEF' && strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+									$summary_coin['amount'] += ($fondo->amount/100000);
+								}else{
+									$summary_coin['amount'] += $fondo->amount;
+								}
+								
+								// Formateamos el monto total de la moneda con sus decimales correspondientes
+								$summary_coin['amount'] = round($summary_coin['amount'], $fondo->coin_decimals);
+								
+							}
 						}
 					}
 					

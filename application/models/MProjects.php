@@ -388,11 +388,14 @@ class MProjects extends CI_Model {
 		$this->db->join('users u', 'u.id = pt.user_id', 'left');
 		// Si el usuario logueado es de perfil inversor tomamos sólo las transacciones asignadas a él.
 		// Si el usuario logueado es de perfil gestor tomamos sólo las transacciones generadas por él.
+		// Si el usuario logueado es de perfil asesor tomamos sólo las transacciones generadas por él y los usuarios asociados a él.
 		if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
 			if($this->session->userdata('logged_in')['profile_id'] == 3){
 				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
 			}else if($this->session->userdata('logged_in')['profile_id'] == 5){
 				$this->db->where('pt.user_create_id =', $this->session->userdata('logged_in')['id']);
+			}else if($this->session->userdata('logged_in')['profile_id'] == 4){
+				$this->db->where_in('pt.user_id', $ids);
 			}else{
 				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
 			}
@@ -411,6 +414,16 @@ class MProjects extends CI_Model {
     // Public method to obtain the documentos by project_id and group by coin
     public function obtenerTransaccionesPorMoneda($project_id) {
 		
+		// Almacenamos los ids de los inversores asociados al asesor más su id propio en un array
+		$ids = array($this->session->userdata('logged_in')['id']);
+		$this->db->where('adviser_id', $this->session->userdata('logged_in')['id']);
+        $query_asesor_inversores = $this->db->get('user_relations');
+        if ($query_asesor_inversores->num_rows() > 0) {
+            foreach($query_asesor_inversores->result() as $relacion){
+				$ids[] = $relacion->investor_id;
+			}
+		}
+		
 		$select = 'pt.id, pt.project_id, pt.user_id, pt.date, pt.type, pt.description, pt.amount, pt.status, u.username, c.alias, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, u.name, u.alias as user_alias';
 		
@@ -419,6 +432,20 @@ class MProjects extends CI_Model {
 		$this->db->join('accounts c', 'c.id = pt.account_id');
 		$this->db->join('coins cn', 'cn.id = c.coin_id');
 		$this->db->join('users u', 'u.id = pt.user_id', 'left');
+		// Si el usuario logueado es de perfil inversor tomamos sólo las transacciones asignadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos sólo las transacciones generadas por él.
+		// Si el usuario logueado es de perfil asesor tomamos sólo las transacciones generadas por él y los usuarios asociados a él.
+		if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+			if($this->session->userdata('logged_in')['profile_id'] == 3){
+				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+				$this->db->where('pt.user_create_id =', $this->session->userdata('logged_in')['id']);
+			}else if($this->session->userdata('logged_in')['profile_id'] == 4){
+				$this->db->where_in('pt.user_id', $ids);
+			}else{
+				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			}
+		}
 		$this->db->where('pt.project_id', $project_id);
 		$this->db->where('pt.status', 'approved');
 		//~ $this->db->group_by("cn.description");
