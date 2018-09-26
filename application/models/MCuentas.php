@@ -185,16 +185,65 @@ class MCuentas extends CI_Model {
     // Public method to serach the transactions associated
     public function buscar_transacciones($account_id, $tabla) {
 		
-		$this->db->select('t.id, t.date, t.project_id, p.name as name_project, t.user_id, t.type, t.amount, t.real, t.rate, t.description, t.status, u.profile_id, u.name as name_user, c.abbreviation as coin_avr');
+		$this->db->select('t.id, t.date, t.project_id, p.name as name_project, t.user_id, t.type, t.amount, t.real, t.rate, t.description, t.status, u.profile_id, u.name as name_user, cn.abbreviation as coin_avr');
+		$this->db->distinct();
+		//~ $this->db->from($tabla);
+		//~ $this->db->join('users u', 'u.id = t.user_id', 'left');
+		//~ $this->db->join('accounts a', 'a.id = t.account_id');
+		//~ $this->db->join('coins c', 'c.id = a.coin_id');
+		//~ $this->db->join('projects p', 'p.id = t.project_id', 'left');
+		//~ $this->db->where('t.account_id', $account_id);
+		//~ // Si el usuario corresponde al de un gestor tomamos sólo las transacciones propias
+		//~ if($this->session->userdata('logged_in')['profile_id'] == 5){
+			//~ $this->db->where('t.user_create_id =', $this->session->userdata('logged_in')['id']);
+		//~ }
 		
-		$this->db->from($tabla);
-		$this->db->join('users u', 'u.id = t.user_id', 'left');
-		$this->db->join('accounts a', 'a.id = t.account_id');
-		$this->db->join('coins c', 'c.id = a.coin_id');
-		$this->db->join('projects p', 'p.id = t.project_id', 'left');
-		$this->db->where('t.account_id', $account_id);
-		// Si el usuario corresponde al de un gestor tomamos sólo las transacciones propias
-		if($this->session->userdata('logged_in')['profile_id'] == 5){
+		// Si el usuario logueado es de perfil administrador tomamos todas las transacciones.
+		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones asociadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos todas las transacciones generadas por él.
+		if($this->session->userdata('logged_in')['profile_id'] == 1){
+			$this->db->from($tabla);
+			$this->db->join('users u', 'u.id = t.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = t.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('projects p', 'p.id = t.project_id', 'left');
+			$this->db->where('t.account_id', $account_id);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join($tabla, 't.account_id = c.id');
+			$this->db->join('users u', 'u.id = t.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('projects p', 'p.id = t.project_id', 'left');
+			$this->db->where('t.account_id', $account_id);
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from($tabla);
+			$this->db->join('users u', 'u.id = t.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = t.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('projects p', 'p.id = t.project_id', 'left');
+			$this->db->where('t.account_id', $account_id);
+			$this->db->where('t.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->from($tabla);
+			$this->db->join('users u', 'u.id = t.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = t.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('projects p', 'p.id = t.project_id', 'left');
+			$this->db->where('t.account_id', $account_id);
+			$this->db->where('t.user_create_id =', $this->session->userdata('logged_in')['id']);
+		}else{
+			$this->db->from($tabla);
+			$this->db->join('users u', 'u.id = t.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = t.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->join('projects p', 'p.id = t.project_id', 'left');
+			$this->db->where('t.account_id', $account_id);
 			$this->db->where('t.user_id =', $this->session->userdata('logged_in')['id']);
 		}
 		$this->db->order_by("t.date", "desc");
