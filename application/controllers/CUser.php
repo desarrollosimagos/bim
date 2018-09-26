@@ -84,6 +84,7 @@ class CUser extends CI_Controller {
 			'profile_id' => $this->input->post('profile_id'),
 			'coin_id' => $this->input->post('coin_id'),
 			'lang_id' => $this->input->post('lang_id'),
+			'user_create_id' => $this->session->userdata('logged_in')['id'],
 			'admin' => $this->input->post('admin'),
 			'password' => 'pbkdf2_sha256$12000$' . hash("sha256", $this->input->post('password')),
 			'status' => $this->input->post('status'),

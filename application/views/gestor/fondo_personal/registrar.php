@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<!-- Si el usuario es administrador, entonces puede elegir el usuario -->
-						<?php if($this->session->userdata('logged_in')['id'] == 1){ ?>
+						<?php if($this->session->userdata('logged_in')['profile_id'] == 5){ ?>
 						<div class="form-group">
 							<label class="col-sm-2 control-label" ><?php echo $this->lang->line('registry_user'); ?> *</label>
 							<div class="col-sm-10">

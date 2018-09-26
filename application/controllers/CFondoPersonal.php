@@ -481,7 +481,7 @@ class CFondoPersonal extends CI_Controller {
 			// Validación de campo real
 			if($row->real == 1){ $real = "Sí"; }else{ $real = "No"; }
 			// Validación de botón de edición
-			if($this->session->userdata('logged_in')['profile_id'] == 1){
+			if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 5){
 				$edit = "<a class='a-actions' href='".base_url()."transactions/edit/".$row->id."' title='".$this->lang->line('list_edit')."'><i class='fa fa-edit fa-2x a-actions'></i></a>";
 			}else{
 				$edit = "<a class='a-actions'><i class='fa fa-ban fa-2x a-actions' style='color:#D33333;'></i></a>";
