@@ -88,6 +88,18 @@
 	</div>
 	<?php } ?>
 	
+	<!-- Alerta para cuando el Capital Disponible de un proyecto en una determinada moneda sea negativo -->
+	<?php foreach ($fondo_resumen['resumen_projects'] as $fondo) { ?>
+		<?php foreach ($fondo->retirement_capital_available_coins as $fd) { ?>
+			<?php if($fd->amount < 0){ ?>
+			<div class="col-lg-12 alert alert-danger alert-dismissable">
+				<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				<?php echo $this->lang->line('capital_project_error_message').$fondo->name.$this->lang->line('capital_project_error_message2').$fd->coin.$this->lang->line('capital_project_error_message3').$fd->amount; ?>.
+			</div>
+			<?php } ?>
+		<?php } ?>
+	<?php } ?>
+	
 	<!-- Cuerpo de la sección de balance general -->
 	<div class="row">
 		<div class="col-lg-3">
@@ -243,6 +255,394 @@
 	</div>
 	<!-- Cierre del cuerpo de la sección de cintillo de montos -->
 	
+	<!-- Cuerpo de la sección de montos agrupados por moneda -->
+	<div class="ibox float-e-margins">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('view_list_summary_currency_title_projects'); ?></h5>
+
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_coin">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			
+			<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter_coin>
+				<thead>
+					<tr style="text-align: center">
+						<th><?php echo $this->lang->line('view_list_currency_projects'); ?></th>
+						<th><?php echo $this->lang->line('view_list_currency_amount_projects'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_list_currency_amountproject_projects'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 1; ?>
+					<?php foreach ($transactions_coins as $transact) { ?>
+						<tr style="text-align: center">
+							<td>
+								<?php echo $transact->coin; ?>
+							</td>
+							<td>
+								<?php echo $transact->amount; ?>
+							</td>
+							<td>
+								<?php echo $transact->amount_user; ?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='3'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+		</div>
+		
+	</div>
+	<!-- Cierre del cuerpo de la sección de montos agrupados por moneda -->
+	
+	<?php 
+	// Ids de los perfiles que tendrań permisos de visualización
+	$global_profiles = array(5);
+	?>
+	
+	<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $global_profiles)){?>
+	<!-- Cuerpo de la sección de cuentas -->
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('accounts_title'); ?></h5>
+			
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<?php $filter_profile = array(5); ?>
+			<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ ?> 
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			<?php } ?>
+
+			<table id="tab_accounts"  data-page-size="10" data-filter=#filter class="footable table table-stripped toggle-arrow-tiny">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('accounts_account'); ?></th>
+						<th ><?php echo $this->lang->line('accounts_number'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('accounts_type'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('accounts_amount'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('accounts_amount'); ?> <?php echo $this->session->userdata('logged_in')['coin_iso'];?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('accounts_description'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('accounts_status'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 1; ?>
+					<?php foreach ($cuentas as $cuenta) { ?>
+						<tr style="text-align: center">
+							<td>
+								<?php echo $i; ?>
+							</td>
+							<td>
+								<?php echo $cuenta->alias; ?>
+							</td>
+							<td>
+								<?php echo $cuenta->number; ?>
+							</td>
+							<td>
+								<?php echo $cuenta->tipo_cuenta; ?>
+							</td>
+							<td>
+								<?php $monto = number_format($cuenta->capital_disponible_total, $cuenta->coin_decimals, '.', ''); ?>
+								<?php echo $monto." ".$cuenta->coin_avr ?>
+							</td>
+							<td>
+								<?php echo $cuenta->capital_disponible_moneda_usuario; ?>
+							</td>
+							<td>
+								<?php echo $cuenta->description; ?>
+							</td>
+							<td>
+								<?php
+								if($cuenta->status == 1){
+									echo "<span style='color:#337AB7;'>Activa</span>";
+								}else if($cuenta->status == 0){
+									echo "<span style='color:#D33333;'>Inactiva</span>";
+								}else{
+									echo "";
+								}
+								?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='7'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<!-- Cierre del cuerpo de la sección de cuentas -->
+	<?php } ?>
+	
+	
+	<?php if(in_array($this->session->userdata('logged_in')['profile_id'], array(5))){?>
+	<!-- Cuerpo de la sección de resumen general -->
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('general_summary_title'); ?></h5>
+			
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<table id="tab_general_summary" data-page-size="10" data-filter=#filter_gen class="footable table table-stripped toggle-arrow-tiny">
+				<thead>
+					<tr>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_invested'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('dividend'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_account'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_project'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr style="text-align: center">
+						<td>
+							<?php echo $fondo_resumen['resumen_general']->capital_invested; ?>
+						</td>
+						<td>
+							<?php echo $fondo_resumen['resumen_general']->returned_capital; ?>
+						</td>
+						<td>
+							<?php echo $fondo_resumen['resumen_general']->retirement_capital_available; ?>
+						</td>
+						<td>
+							<?php echo $fondo_resumen['resumen_general']->capital_in_projects; ?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Cierre del cuerpo de la sección de resumen general -->
+	<?php } ?>
+	
+	
+	<?php 
+	// Ids de los perfiles que tendrań permisos de visualización
+	$global_profiles = array(5);
+	?>
+	
+	<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $global_profiles)){?>
+	<!-- Cuerpo de la sección de resumen por usuario -->
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('user_summary_title'); ?></h5>
+			
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<?php $filter_profile = array(5); ?>
+			<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ ?> 
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_user">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			<?php } ?>
+
+			<table id="tab_transactions_user" data-page-size="10" data-filter=#filter_user class="footable table table-stripped toggle-arrow-tiny">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('user_summary_name'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('user_summary_alias'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_invested'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('dividend'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_account'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_project'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('available_capital'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 1; ?>
+					<?php foreach ($fondo_resumen['resumen_usuarios'] as $fondo) { ?>
+						<tr style="text-align: center">
+							<td>
+								<?php echo $i; ?>
+							</td>
+							<td>
+								<?php echo $fondo->name; ?>
+							</td>
+							<td>
+								<?php echo $fondo->alias; ?>
+							</td>
+							<td>
+								<?php echo $fondo->capital_invested; ?>
+							</td>
+							<td>
+								<?php echo $fondo->returned_capital; ?>
+							</td>
+							<td>
+								<?php echo $fondo->retirement_capital_available; ?>
+							</td>
+							<td>
+								<?php echo $fondo->capital_in_project; ?>
+							</td>
+							<td>
+								<?php echo $fondo->capital_available; ?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='8'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<!-- Cierre del cuerpo de la sección de resumen por usuario -->
+	<?php } ?>
+	
+	
+	<?php if(in_array($this->session->userdata('logged_in')['profile_id'], array(5))){?>
+	<!-- Cuerpo de la sección de resumen por proyecto -->
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('project_summary_title'); ?></h5>
+			
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<?php $filter_profile = array(5); ?>
+			<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ ?> 
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_by_project">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			<?php } ?>
+
+			<table id="tab_project_summary" data-page-size="10" data-filter=#filter_by_project class="footable table table-stripped toggle-arrow-tiny">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('project_summary_name'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('project_summary_type'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_invested'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('dividend'); ?></th>
+						<th data-hide="phone,tablet" ><?php echo $this->lang->line('capital_project'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i = 1; ?>
+					<?php foreach ($fondo_resumen['resumen_projects'] as $fondo) { ?>
+						<tr style="text-align: center">
+							<td>
+								<?php echo $i; ?>
+							</td>
+							<td>
+								<?php echo $fondo->name; ?>
+							</td>
+							<td>
+								<?php echo $fondo->type; ?>
+							</td>
+							<td>
+								<?php echo $fondo->capital_invested; ?>
+							</td>
+							<td>
+								<?php echo $fondo->returned_capital; ?>
+							</td>
+							<td>
+								<?php echo $fondo->retirement_capital_available; ?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='8'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<!-- Cierre del cuerpo de la sección de resume por proyecto -->
+	<?php } ?>
+	
+	
 	<!-- Cuerpo de la sección de transacciones asociadas -->
 	<div class="ibox">
 		<div class="ibox-title">
@@ -251,22 +651,13 @@
 				<a class="collapse-link">
 					<i class="fa fa-chevron-up"></i>
 				</a>
-				<!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="fa fa-wrench"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-user">
-					<li><a href="#">Config option 1</a>
-					</li>
-					<li><a href="#">Config option 2</a>
-					</li>
-				</ul>-->
 				<a class="close-link">
 					<i class="fa fa-times"></i>
 				</a>
 			</div>
 		</div>
 		<div class="ibox-content">
-			<?php $filter_profile = array(1, 2, 4); ?>
+			<?php $filter_profile = array(5); ?>
 			<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $filter_profile)){ ?> 
 			<div class="col-sm-4 col-md-offset-8">
 				<div class="input-group">
@@ -295,69 +686,7 @@
 						<th data-hide="phone,tablet" ><?php echo $this->lang->line('transactions_status'); ?></th>
 					</tr>
 				</thead>
-				<!--<tbody>
-					<?php $i = 1; ?>
-					<?php foreach ($listar as $fondo) { ?>
-						<tr style="text-align: center">
-							<td>
-								<?php echo $fondo->id; ?>
-							</td>
-							<td>
-								<?php echo $fondo->date; ?>
-							</td>
-							<td>
-								<?php echo $fondo->user_name; ?>
-							</td>
-							<td>
-								<?php
-								echo $this->lang->line('transactions_type_'.$fondo->type);
-								?>
-							</td>
-							<td>
-								<?php echo number_format($fondo->amount, $fondo->coin_decimals, '.', '')."  ".$fondo->coin_symbol; ?>
-							</td>
-							<?php if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){ ?>
-							<td>
-								<?php echo $fondo->alias." - ".$fondo->number; ?>
-							</td>
-							<?php } ?>
-							<td>
-								<?php echo $fondo->description; ?>
-							</td>
-							<td>
-								<?php echo $fondo->reference; ?>
-							</td>
-							<td>
-								<?php echo $fondo->observation; ?>
-							</td>
-							<td>
-								<?php
-								if($fondo->status == 'approved'){
-									echo "<span style='color:#337AB7;'>".$this->lang->line('transactions_status_approved')."</span>";
-								}else if($fondo->status == 'waiting'){
-									echo "<span style='color:#A5D353;'>".$this->lang->line('transactions_status_waiting')."</span>";
-								}else{
-									echo "<span style='color:#D33333;'>".$this->lang->line('transactions_status_denied')."</span>";
-								}
-								?>
-							</td>
-						</tr>
-						<?php $i++ ?>
-					<?php } ?>
-				</tbody>
-				<tfoot>
-					<tr>
-						<?php if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){ ?>
-						<td class='text-center' colspan='10'>
-							<ul class='pagination'></ul>
-						</td>
-						<?php }else{ ?>
-						<td class='text-center' colspan='9'>
-							<ul class='pagination'></ul>
-						</td>
-						<?php } ?>
-					</tr>
-				</tfoot>-->
+				
 			</table>
 					
 		</div>

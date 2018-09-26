@@ -388,6 +388,13 @@ class MResumen extends CI_Model {
 		$this->db->join('projects p', 'p.id = f_p.project_id', 'left');
 		$this->db->join('project_types p_t', 'p_t.id = p.type', 'left');
 		$this->db->where('f_p.project_id', $project_id);
+		if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+			if($this->session->userdata('logged_in')['profile_id'] == 5){
+				$this->db->where('f_p.user_create_id', $this->session->userdata('logged_in')['id']);
+			}else{
+				$this->db->where('f_p.user_id', $this->session->userdata('logged_in')['id']);
+			}
+		}
 		$this->db->group_by('cn.description');
         $query = $this->db->get();
         
