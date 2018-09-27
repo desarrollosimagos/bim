@@ -238,7 +238,7 @@
 						</div>
 						<div class="col-md-4 forum-info">
 							<span class="views-number" id="span_inversion_pendiente">
-								<?php echo $fondo_resumen['resumen_general']->pending_entry; ?>
+								<?php echo $fondo_resumen['resumen_general']->pending_invest; ?>
 							</span>
 							<div>
 								<small><?php echo $this->lang->line('pending_investment'); ?></small>

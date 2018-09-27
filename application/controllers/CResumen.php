@@ -2167,6 +2167,16 @@ class CResumen extends CI_Controller {
 			$sell_approved = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2238,6 +2248,16 @@ class CResumen extends CI_Controller {
 			$sell_approved = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2275,7 +2295,7 @@ class CResumen extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id == 0){
+				if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id == 0){
 					// Suma de depósitos
 					if($fondo->type == 'deposit'){
 						$deposit_approved += $trans_usd;
@@ -2321,6 +2341,16 @@ class CResumen extends CI_Controller {
 			$sell_approved = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2358,7 +2388,7 @@ class CResumen extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
+				if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
 					// Suma de depósitos
 					if($fondo->type == 'deposit'){
 						$deposit_approved += $trans_usd;
@@ -2393,11 +2423,21 @@ class CResumen extends CI_Controller {
 			$deposit_approved = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción				
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
+				if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
 					//~ echo "Proyecto: ".$fondo->project_id;
 					//~ exit();
 					$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
@@ -2517,6 +2557,16 @@ class CResumen extends CI_Controller {
 			$profit_approved = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2554,7 +2604,7 @@ class CResumen extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
+				if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
 					// Suma de ganancias
 					if($fondo->type == 'profit'){
 						$profit_approved += $trans_usd;
@@ -2569,6 +2619,16 @@ class CResumen extends CI_Controller {
 			$deposit_waiting = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2606,7 +2666,7 @@ class CResumen extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'waiting' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id == 0){
+				if($fondo->status == 'waiting' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id == 0){
 					// Suma de depósitos
 					if($fondo->type == 'deposit'){
 						$deposit_waiting += $trans_usd;
@@ -2621,6 +2681,16 @@ class CResumen extends CI_Controller {
 			$withdraw_waiting = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2658,7 +2728,7 @@ class CResumen extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'waiting' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id == 0){
+				if($fondo->status == 'waiting' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id == 0){
 					// Suma de retiros
 					if($fondo->type == 'withdraw'){
 						$withdraw_waiting += $trans_usd;
@@ -2673,6 +2743,16 @@ class CResumen extends CI_Controller {
 			$invest_waiting = 0;
 			
 			foreach($fondos_details as $fondo){
+				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
 					
 				// Conversión de cada monto a dólares
 				$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2710,7 +2790,7 @@ class CResumen extends CI_Controller {
 					
 				}
 				
-				if($fondo->status == 'waiting' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
+				if($fondo->status == 'waiting' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
 					// Suma de retiros
 					if($fondo->type == 'deposit'){
 						$invest_waiting += $trans_usd;
@@ -2731,12 +2811,23 @@ class CResumen extends CI_Controller {
 			
 			$ids_users = array();  // Para almacenar los ids de los usuarios que han registrado fondos
 			
+			$id_user_owner;  // Variable para almacenar el id del usuario propietario
+			
 			// Colectamos los ids de los usuarios de las transacciones generales
 			foreach($fondos_details as $fondo){
 				
-				if(!in_array($fondo->user_id, $ids_users)){
-					if($fondo->user_id > 0){
-						$ids_users[] = $fondo->user_id;
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_id;
+				}else{
+					$id_user_owner = $fondo->user_create_id;
+				}
+				
+				if(!in_array($id_user_owner, $ids_users)){
+					if($id_user_owner > 0){
+						$ids_users[] = $id_user_owner;
 					}
 				}
 				
@@ -2761,7 +2852,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($fondo->user_id == $id_user){
+					if($id_user_owner == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2771,7 +2862,7 @@ class CResumen extends CI_Controller {
 						$resumen_user['username'] = $fondo->username;
 						
 						// Si tiene proyecto asociado en project_id lo sumamos
-						if($fondo->status == 'approved' && $fondo->user_id > 0 && $fondo->project_id > 0){
+						if($fondo->status == 'approved' && $id_user_owner > 0 && $fondo->project_id > 0){
 							
 							$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
@@ -2892,7 +2983,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($fondo->user_id == $id_user){
+					if($id_user_owner == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2931,7 +3022,7 @@ class CResumen extends CI_Controller {
 						}
 						
 						// Si tiene proyecto asociado en project_id lo sumamos
-						if($fondo->status == 'approved' && $fondo->user_id > 0 && $fondo->project_id > 0){
+						if($fondo->status == 'approved' && $id_user_owner > 0 && $fondo->project_id > 0){
 							// Suma de depósitos
 							if($fondo->type == 'profit'){
 								$profit_approved += $trans_usd;
@@ -2959,7 +3050,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($fondo->user_id == $id_user){
+					if($id_user_owner == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2998,7 +3089,7 @@ class CResumen extends CI_Controller {
 						}
 						
 						// Si tiene proyecto asociado en project_id lo sumamos
-						if($fondo->status == 'approved' && $fondo->user_id > 0 && $fondo->project_id == 0){
+						if($fondo->status == 'approved' && $id_user_owner > 0 && $fondo->project_id == 0){
 							// Suma de depósitos
 							if($fondo->type == 'deposit'){
 								$deposit_approved += $trans_usd;
@@ -3046,7 +3137,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($fondo->user_id == $id_user){
+					if($id_user_owner == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -3198,6 +3289,16 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
+					/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+					 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+					 * */
+					$id_user_owner;
+					if($this->session->userdata('logged_in')['profile_id'] == 5){
+						$id_user_owner = $fondo->user_id;
+					}else{
+						$id_user_owner = $fondo->user_create_id;
+					}
+					
 					if($fondo->project_id == $id_project){
 							
 						// Conversión de cada monto a dólares
@@ -3207,7 +3308,7 @@ class CResumen extends CI_Controller {
 						$resumen_project['type'] = $fondo->project_type;
 						
 						// Si tiene depósitos aprobados
-						if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
+						if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id'] && $fondo->project_id > 0){
 							
 							$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 							
@@ -3328,6 +3429,16 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
+					/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+					 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+					 * */
+					$id_user_owner;
+					if($this->session->userdata('logged_in')['profile_id'] == 5){
+						$id_user_owner = $fondo->user_id;
+					}else{
+						$id_user_owner = $fondo->user_create_id;
+					}
+					
 					if($fondo->project_id == $id_project){
 						
 						// Conversión de cada monto a dólares
@@ -3367,7 +3478,7 @@ class CResumen extends CI_Controller {
 						}
 						
 						// Si tiene ganancias aprobadas
-						if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id']){
 							// Suma de depósitos
 							if($fondo->type == 'profit'){
 								$profit_approved += $trans_usd;
@@ -3394,6 +3505,16 @@ class CResumen extends CI_Controller {
 				$sell_approved = 0;
 				
 				foreach($fondos_details as $fondo){
+					
+					/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+					 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+					 * */
+					$id_user_owner;
+					if($this->session->userdata('logged_in')['profile_id'] == 5){
+						$id_user_owner = $fondo->user_id;
+					}else{
+						$id_user_owner = $fondo->user_create_id;
+					}
 					
 					if($fondo->project_id == $id_project){
 						
@@ -3434,7 +3555,7 @@ class CResumen extends CI_Controller {
 						}
 						
 						// Si tiene transacciones aprobadas la sumamos independientemente del tipo
-						if($fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						if($fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id']){
 							// Suma de depósitos
 							if($fondo->type == 'deposit'){
 								$deposit_approved += $trans_usd;
@@ -3536,6 +3657,7 @@ class CResumen extends CI_Controller {
 		$resumen['capital_available_platform'] = round($resumen['capital_available_platform'], $decimals);
 		$resumen['capital_available_platform'] = $resumen['capital_available_platform']." ".$symbol;
 		
+		// Cálculo del balance general
 		$resumen['balance_sheet'] = $capital_account_user + $capital_project_user + $capital_account_platform + $capital_project_platform;
 		
 		$resumen['balance_sheet'] *= $currency_user; 

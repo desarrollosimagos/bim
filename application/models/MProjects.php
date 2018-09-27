@@ -378,7 +378,7 @@ class MProjects extends CI_Model {
 			}
 		}
 		
-		$select = 'pt.id, pt.project_id, pt.user_id, pt.date, pt.type, pt.description, pt.amount, pt.real, pt.rate, pt.status, u.username, c.alias, ';
+		$select = 'pt.id, pt.project_id, pt.user_id, pt.user_create_id, pt.date, pt.type, pt.description, pt.amount, pt.real, pt.rate, pt.status, u.username, c.alias, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, u.name, u.alias as user_alias';
 		
 		$this->db->select($select);
@@ -393,7 +393,7 @@ class MProjects extends CI_Model {
 			if($this->session->userdata('logged_in')['profile_id'] == 3){
 				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
 			}else if($this->session->userdata('logged_in')['profile_id'] == 5){
-				$this->db->where('pt.user_create_id =', $this->session->userdata('logged_in')['id']);
+				$this->db->where('pt.user_create_id', $this->session->userdata('logged_in')['id']);
 			}else if($this->session->userdata('logged_in')['profile_id'] == 4){
 				$this->db->where_in('pt.user_id', $ids);
 			}else{
@@ -424,7 +424,7 @@ class MProjects extends CI_Model {
 			}
 		}
 		
-		$select = 'pt.id, pt.project_id, pt.user_id, pt.date, pt.type, pt.description, pt.amount, pt.status, u.username, c.alias, ';
+		$select = 'pt.id, pt.project_id, pt.user_id, pt.user_create_id, pt.date, pt.type, pt.description, pt.amount, pt.status, u.username, c.alias, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, u.name, u.alias as user_alias';
 		
 		$this->db->select($select);
@@ -439,7 +439,7 @@ class MProjects extends CI_Model {
 			if($this->session->userdata('logged_in')['profile_id'] == 3){
 				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
 			}else if($this->session->userdata('logged_in')['profile_id'] == 5){
-				$this->db->where('pt.user_create_id =', $this->session->userdata('logged_in')['id']);
+				$this->db->where('pt.user_create_id', $this->session->userdata('logged_in')['id']);
 			}else if($this->session->userdata('logged_in')['profile_id'] == 4){
 				$this->db->where_in('pt.user_id', $ids);
 			}else{
