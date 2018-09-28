@@ -2727,6 +2727,458 @@ class CProjects extends CI_Controller {
 			$resumen['expense_capital_user'] += $expense_approved;
 			
 			// CIERRE DE CÁLCULOS DEL RESUMEN GENERAL
+			
+			//-----------------------------------------------------------------------------------------------------------------------------
+			
+			// CÁLCULOS DEL RESUMEN POR USUARIO
+			
+			$resumen_users = array();  // Para el resultado final (Listado de usuarios con sus respectivos resúmenes)
+			
+			$ids_users = array();  // Para almacenar los ids de los usuarios que han registrado fondos
+			
+			// Colectamos los ids de los usuarios de las transacciones del proyecto
+			foreach($fondos_details as $fondo){
+				
+				if(!in_array($fondo->user_id, $ids_users)){
+					if($fondo->user_id > 0){
+						$ids_users[] = $fondo->user_id;
+					}
+				}
+				
+			}
+			
+			// Armamos una lista de fondos por usuario y lo almacenamos en el arreglo '$resumen_users'
+			foreach($ids_users as $id_user){
+				
+				$resumen_user = array(
+					'name' => '',
+					'alias' => '',
+					'username' => '',
+					'capital_payback' => 0,
+					'capital_invested' => 0,
+					'returned_capital' => 0,
+					'retirement_capital_available' => 0,
+					'pending_entry' => 0,
+					'pending_exit' => 0
+				);
+				
+				// Capital Invertido
+				$deposit_approved = 0;
+				
+				foreach($fondos_details as $fondo){
+					
+					if($fondo->user_id == $id_user){
+						
+						// Conversión de cada monto a dólares
+						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
+						
+						// Si la moneda de la transacción difiere de la del proyecto
+						if($currency != $data_project[0]->coin_avr){
+							
+							// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+							if (in_array($currency, $rates)) {
+								
+								// Primero convertimos el valor de la cryptodivisa
+								$valor1anycoin = 0;
+								$i = 0;
+								$rate = $currency;
+								foreach($exchangeRates2 as $divisa){
+									if ($divisa['symbol'] == $rate){
+										$i+=1;
+										
+										// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+										$valor1anycoin = $divisa['price_usd'];
+									}
+								}
+								
+								// Si el campo de tasa 'rate' es mayor a cero
+								if((float)$fondo->rate > 0){
+									$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+									//~ $trans_usd *= (float)$valor1anycoin;
+								}else{
+									$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+								}
+								
+							}else if($currency == 'VEF'){
+								
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+									// Si el campo de tasa 'rate' es mayor a cero
+									if((float)$fondo->rate > 0){
+										$trans_usd = (float)($fondo->amount/100000)*(float)$fondo->rate;
+										//~ $trans_usd /= (float)$valor1vef;
+									}else{
+										$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+									}
+								}else{
+									// Si el campo de tasa 'rate' es mayor a cero
+									if((float)$fondo->rate > 0){
+										$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+										//~ $trans_usd /= (float)$valor1vef;
+									}else{
+										$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+									}
+								}
+								
+							}else{
+								
+								// Si el campo de tasa 'rate' es mayor a cero
+								if((float)$fondo->rate > 0){
+									$trans_usd = (float)$fondo->amount*(float)$fondo->rate;
+									//~ $trans_usd /= (float)$exchangeRates['rates'][$currency];
+								}else{
+									$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+								}
+								
+							}
+							
+						}else{
+							
+							// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+							if (in_array($currency, $rates)) {
+								
+								// Primero convertimos el valor de la cryptodivisa
+								$valor1anycoin = 0;
+								$i = 0;
+								$rate = $currency;
+								foreach($exchangeRates2 as $divisa){
+									if ($divisa['symbol'] == $rate){
+										$i+=1;
+										
+										// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+										$valor1anycoin = $divisa['price_usd'];
+									}
+								}
+								
+								$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+								
+							}else if($currency == 'VEF'){
+								
+								// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+								if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+									$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+								}else{
+									$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+								}
+								
+							}else{
+								
+								$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+								
+							}
+							
+						}
+						
+						$resumen_user['name'] = $fondo->name;
+						$resumen_user['alias'] = $fondo->alias;
+						$resumen_user['username'] = $fondo->username;
+						
+						// Si tiene proyecto asociado en project_id lo sumamos
+						if($fondo->status == 'approved'){
+							// Suma de depósitos
+							if($fondo->type == 'invest'){
+								$deposit_approved += $trans_usd;
+							}
+						}
+					}
+					
+				}  // Cierre del for each de transacciones para capital invertido
+				
+				$resumen_user['capital_invested'] += $deposit_approved;
+				
+				// Dividendo
+				$profit_approved = 0;
+				
+				foreach($fondos_details as $fondo){
+					
+					if($fondo->user_id == $id_user){
+						
+						// Conversión de cada monto a dólares
+						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
+						
+						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+						if (in_array($currency, $rates)) {
+							
+							// Primero convertimos el valor de la cryptodivisa
+							$valor1anycoin = 0;
+							$i = 0;
+							$rate = $currency;
+							foreach($exchangeRates2 as $divisa){
+								if ($divisa['symbol'] == $rate){
+									$i+=1;
+									
+									// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+									$valor1anycoin = $divisa['price_usd'];
+								}
+							}
+							
+							$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+							
+						}else if($currency == 'VEF'){
+							
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
+							
+						}else{
+							
+							$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+							
+						}
+						
+						// Si tiene proyecto asociado en project_id lo sumamos
+						if($fondo->status == 'approved'){
+							// Suma de depósitos
+							if($fondo->type == 'profit'){
+								$profit_approved += $trans_usd;
+							}
+						}
+					}
+					
+				}  // Cierre del for each de transacciones para el dividendo
+				
+				$resumen_user['returned_capital'] += $profit_approved;
+				
+				// Capital en Proyecto
+				$deposit_waiting = 0;
+				$expense_waiting = 0;
+				$profit_waiting = 0;
+				$withdraw_waiting = 0;
+				$invest_waiting = 0;
+				$sell_waiting = 0;
+				$deposit_approved = 0;
+				$expense_approved = 0;
+				$profit_approved = 0;
+				$withdraw_approved = 0;
+				$invest_approved = 0;
+				$sell_approved = 0;
+				
+				foreach($fondos_details as $fondo){
+					
+					if($fondo->user_id == $id_user){
+						
+						// Conversión de cada monto a dólares
+						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
+						
+						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+						if (in_array($currency, $rates)) {
+							
+							// Primero convertimos el valor de la cryptodivisa
+							$valor1anycoin = 0;
+							$i = 0;
+							$rate = $currency;
+							foreach($exchangeRates2 as $divisa){
+								if ($divisa['symbol'] == $rate){
+									$i+=1;
+									
+									// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+									$valor1anycoin = $divisa['price_usd'];
+								}
+							}
+							
+							$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+							
+						}else if($currency == 'VEF'){
+							
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
+							
+						}else{
+							
+							$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+							
+						}
+						
+						// Si tiene proyecto asociado en project_id lo sumamos
+						if($fondo->status == 'approved'){
+							// Suma de depósitos
+							if($fondo->type == 'deposit'){
+								$deposit_approved += $trans_usd;
+							}
+							// Suma de gastos
+							if($fondo->type == 'expense'){
+								$expense_approved += $trans_usd;
+							}
+							// Suma de ganancias
+							if($fondo->type == 'profit'){
+								$profit_approved += $trans_usd;
+							}
+							// Suma de retiros
+							if($fondo->type == 'withdraw'){
+								$withdraw_approved += $trans_usd;
+							}
+							// Suma de inversiones
+							if($fondo->type == 'invest'){
+								/*$variable1 = "projects.type"; $condicional = "="; $variable2 = $data_project[0]->type; $segmento = "invest";
+								$reglas = $this->MProjects->buscar_rules($variable1, $condicional, $variable2, $segmento);  // Listado de reglas
+								if(count($reglas) > 0){
+									if($reglas[0]->result == "true"){*/
+										$invest_approved += $trans_usd;
+									/*}
+								}*/
+							}
+							// Suma de ventas
+							if($fondo->type == 'sell'){
+								$sell_approved += $trans_usd;
+							}
+						}
+					}
+					
+				}  // Cierre del for each de transacciones para el capital en cuenta
+				
+				$resumen_user['retirement_capital_available'] = $deposit_approved + $expense_approved + $profit_approved + $withdraw_approved + $invest_approved + $sell_approved;
+				
+				// Inversión Pendiente
+				$deposit_waiting = 0;
+				
+				foreach($fondos_details as $fondo){
+					
+					if($fondo->user_id == $id_user){
+						
+						// Conversión de cada monto a dólares
+						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
+						
+						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+						if (in_array($currency, $rates)) {
+							
+							// Primero convertimos el valor de la cryptodivisa
+							$valor1anycoin = 0;
+							$i = 0;
+							$rate = $currency;
+							foreach($exchangeRates2 as $divisa){
+								if ($divisa['symbol'] == $rate){
+									$i+=1;
+									
+									// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+									$valor1anycoin = $divisa['price_usd'];
+								}
+							}
+							
+							$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+							
+						}else if($currency == 'VEF'){
+							
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
+							
+						}else{
+							
+							$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+							
+						}
+						
+						// Si tiene depósito pendiente
+						if($fondo->status == 'waiting'){
+							// Suma de depósitos
+							if($fondo->type == 'deposit'){
+								$deposit_waiting += $trans_usd;
+							}
+						}
+					}
+					
+				}  // Cierre del for each de transacciones para la inversión pendiente
+				
+				$resumen_user['pending_entry'] += $deposit_waiting;
+				
+				// Retiro Pendiente
+				$withdraw_waiting = 0;
+				
+				foreach($fondos_details as $fondo){
+					
+					if($fondo->user_id == $id_user){
+						
+						// Conversión de cada monto a dólares
+						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
+						
+						// Si el tipo de moneda de la transacción es alguna cryptomoneda (BTC, LTC, BCH, ect.) o Bolívares (VEF) hacemos la conversión usando una api más acorde
+						if (in_array($currency, $rates)) {
+							
+							// Primero convertimos el valor de la cryptodivisa
+							$valor1anycoin = 0;
+							$i = 0;
+							$rate = $currency;
+							foreach($exchangeRates2 as $divisa){
+								if ($divisa['symbol'] == $rate){
+									$i+=1;
+									
+									// Obtenemos el valor de la cryptomoneda de la transacción en dólares
+									$valor1anycoin = $divisa['price_usd'];
+								}
+							}
+							
+							$trans_usd = (float)$fondo->amount*(float)$valor1anycoin;
+							
+						}else if($currency == 'VEF'){
+							
+							// Si la moneda de la transacción es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+							if(strtotime($fondo->date) < strtotime("2018-08-20 00:00:00")){
+								$trans_usd = (float)($fondo->amount/100000)/(float)$valor1vef;
+							}else{
+								$trans_usd = (float)$fondo->amount/(float)$valor1vef;
+							}
+							
+						}else{
+							
+							$trans_usd = (float)$fondo->amount/$exchangeRates['rates'][$currency];
+							
+						}
+						
+						// Si tiene retiro pendiente
+						if($fondo->status == 'waiting'){
+							// Suma de depósitos
+							if($fondo->type == 'withdraw'){
+								$withdraw_waiting += $trans_usd;
+							}
+						}
+					}
+					
+				}  // Cierre del for each de transacciones para la retiro pendiente
+				
+				$resumen_user['pending_exit'] += $withdraw_waiting;
+				
+				$decimals = 2;
+				if($this->session->userdata('logged_in')['coin_decimals'] != ""){
+					$decimals = $this->session->userdata('logged_in')['coin_decimals'];
+				}
+				$symbol = $this->session->userdata('logged_in')['coin_symbol'];
+				
+				// Conversión de los montos a la divisa del usuario
+				$resumen_user['capital_invested'] *= $currency_user; 
+				$resumen_user['capital_invested'] = round($resumen_user['capital_invested'], $decimals);
+				$resumen_user['capital_invested'] = $resumen_user['capital_invested']." ".$symbol;
+				
+				$resumen_user['returned_capital'] *= $currency_user; 
+				$resumen_user['returned_capital'] = round($resumen_user['returned_capital'], $decimals);
+				$resumen_user['returned_capital'] = $resumen_user['returned_capital']." ".$symbol;
+				
+				$resumen_user['retirement_capital_available'] *= $currency_user; 
+				$resumen_user['retirement_capital_available'] = round($resumen_user['retirement_capital_available'], $decimals);
+				$resumen_user['retirement_capital_available'] = $resumen_user['retirement_capital_available']." ".$symbol;
+				
+				$resumen_user['pending_entry'] *= $currency_user; 
+				$resumen_user['pending_entry'] = round($resumen_user['pending_entry'], $decimals);
+				$resumen_user['pending_entry'] = $resumen_user['pending_entry']." ".$symbol;
+				
+				$resumen_user['pending_exit'] *= $currency_user; 
+				$resumen_user['pending_exit'] = round($resumen_user['pending_exit'], $decimals);
+				$resumen_user['pending_exit'] = $resumen_user['pending_exit']." ".$symbol;
+				
+				$resumen_users[] = $resumen_user;
+				
+			}
+			
+			// CIERRE DE CÁLCULOS DEL RESUMEN POR USUARIO
 		
 		}  // Cierre de validación de perfil
 			
@@ -2797,7 +3249,8 @@ class CProjects extends CI_Controller {
 		}else{
 			// Retorno de todos los montos calculados
 			return array(
-				'resumen_general' => json_decode(json_encode($resumen), false)
+				'resumen_general' => json_decode(json_encode($resumen), false),
+				'resumen_usuarios' => json_decode(json_encode($resumen_users), false)
 			);  // Esto retorna un arreglo de objetos
 		}
 		
