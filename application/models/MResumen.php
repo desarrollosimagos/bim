@@ -228,7 +228,7 @@ class MResumen extends CI_Model {
 		
 		$capitalAprobado = 0;
 		
-		$select = 'u.name, u.alias, u.username, f_p.id, f_p.account_id, f_p.project_id, f_p.user_id, f_p.type, f_p.amount, f_p.real, f_p.rate, f_p.status, f_p.date, ';
+		$select = 'u.name, u.alias, u.username, f_p.id, f_p.account_id, f_p.project_id, f_p.user_id, f_p.user_create_id, f_p.type, f_p.amount, f_p.real, f_p.rate, f_p.status, f_p.date, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, pf.id as perfil_id, pf.name as perfil_name, pj.name as project_name, p_t.type as project_type';
 		
 		$this->db->select($select);
@@ -301,6 +301,9 @@ class MResumen extends CI_Model {
 		}
 		
         $query = $this->db->get();
+        
+        //~ echo $this->db->last_query();
+		//~ exit();
         
         return $query->result();
             

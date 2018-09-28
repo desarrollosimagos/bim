@@ -2173,9 +2173,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2254,9 +2254,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2347,9 +2347,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2429,9 +2429,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2563,9 +2563,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2625,9 +2625,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2687,9 +2687,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2749,9 +2749,9 @@ class CResumen extends CI_Controller {
 				 * */
 				$id_user_owner;
 				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
 					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
 				}
 					
 				// Conversión de cada monto a dólares
@@ -2811,23 +2811,12 @@ class CResumen extends CI_Controller {
 			
 			$ids_users = array();  // Para almacenar los ids de los usuarios que han registrado fondos
 			
-			$id_user_owner;  // Variable para almacenar el id del usuario propietario
-			
 			// Colectamos los ids de los usuarios de las transacciones generales
 			foreach($fondos_details as $fondo){
 				
-				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
-				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
-				 * */
-				if($this->session->userdata('logged_in')['profile_id'] == 5){
-					$id_user_owner = $fondo->user_id;
-				}else{
-					$id_user_owner = $fondo->user_create_id;
-				}
-				
-				if(!in_array($id_user_owner, $ids_users)){
-					if($id_user_owner > 0){
-						$ids_users[] = $id_user_owner;
+				if(!in_array($fondo->user_id, $ids_users)){
+					if($fondo->user_id > 0){
+						$ids_users[] = $fondo->user_id;
 					}
 				}
 				
@@ -2852,7 +2841,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($id_user_owner == $id_user){
+					if($fondo->user_id == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -2862,7 +2851,7 @@ class CResumen extends CI_Controller {
 						$resumen_user['username'] = $fondo->username;
 						
 						// Si tiene proyecto asociado en project_id lo sumamos
-						if($fondo->status == 'approved' && $id_user_owner > 0 && $fondo->project_id > 0){
+						if($fondo->status == 'approved' && $fondo->user_id > 0 && $fondo->project_id > 0){
 							
 							$data_project = $this->MProjects->obtenerProyecto($fondo->project_id);  // Datos del proyecto
 					
@@ -2983,7 +2972,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($id_user_owner == $id_user){
+					if($fondo->user_id == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -3022,7 +3011,7 @@ class CResumen extends CI_Controller {
 						}
 						
 						// Si tiene proyecto asociado en project_id lo sumamos
-						if($fondo->status == 'approved' && $id_user_owner > 0 && $fondo->project_id > 0){
+						if($fondo->status == 'approved' && $fondo->user_id > 0 && $fondo->project_id > 0){
 							// Suma de depósitos
 							if($fondo->type == 'profit'){
 								$profit_approved += $trans_usd;
@@ -3050,7 +3039,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($id_user_owner == $id_user){
+					if($fondo->user_id == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -3089,7 +3078,7 @@ class CResumen extends CI_Controller {
 						}
 						
 						// Si tiene proyecto asociado en project_id lo sumamos
-						if($fondo->status == 'approved' && $id_user_owner > 0 && $fondo->project_id == 0){
+						if($fondo->status == 'approved' && $fondo->user_id > 0 && $fondo->project_id == 0){
 							// Suma de depósitos
 							if($fondo->type == 'deposit'){
 								$deposit_approved += $trans_usd;
@@ -3137,7 +3126,7 @@ class CResumen extends CI_Controller {
 				
 				foreach($fondos_details as $fondo){
 					
-					if($id_user_owner == $id_user){
+					if($fondo->user_id == $id_user){
 						
 						// Conversión de cada monto a dólares
 						$currency = $fondo->coin_avr;  // Tipo de moneda de la transacción
@@ -3252,11 +3241,21 @@ class CResumen extends CI_Controller {
 			
 			$ids_projects = array();  // Para almacenar los ids de los proyectos que han registrado fondos
 			
-			// Colectamos los ids de los usuarios de las transacciones generales
+			// Colectamos los ids de los proyectos de las transacciones generales
 			foreach($fondos_details as $fondo){
 				
+				/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+				 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+				 * */
+				$id_user_owner;
+				if($this->session->userdata('logged_in')['profile_id'] == 5){
+					$id_user_owner = $fondo->user_create_id;
+				}else{
+					$id_user_owner = $fondo->user_id;
+				}
+				
 				if(!in_array($fondo->project_id, $ids_projects)){
-					if($fondo->project_id > 0 && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+					if($fondo->project_id > 0 && $id_user_owner == $this->session->userdata('logged_in')['id']){
 						$ids_projects[] = $fondo->project_id;
 					}
 				}
@@ -3294,9 +3293,9 @@ class CResumen extends CI_Controller {
 					 * */
 					$id_user_owner;
 					if($this->session->userdata('logged_in')['profile_id'] == 5){
-						$id_user_owner = $fondo->user_id;
-					}else{
 						$id_user_owner = $fondo->user_create_id;
+					}else{
+						$id_user_owner = $fondo->user_id;
 					}
 					
 					if($fondo->project_id == $id_project){
@@ -3434,9 +3433,9 @@ class CResumen extends CI_Controller {
 					 * */
 					$id_user_owner;
 					if($this->session->userdata('logged_in')['profile_id'] == 5){
-						$id_user_owner = $fondo->user_id;
-					}else{
 						$id_user_owner = $fondo->user_create_id;
+					}else{
+						$id_user_owner = $fondo->user_id;
 					}
 					
 					if($fondo->project_id == $id_project){
@@ -3511,9 +3510,9 @@ class CResumen extends CI_Controller {
 					 * */
 					$id_user_owner;
 					if($this->session->userdata('logged_in')['profile_id'] == 5){
-						$id_user_owner = $fondo->user_id;
-					}else{
 						$id_user_owner = $fondo->user_create_id;
+					}else{
+						$id_user_owner = $fondo->user_id;
 					}
 					
 					if($fondo->project_id == $id_project){
@@ -3754,6 +3753,16 @@ class CResumen extends CI_Controller {
 			
 				foreach($fondos_details as $fondo){
 					
+					/* Creamos una variable para almacenar el id del usuario creador, en caso de ser un usuario de perfil 'GESTOR', 
+					 * o el id del usuario asociado, en caso de ser un usuario de los perfiles restantes ('INVERSOR', 'ASESOR')
+					 * */
+					$id_user_owner;
+					if($this->session->userdata('logged_in')['profile_id'] == 5){
+						$id_user_owner = $fondo->user_create_id;
+					}else{
+						$id_user_owner = $fondo->user_id;
+					}
+					
 					// Si el usuario es de perfil 'ADMINISTRADOR' o 'PLATAFORMA'
 					if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
 						// Si es una transacción de la modela iterada la procesamos y sumamos
@@ -3776,7 +3785,7 @@ class CResumen extends CI_Controller {
 						}
 					}else{
 						// Si es una transacción de la moneda iterada y del usuario logueado la procesamos y sumamos
-						if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved' && $fondo->user_id == $this->session->userdata('logged_in')['id']){
+						if($fondo->coin_avr == key($avr_coin) && $fondo->status == 'approved' && $id_user_owner == $this->session->userdata('logged_in')['id']){
 						
 							// Asignamos el nombre de la moneda
 							$summary_coin['coin'] = $fondo->coin;

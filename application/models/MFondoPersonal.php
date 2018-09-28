@@ -141,7 +141,7 @@ class MFondoPersonal extends CI_Model {
  * Public method to obtain the associated accounts
  * ------------------------------------------------------
  */
-    public function obtener_cuentas_group($tipo) {
+    public function obtener_cuentas_group() {
 		
 		$this->db->select('c.id, c.alias, c.number, cn.abbreviation as coin_avr');
 		if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2){
