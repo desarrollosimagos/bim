@@ -74,8 +74,7 @@ class CFondoPersonal extends CI_Controller {
 		$this->load->view('base');
 		$data['ident'] = "Cuentas";
 		$data['ident_sub'] = "Transacciones";
-		$tipo = $this->uri->segment(3);  // 'deposit' = Agregar, 'withdraw' = Retirar
-		$data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group($tipo);
+		$data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group();
 		$data['usuarios'] = $this->MUser->obtener();
 		$data['projects'] = $this->MFondoPersonal->obtener_proyectos_group();
 		
@@ -119,7 +118,7 @@ class CFondoPersonal extends CI_Controller {
 		
 		$fecha = $fecha." ".$hora;
 		
-		if($this->session->userdata('logged_in')['id'] == 1){
+		if($this->session->userdata('logged_in')['id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 5){
 			$user_id = $this->input->post('user_id');
 		}else if($this->session->userdata('logged_in')['id'] == 2){
 			$user_id = 0;
@@ -221,7 +220,7 @@ class CFondoPersonal extends CI_Controller {
 		$data['ident_sub'] = "Transacciones";
         $data['id'] = $this->uri->segment(3);
         $data['editar'] = $this->MFondoPersonal->obtenerFondoPersonal($data['id']);
-        $data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group($tipo);
+        $data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group();
         $data['usuarios'] = $this->MUser->obtener();
         $data['projects'] = $this->MFondoPersonal->obtener_proyectos_group();
         
@@ -265,7 +264,7 @@ class CFondoPersonal extends CI_Controller {
 		
 		$fecha = $fecha." ".$hora;
 		
-		if($this->session->userdata('logged_in')['id'] == 1){
+		if($this->session->userdata('logged_in')['id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 5){
 			$user_id = $this->input->post('user_id');
 		}else if($this->session->userdata('logged_in')['id'] == 2){
 			$user_id = 0;
