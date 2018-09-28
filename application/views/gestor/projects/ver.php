@@ -651,7 +651,7 @@ th {
 	
 	<?php 
 	// Ids de los perfiles que tendrań permisos de visualización
-	$global_profiles = array(1, 2);
+	$global_profiles = array(5);
 	?>
 	
 	<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $global_profiles)){?>
