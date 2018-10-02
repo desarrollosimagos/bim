@@ -1,4 +1,5 @@
-# BIM - Business Investment Management
+# BIM
+Business Investment Management
 
 Archivos de configuración para los ajustes de la aplicación:
 
