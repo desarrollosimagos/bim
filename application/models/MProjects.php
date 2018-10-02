@@ -125,6 +125,7 @@ class MProjects extends CI_Model {
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
 			$this->db->join('coins c', 'c.id = pj.coin_id');
 		}
+		// Filtro del buscador
 		if($buscar != ''){
 			$this->db->like('pj.name', $buscar);
 			$this->db->or_like('pj.date', $buscar);
