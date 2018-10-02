@@ -141,13 +141,49 @@
 					<!--<button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ><i class="fa fa-refresh"></i> Refresh</button>-->
 				</div>
 				<div class="col-md-6">
-					<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control">
+					<div class="input-group">
+						<input type="text" id="search" name="search" placeholder="Search" class="input-sm form-control">
 						<span class="input-group-btn">
-							<button type="button" class="btn btn-sm btn-primary"> Go!</button> 
+							<button type="button" id="go-search" class="btn btn-sm btn-primary"> Go!</button>
 						</span>
 					</div>
 				</div>
 			</div>
+			
+			<!-- Capa para mostrar la busqueda realizada -->
+			<div class="row m-b-sm m-t-sm">
+				<div class="col-md-6">
+					
+				</div>
+				<div class="col-md-6">
+					<div class="input-group">
+						<div class="col-sm-6">
+							<span class="info">
+								
+							</span>
+						</div>
+						<div class="col-sm-6">
+							<!-- Spinner de carga -->
+							<div class="sk-spinner sk-spinner-circle">
+								<div class="sk-circle1 sk-circle"></div>
+								<div class="sk-circle2 sk-circle"></div>
+								<div class="sk-circle3 sk-circle"></div>
+								<div class="sk-circle4 sk-circle"></div>
+								<div class="sk-circle5 sk-circle"></div>
+								<div class="sk-circle6 sk-circle"></div>
+								<div class="sk-circle7 sk-circle"></div>
+								<div class="sk-circle8 sk-circle"></div>
+								<div class="sk-circle9 sk-circle"></div>
+								<div class="sk-circle10 sk-circle"></div>
+								<div class="sk-circle11 sk-circle"></div>
+								<div class="sk-circle12 sk-circle"></div>
+							</div>
+							<!-- Cierre de spinner de carga -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Cierre de la capa para mostrar la busqueda realizada -->
 
 			<div class="project-list">
 
@@ -197,13 +233,6 @@
 						<td class="project-title">
 							<?php echo $proyecto->coin; ?>
 						</td>
-						<!--<td class="project-people">
-							<a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-							<a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-							<a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-							<a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-							<a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-						</td>-->
 						<td class="project-actions">
 							<a href="<?php echo base_url() ?>projects/view/<?= $proyecto->id; ?>" title="<?php echo $this->lang->line('list_view_projects'); ?>" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> <?php echo $this->lang->line('list_view_projects'); ?> </a>
 							<a href="<?php echo base_url() ?>projects/edit/<?= $proyecto->id; ?>" title="<?php echo $this->lang->line('list_edit_projects'); ?>" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> <?php echo $this->lang->line('list_edit_projects'); ?> </a>

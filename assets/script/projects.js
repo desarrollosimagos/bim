@@ -108,5 +108,139 @@ $(document).ready(function(){
                 }, 'json');
             } 
         });
-    });       
+    });
+    
+    // El elemento que se quiere activar.
+	var cargando = $(".sk-spinner-circle");
+	cargando.hide();
+    
+    // Funciones para el buscador
+    $("#search").keyup( function (e) {
+		
+		// Realizamos la búsqueda al persionar la tecla 'Intro' o 'Enter'
+		if(e.which == 13){
+			
+			var info = $(this).val();  // Valor del campo 'search'
+			
+			if(info != ''){
+				
+				// Mostramos en tiempo real una vista preliminar de lo que se busca
+				$(".info").html('<strong>"'+info+'"</strong>');
+
+				// evento ajax start
+				$(document).ajaxStart(function() {
+				cargando.show();
+				});
+
+				// evento ajax stop
+				$(document).ajaxStop(function() {
+				cargando.hide();
+				});
+				
+				// Realizamos una consulta asincrona con ajax usando como argumento lo escrito en el buscador
+				$.post(base_url+'projects/search', { 'search': info }, function(data){
+					
+					if(data != ''){
+						$(".results").html('');  // Vaciamos la tabla
+						$(".results").html(data);  // Cargamos los resultados
+					}else{
+						$(".results").html('<strong>No se encontraron coincidencias</strong>');
+					}
+					
+				});			
+				
+			}else{
+				
+				// Vaciamos la vista preliminar de la búsqueda
+				$(".info").html('');
+
+				// evento ajax start
+				$(document).ajaxStart(function() {
+				cargando.show();
+				});
+
+				// evento ajax stop
+				$(document).ajaxStop(function() {
+				cargando.hide();
+				});
+				
+				// Realizamos una consulta asincrona con ajax sin datos de búsqueda para que retorne todos los registros correspondientes
+				$.post(base_url+'projects/search', { 'search': '' }, function(data){
+					
+					if(data != ''){
+						$(".results").html('');  // Vaciamos la tabla
+						$(".results").html(data);  // Cargamos los resultados
+					}else{
+						$(".results").html('<strong>No se encontraron coincidencias</strong>');
+					}
+					
+				});
+				
+			}
+		}
+		
+	});
+    
+    $("#go-search").click(function (e) {
+		
+		var info = $("#search").val();
+		
+		if(info != ''){
+			
+			// Mostramos en tiempo real una vista preliminar de lo que se busca
+			$(".info").html('<strong>"'+info+'"</strong>');
+
+			// evento ajax start
+			$(document).ajaxStart(function() {
+			cargando.show();
+			});
+
+			// evento ajax stop
+			$(document).ajaxStop(function() {
+			cargando.hide();
+			});
+			
+			// Realizamos una consulta asincrona con ajax usando como argumento lo escrito en el buscador
+			$.post(base_url+'projects/search', { 'search': info }, function(data){
+				
+				if(data != ''){
+					$(".results").html('');  // Vaciamos la tabla
+					$(".results").html(data);  // Cargamos los resultados
+				}else{
+					$(".results").html('<strong>No se encontraron coincidencias</strong>');
+				}
+				
+			});			
+			
+		}else{
+			
+			// Vaciamos la vista preliminar de la búsqueda
+			$(".info").html('');
+
+			// evento ajax start
+			$(document).ajaxStart(function() {
+			cargando.show();
+			});
+
+			// evento ajax stop
+			$(document).ajaxStop(function() {
+			cargando.hide();
+			});
+			
+			// Realizamos una consulta asincrona con ajax sin datos de búsqueda para que retorne todos los registros correspondientes
+			$.post(base_url+'projects/search', { 'search': '' }, function(data){
+				
+				if(data != ''){
+					$(".results").html('');  // Vaciamos la tabla
+					$(".results").html(data);  // Cargamos los resultados
+				}else{
+					$(".results").html('<strong>No se encontraron coincidencias</strong>');
+				}
+				
+			});
+			
+		}
+		
+	});
+    
 });
