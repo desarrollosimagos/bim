@@ -141,18 +141,54 @@
 					<!--<button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ><i class="fa fa-refresh"></i> Refresh</button>-->
 				</div>
 				<div class="col-md-6">
-					<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control">
+					<div class="input-group">
+						<input type="text" id="search" name="search" placeholder="Search" class="input-sm form-control">
 						<span class="input-group-btn">
-							<button type="button" class="btn btn-sm btn-primary"> Go!</button> 
+							<button type="button" id="go-search" class="btn btn-sm btn-primary"> Go!</button> 
 						</span>
 					</div>
 				</div>
 			</div>
+			
+			<!-- Capa para mostrar la busqueda realizada -->
+			<div class="row m-b-sm m-t-sm">
+				<div class="col-md-6">
+					
+				</div>
+				<div class="col-md-6">
+					<div class="input-group">
+						<div class="col-sm-6">
+							<span class="info">
+								
+							</span>
+						</div>
+						<div class="col-sm-6">
+							<!-- Spinner de carga -->
+							<div class="sk-spinner sk-spinner-circle">
+								<div class="sk-circle1 sk-circle"></div>
+								<div class="sk-circle2 sk-circle"></div>
+								<div class="sk-circle3 sk-circle"></div>
+								<div class="sk-circle4 sk-circle"></div>
+								<div class="sk-circle5 sk-circle"></div>
+								<div class="sk-circle6 sk-circle"></div>
+								<div class="sk-circle7 sk-circle"></div>
+								<div class="sk-circle8 sk-circle"></div>
+								<div class="sk-circle9 sk-circle"></div>
+								<div class="sk-circle10 sk-circle"></div>
+								<div class="sk-circle11 sk-circle"></div>
+								<div class="sk-circle12 sk-circle"></div>
+							</div>
+							<!-- Cierre de spinner de carga -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Cierre de la capa para mostrar la busqueda realizada -->
 
 			<div class="project-list">
 
 				<table class="table table-hover" id="tab_projects" >
-					<tbody>
+					<tbody class="results">
 					<?php $i = 1; ?>
 					<?php foreach ($listar as $proyecto) { ?>
 					<tr class="scroll">

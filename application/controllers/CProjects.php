@@ -154,6 +154,132 @@ class CProjects extends CI_Controller {
 		$this->load->view('footer');
 	}
 	
+	// Método para buscar proyectos por nombre o fecha
+	public function seeker(){
+		
+		$buscar = $this->input->post('search');
+		
+		$listar = array();
+		
+		$proyectos = $this->MProjects->obtener_filtrado($buscar);
+		
+		// Perfil del usuario logueado
+		$perfil_id = $this->session->userdata('logged_in')['profile_id'];
+		
+		// Id del usuario logueado
+		$user_id = $this->session->userdata('logged_in')['id'];
+		
+		// Consutamos los datos extra y construimos la data a imprimir
+		foreach($proyectos as $proyecto ){
+			
+			// Proceso de búsqueda de grupos de inversores asociados al proyecto
+			$groups = $this->MProjects->buscar_grupos($proyecto->id);
+			$groups_names = "";
+			foreach($groups as $group){
+				$groups_names .= $group->name.",";
+			}
+			$groups_names = substr($groups_names, 0, -1);
+			
+			// Proceso de búsqueda de transacciones asociados al proyecto para calcular el porcentaje recaudado
+			$transacctions = $this->MProjects->buscar_transacciones($proyecto->id);
+			if($proyecto->amount_r != null && $proyecto->amount_r > 0){
+				$porcentaje = (float)$transacctions[0]->ingresos/(float)$proyecto->amount_r*100;
+			}else{
+				$porcentaje = "null";
+			}
+			
+			$data_proyecto = array(
+				'id' => $proyecto->id,
+				'name' => $proyecto->name,
+				'description' => $proyecto->description,
+				'type' => $proyecto->type,
+				'valor' => $proyecto->valor,
+				'amount_r' => $proyecto->amount_r,
+				'amount_min' => $proyecto->amount_min,
+				'amount_max' => $proyecto->amount_max,
+				'date' => $proyecto->date,
+				'date_r' => $proyecto->date_r,
+				'date_v' => $proyecto->date_v,
+				'coin' => $proyecto->coin_avr." (".$proyecto->coin.")",
+				'status' => $proyecto->status,
+				'groups_names' => $groups_names,
+				'percentage_collected' => $porcentaje
+			);
+			
+			// Si el perfil no es de administrador ni plataforma ni gestor verificamos si el proyecto tiene transacciones asociadas al usuario logueado
+			if($perfil_id != 1 && $perfil_id != 2 && $perfil_id != 5){
+				// Buscamos si hay transacciones ligadas al usuario logueado y a la vez al proyecto actual
+				$existencia = $this->MProjects->buscar_transacciones_user_project($user_id, $proyecto->id);
+				
+				if(count($existencia) > 0){
+					$listar[] = $data_proyecto;
+				}
+			}else{
+				$listar[] = $data_proyecto;
+			}
+			
+		}
+		
+		// Conversión a objeto
+		$listar = json_decode( json_encode( $listar ), false );
+		
+		$data['listar'] = $listar;
+		
+		foreach($data['listar'] as $proyecto){
+		?>
+		<tr class="scroll">
+			<td class="project-status">
+				<?php if($proyecto->status == 1) { ?>
+				<span class="label label-primary"><?php echo $this->lang->line('list_status1_projects'); ?></span>
+				<?php }else{ ?>
+				<span class="label label-default"><?php echo $this->lang->line('list_status2_projects'); ?></span>
+				<?php } ?>
+			</td>
+			<td class="project-title">
+				<a href="<?php echo base_url() ?>projects/view/<?= $proyecto->id; ?>"><?php echo $proyecto->name; ?></a>
+				<br/>
+				<small>Created <?php echo $proyecto->date; ?></small>
+				<br>
+				<?php if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2) { ?>
+				<small><?php echo $proyecto->groups_names; ?></small>
+				<?php } ?>
+			</td>
+			<td class="project-completion">
+					<small>
+						<?php echo $this->lang->line('list_completed_projects'); ?>: 
+						<?php 
+						if($proyecto->amount_r == null){
+							echo "&infin;";
+							$percentage = 0;
+						}else{
+							if($proyecto->percentage_collected > 0){
+								echo round($proyecto->percentage_collected, 2)."%";
+								$percentage = round($proyecto->percentage_collected, 2);
+							}else{
+								echo "0%";
+								$percentage = 0;
+							}
+						}
+						?>
+					</small>
+					<div class="progress progress-mini">
+						<div style="width: <?php echo $percentage; ?>%;" class="progress-bar"></div>
+					</div>
+			</td>
+			<td class="project-title">
+				<?php echo $proyecto->coin; ?>
+			</td>
+			<td class="project-actions">
+				<a href="<?php echo base_url() ?>projects/view/<?= $proyecto->id; ?>" title="<?php echo $this->lang->line('list_view_projects'); ?>" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> <?php echo $this->lang->line('list_view_projects'); ?> </a>
+				<a href="<?php echo base_url() ?>projects/edit/<?= $proyecto->id; ?>" title="<?php echo $this->lang->line('list_edit_projects'); ?>" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> <?php echo $this->lang->line('list_edit_projects'); ?> </a>
+				<a id='<?php echo $proyecto->id; ?>' title='<?php echo $this->lang->line('list_delete_projects'); ?>' class="btn btn-danger btn-sm borrar"><i class="fa fa-trash"></i> <?php echo $this->lang->line('list_delete_projects'); ?> </a>
+			</td>
+		</tr>
+		<?php
+		}
+		
+	}
+	
 	public function register()
 	{
 		$this->load->view('base');
