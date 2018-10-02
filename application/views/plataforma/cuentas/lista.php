@@ -110,22 +110,58 @@
 		</div>
 		<div class="ibox-content">
 			<div class="row m-b-sm m-t-sm">
-				<div class="col-md-1">
+				<div class="col-md-6">
 					<!--<button type="button" id="loading-example-btn" class="btn btn-white btn-sm" ><i class="fa fa-refresh"></i> Refresh</button>-->
 				</div>
-				<div class="col-md-11">
-					<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> 
+				<div class="col-md-6">
+					<div class="input-group">
+						<input type="text" id="search" name="search" placeholder="Search" class="input-sm form-control">
 						<span class="input-group-btn">
-							<button type="button" class="btn btn-sm btn-primary"> Go!</button> 
+							<button type="button" id="go-search" class="btn btn-sm btn-primary"> Go!</button> 
 						</span>
 					</div>
 				</div>
 			</div>
+			
+			<!-- Capa para mostrar la busqueda realizada -->
+			<div class="row m-b-sm m-t-sm">
+				<div class="col-md-6">
+					
+				</div>
+				<div class="col-md-6">
+					<div class="input-group">
+						<div class="col-sm-6">
+							<span class="info">
+								
+							</span>
+						</div>
+						<div class="col-sm-6">
+							<!-- Spinner de carga -->
+							<div class="sk-spinner sk-spinner-circle">
+								<div class="sk-circle1 sk-circle"></div>
+								<div class="sk-circle2 sk-circle"></div>
+								<div class="sk-circle3 sk-circle"></div>
+								<div class="sk-circle4 sk-circle"></div>
+								<div class="sk-circle5 sk-circle"></div>
+								<div class="sk-circle6 sk-circle"></div>
+								<div class="sk-circle7 sk-circle"></div>
+								<div class="sk-circle8 sk-circle"></div>
+								<div class="sk-circle9 sk-circle"></div>
+								<div class="sk-circle10 sk-circle"></div>
+								<div class="sk-circle11 sk-circle"></div>
+								<div class="sk-circle12 sk-circle"></div>
+							</div>
+							<!-- Cierre de spinner de carga -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Cierre de la capa para mostrar la busqueda realizada -->
 
 			<div class="project-list">
 
 				<table class="table table-hover" id="tab_cuentas" >
-					<tbody>
+					<tbody class="results">
 					<?php $i = 1; ?>
 					<?php foreach ($listar as $fondo) { ?>
 					<tr class="scroll">
@@ -186,102 +222,4 @@
 
 
  <!-- Page-Level Scripts -->
-<script>
-$(document).ready(function(){
-	
-     //~ $('#tab_cuentas').DataTable({
-        //~ "paging": true,
-        //~ "lengthChange": true,
-        //~ "autoWidth": false,
-        //~ "searching": true,
-        //~ "ordering": true,
-        //~ "info": true,
-        //~ "iDisplayLength": 50,
-        //~ "iDisplayStart": 0,
-        //~ "sPaginationType": "full_numbers",
-        //~ "aLengthMenu": [10, 50, 100, 150],
-        //~ "oLanguage": {"sUrl": "<?= assets_url() ?>js/es.txt"},
-        //~ "aoColumns": [
-            //~ {"sClass": "registro center", "sWidth": "5%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "registro center", "sWidth": "10%"},
-            //~ {"sClass": "none", "sWidth": "30%"},
-            //~ {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
-            //~ {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
-        //~ ]
-    //~ });
-             
-         // Validacion para borrar
-    $("table#tab_cuentas").on('click', 'a.borrar', function (e) {
-        e.preventDefault();
-        var id = this.getAttribute('id');
-
-        swal({
-            title: "Borrar registro",
-            text: "¿Está seguro de borrar el registro?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar",
-            closeOnConfirm: false,
-            closeOnCancel: true
-          },
-        function(isConfirm){
-            if (isConfirm) {
-             
-                $.post('<?php echo base_url(); ?>accounts/delete/' + id + '', function (response) {
-
-                    if (response['response'] == "existe") {
-                       
-                         swal({ 
-                           title: "Disculpe,",
-                            text: "No se puede eliminar, se encuentra asociado a una transacción",
-                             type: "warning" 
-                           },
-                           function(){
-                             
-                         });
-                    } else if (response['response'] == "existe2") {
-                       
-                         swal({ 
-                           title: "Disculpe,",
-                            text: "No se puede eliminar, se encuentra asociado a un grupo de inversionistas.",
-                             type: "warning" 
-                           },
-                           function(){
-                             
-                         });
-                    } else if (response['response'] == "error") {
-                       
-                         swal({ 
-                           title: "Disculpe,",
-                            text: "No se puede eliminar, ha ocurrido un falo en el sistema, por favor consulte con su administrador.",
-                             type: "warning" 
-                           },
-                           function(){
-                             
-                         });
-                    } else {
-                         swal({ 
-                           title: "Eliminar",
-                            text: "Registro eliminado con exito.",
-                             type: "success" 
-                           },
-                           function(){
-                             window.location.href = '<?php echo base_url(); ?>accounts';
-                         });
-                    }
-                }, 'json');
-            } 
-        });
-    });       
-});
-        
-</script>
+<script src="<?php echo assets_url(); ?>script/accounts.js"></script>

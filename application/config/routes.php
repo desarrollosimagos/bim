@@ -99,6 +99,7 @@ $route['accounts/register'] = 'CCuentas/register';
 $route['accounts/view/(:num)'] = 'CCuentas/view/$1';
 $route['accounts/edit/(:num)'] = 'CCuentas/edit/$1';
 $route['accounts/delete/(:num)'] = 'CCuentas/delete/$1';
+$route['accounts/search'] = 'CCuentas/seeker';
 /*   Resumen */
 $route['dashboard'] = 'CResumen';
 $route['dashboard/register'] = 'CResumen/register';
@@ -129,6 +130,7 @@ $route['projects/register'] = 'CProjects/register';
 $route['projects/view/(:num)'] = 'CProjects/view/$1';
 $route['projects/edit/(:num)'] = 'CProjects/edit/$1';
 $route['projects/delete/(:num)'] = 'CProjects/delete/$1';
+$route['projects/search'] = 'CProjects/seeker';
 $route['share_profit'] = 'CShareProfit';
 $route['share_profit/share'] = 'CShareProfit/share';
 /*   Público */

@@ -124,6 +124,124 @@ class CCuentas extends CI_Controller {
 		$this->load->view('footer');
 	}
 	
+	// Método para buscar cuentas por nombre o fecha
+	public function seeker(){
+		
+		$buscar = $this->input->post('search');
+		
+		$listar = array();
+		
+		$cuentas = $this->MCuentas->obtener_filtrado($buscar);
+		
+		foreach($cuentas as $cuenta){
+						
+			// Proceso de búsqueda de grupos de inversores asociados a la cuenta
+			$groups = $this->MCuentas->buscar_grupos($cuenta->id);
+			$groups_names = "";
+			foreach($groups as $group){
+				$groups_names .= $group->name.",";
+			}
+			$groups_names = substr($groups_names, 0, -1);
+			
+			// Proceso de búsqueda de transacciones asociadas a la cuenta para calcular los montos totales y parciales
+			// Suma general de la tabla 'transactions'
+			$sum_transacctions = $this->MCuentas->sumar_transacciones($cuenta->id, 'transactions t');
+			//~ $sum_transacctions_project = $this->MCuentas->sumar_transacciones($cuenta->id, 'project_transactions t');
+			// Suma condicionada de la tabla 'transactions'
+			$find_transactions = $this->MCuentas->buscar_transacciones($cuenta->id, 'transactions t');
+			//~ $find_transactions_project = $this->MCuentas->buscar_transacciones($cuenta->id, 'project_transactions t');
+			$capital_disponible_total = 0;
+			$capital_disponible_parcial = 0;
+			if(count($find_transactions) > 0){
+				foreach($find_transactions as $t1){
+					if($t1->status == 'approved'){
+						// Si la moneda de la cuenta es el bolívar y la transacción es anterior al 20-08-2018, se hace una reconversión
+						if($cuenta->coin_avr == 'VEF' && strtotime($t1->date) < strtotime("2018-10-20 00:00:00")){
+							$capital_disponible_total += ($t1->amount/100000);
+						}else{
+							$capital_disponible_total += $t1->amount;
+						}
+					}
+					$relations = $this->MCuentas->buscar_transaction_relation($t1->id);
+					if($t1->type != "invest" && $t1->type != "sell" && $t1->status == 'approved'){
+						if(count($relations) == 0){
+							$capital_disponible_parcial += $t1->amount;
+						}
+						if(count($relations) > 0 && $relations[0]->type != "distribute"){
+							$capital_disponible_parcial += $t1->amount;
+						}
+					}
+				}
+			}
+			
+			$data_cuenta = array(
+				'id' => $cuenta->id,
+				'owner' => $cuenta->owner,
+				'alias' => $cuenta->alias,
+				'number' => $cuenta->number,
+				'usuario' => $cuenta->usuario,
+				'type' => $cuenta->type,
+				'description' => $cuenta->description,
+				'amount' => $cuenta->amount,
+				'capital_disponible_total' => $capital_disponible_total,
+				'capital_disponible_parcial' => $capital_disponible_parcial,
+				'status' => $cuenta->status,
+				'coin' => $cuenta->coin,
+				'coin_avr' => $cuenta->coin_avr,
+				'coin_symbol' => $cuenta->coin_symbol,
+				'coin_decimals' => $cuenta->coin_decimals,
+				'tipo_cuenta' => $cuenta->tipo_cuenta,
+				'd_create' => $cuenta->d_create,
+				'groups_names' => $groups_names
+			);
+			
+			$listar[] = $data_cuenta;
+			
+		}
+		
+		// Conversión a objeto
+		$listar = json_decode( json_encode( $listar ), false );
+		
+		$data['listar'] = $listar;
+		
+		foreach($data['listar'] as $fondo){
+		?>
+		<tr class="scroll">
+			<td class="project-status">
+				<?php if($fondo->status == 1) { ?>
+				<span class="label label-primary"><?php echo $this->lang->line('list_status1_accounts'); ?></span>
+				<?php }else{ ?>
+				<span class="label label-default"><?php echo $this->lang->line('list_status2_accounts'); ?></span>
+				<?php } ?>
+			</td>
+			<td class="project-title">
+				<a href="<?php echo base_url() ?>accounts/view/<?= $fondo->id; ?>"><?php echo $fondo->alias; ?></a>
+				<br/>
+				<small>Created <?php echo $fondo->d_create; ?></small>
+				<br>
+				<?php if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 2) { ?>
+				<small><?php echo $fondo->groups_names; ?></small>
+				<?php } ?>
+			</td>
+			<td class="project-completion">
+				<small>
+					<!--Completion with:-->
+					<?php echo $this->lang->line('list_capital_available_accounts'); ?>: <?php echo $fondo->capital_disponible_total; ?>
+				</small>
+			</td>
+			<td class="project-title">
+				<?php echo $fondo->coin; ?>
+			</td>
+			<td class="project-actions">
+				<a href="<?php echo base_url() ?>accounts/view/<?= $fondo->id; ?>" title="<?php echo $this->lang->line('list_view_accounts'); ?>" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> <?php echo $this->lang->line('list_view_accounts'); ?> </a>
+				<a href="<?php echo base_url() ?>accounts/edit/<?= $fondo->id; ?>" title="<?php echo $this->lang->line('list_edit_accounts'); ?>" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> <?php echo $this->lang->line('list_edit_accounts'); ?> </a>
+				<a id='<?php echo $fondo->id; ?>' title='<?php echo $this->lang->line('list_delete_accounts'); ?>' class="btn btn-danger btn-sm borrar"><i class="fa fa-trash"></i> <?php echo $this->lang->line('list_delete_accounts'); ?> </a>
+			</td>
+		</tr>
+		<?php
+		}
+	}
+	
 	public function register()
 	{
 		$this->load->view('base');
