@@ -118,9 +118,9 @@ class CFondoPersonal extends CI_Controller {
 		
 		$fecha = $fecha." ".$hora;
 		
-		if($this->session->userdata('logged_in')['id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 5){
+		if($this->session->userdata('logged_in')['profile_id'] == 1 || $this->session->userdata('logged_in')['profile_id'] == 5){
 			$user_id = $this->input->post('user_id');
-		}else if($this->session->userdata('logged_in')['id'] == 2){
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
 			$user_id = 0;
 		}else{
 			$user_id = $this->session->userdata('logged_in')['id'];
