@@ -319,10 +319,10 @@ class MProjects extends CI_Model {
 		$this->db->join('projects p', 'p.id = t.project_id');
 		$this->db->join('coins c', 'c.id = a.coin_id');
 		$this->db->join('account_type t_c', 't_c.id = a.type');
-		//~ // Si el usuario corresponde al de un administrador quitamos el filtro de usuario
-        //~ if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
-			//~ $this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
-		//~ }
+		// Si el usuario corresponde al de un GESTOR incluimos sólo las cuentas donde éste creo transacciones
+        if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->where('t.user_create_id =', $this->session->userdata('logged_in')['id']);
+		}
 		$this->db->where('t.project_id =', $project_id);
 		$this->db->group_by(array("a.id", "a.owner", "a.alias", "a.number", "a.type", "a.description", "a.amount", "a.status", "a.d_create", "coin", "coin_avr", "coin_symbol", "coin_decimals", "tipo_cuenta"));
 		$this->db->order_by("a.id", "desc");
