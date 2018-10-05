@@ -663,19 +663,19 @@ $(document).ready(function(){
 
         e.preventDefault();  // Para evitar que se envíe por defecto
 
-        if ($('#user_id').val() == "0") {
+        /*if ($('#user_id').val() == "0") {
 			
 			swal("Disculpe,", "para continuar debe seleccionar el usuario");
 			$('#user_id').focus();
 			$('#user_id').parent('div').addClass('has-error');
 			
-        } /*else if ($('#project_id').val() == "0") {
+        } else if ($('#project_id').val() == "0") {
 			
 			swal("Disculpe,", "para continuar debe seleccionar el proyecto");
 			$('#project_id').focus();
 			$('#project_id').parent('div').addClass('has-error');
 			
-        }*/ else if ($('#account_id').val() == "0") {
+        } else*/ if ($('#account_id').val() == "0") {
 			
 			swal("Disculpe,", "para continuar debe seleccionar la cuenta");
 			$('#account_id').focus();
