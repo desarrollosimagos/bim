@@ -435,7 +435,7 @@ th {
 	
 	<?php 
 	// Ids de los perfiles que tendrań permisos de visualización
-	$global_profiles = array(1, 2);
+	$global_profiles = array(5);
 	?>
 	
 	<?php if(in_array($this->session->userdata('logged_in')['profile_id'], $global_profiles)){?>
@@ -448,15 +448,6 @@ th {
 				<a class="collapse-link">
 					<i class="fa fa-chevron-up"></i>
 				</a>
-				<!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="fa fa-wrench"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-user">
-					<li><a href="#">Config option 1</a>
-					</li>
-					<li><a href="#">Config option 2</a>
-					</li>
-				</ul>-->
 				<a class="close-link">
 					<i class="fa fa-times"></i>
 				</a>
