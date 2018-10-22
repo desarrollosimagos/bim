@@ -110,7 +110,7 @@ $(document).ready(function(){
         });
     });
     
-    // El elemento que se quiere activar.
+    // El elemento que se quiere activar (ícono de carga) si hay una petición ajax en proceso.
 	var cargando = $(".sk-spinner-circle");
 	cargando.hide();
     

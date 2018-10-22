@@ -3,10 +3,12 @@
 $lang['Transacciones'] = 'Transacciones';
 $lang['Cuentas'] = 'Cuentas';
 $lang['Monedas'] = 'Monedas';
+$lang['Import LB'] = 'Import LB';
 
 // Submenús de Inversiones
 $lang['Inversiones'] = 'Inversiones';
 $lang['Invertir'] = 'Invertir';
+$lang['Repartir Ganancias'] = 'Repartir Ganancias';
 
 // Submenús de Usuarios
 $lang['Perfiles'] = 'Perfiles';

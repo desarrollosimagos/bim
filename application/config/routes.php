@@ -93,6 +93,9 @@ $route['transactions/edit/(:num)'] = 'CFondoPersonal/edit/$1';
 $route['transactions/delete/(:num)'] = 'CFondoPersonal/delete/$1';
 $route['transactions/validar'] = 'CFondoPersonal/validar_transaccion';
 $route['transactions_json'] = 'CFondoPersonal/ajax_transactions';
+$route['import_lb'] = 'CImport';
+$route['import_lb/check_api_account/(:num)'] = 'CImport/check_api_account/$1';
+$route['import_lb/edit'] = 'CImport/edit';
 /*   Cuentas */
 $route['accounts'] = 'CCuentas';
 $route['accounts/register'] = 'CCuentas/register';

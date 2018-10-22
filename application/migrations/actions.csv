@@ -14,3 +14,6 @@
 "14","CHANGE_PASSWD","CChangePasswd","change_passwd","0","2017-05-30 15:21:53","0000-00-00 00:00:00"
 "15","INVESTOR_GROUPS","CInvestorGroups","investor_groups","0","2017-05-30 15:21:53","0000-00-00 00:00:00"
 "16","PROJECTS","CProjects","projects","0","2017-05-30 15:21:53","0000-00-00 00:00:00"
+"17","INVEST","CProjects","projects","0","2017-05-30 15:21:53","0000-00-00 00:00:00"
+"18","SHARE_PROFIT","CShareProfit","share_profit","0","2017-05-30 15:21:53","0000-00-00 00:00:00"
+"19","IMPORT_LB","CImport","import_lb","0","2018-10-10 11:44:53","0000-00-00 00:00:00"
