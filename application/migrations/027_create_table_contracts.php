@@ -48,7 +48,7 @@ class Migration_create_table_contracts extends CI_Migration
 		
 		$this->dbforge->add_key('project_id');  // Establecemos la project_id como key
 		
-		$this->dbforge->add_key('project_transactions_id');  // Establecemos el project_transactions_id como key
+		$this->dbforge->add_key('transaction_id');  // Establecemos el transaction_id como key
 		
 		$this->dbforge->create_table('contracts', TRUE);
 		

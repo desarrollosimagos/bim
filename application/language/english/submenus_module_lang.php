@@ -43,7 +43,7 @@ $lang['registry_save_submenus'] = 'Save';
 $lang['heading_title_submenus_edit'] = 'Sub Menus';
 $lang['heading_home_submenus_edit'] = 'Home';
 $lang['heading_subtitle_submenus_edit'] = 'Sub Menus';
-$lang['heading_info_submenus_edit'] = 'Edit Menu';
+$lang['heading_info_submenus_edit'] = 'Edit Sub Menu';
 
 // Formulario de edición de sub menús
 $lang['edit_name_submenus'] = 'Name';
