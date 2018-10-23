@@ -129,7 +129,7 @@
 <script>
 $(document).ready(function(){
 	
-     $('#tab_import').DataTable({
+     var table = $('#tab_import').DataTable({
         "paging": true,
         "lengthChange": false,
         "autoWidth": false,
@@ -155,6 +155,9 @@ $(document).ready(function(){
             {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
+    
+    // Ordenamos la tabla por el código de referencia de manera descendente
+    table.order([1, 'desc']).draw();
     
     // Validación para cargar el listado de transacciones de la cuenta de localbitcoin
     $("#load").on('click', function (e) {

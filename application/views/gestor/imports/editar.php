@@ -91,7 +91,7 @@ $account_id = $_GET['account_id'];
 									<div class="col-sm-9">
 										<?php 
 											$description1 = "";
-											if($data->is_buying == "1"){
+											if($data->is_buying == ""){
 												$description1 = $data->partner." is buying";
 											}else{
 												$description1 = $data->partner." is selling";
@@ -220,7 +220,7 @@ $account_id = $_GET['account_id'];
 									<div class="col-sm-9">
 										<?php 
 											$description2 = "";
-											if($data->is_buying == "1"){
+											if($data->is_buying == ""){
 												$description2 = $data->partner." is buying";
 											}else{
 												$description2 = $data->partner." is selling";
