@@ -16,6 +16,7 @@ $lang['list_select_account'] = 'Account';
 $lang['list_create_import'] = 'Created in';
 $lang['list_type_trade_import'] = 'Type';
 $lang['list_partner_import'] = 'Partner';
+$lang['list_advertiser_import'] = 'Advertiser';
 $lang['list_status_import'] = 'Status';
 $lang['list_fiduciary_currency_import'] = 'Fiduciary currency';
 $lang['list_amount_import'] = 'Amount';

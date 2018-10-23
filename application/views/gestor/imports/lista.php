@@ -64,6 +64,7 @@
                                     <th><?php echo $this->lang->line('list_create_import'); ?></th>
                                     <th><?php echo $this->lang->line('list_type_trade_import'); ?></th>
                                     <th><?php echo $this->lang->line('list_partner_import'); ?></th>
+                                    <th><?php echo $this->lang->line('list_advertiser_import'); ?></th>
                                     <th><?php echo $this->lang->line('list_status_import'); ?></th>
                                     <th><?php echo $this->lang->line('list_fiduciary_currency_import'); ?></th>
                                     <th><?php echo $this->lang->line('list_amount_import'); ?></th>
@@ -92,6 +93,7 @@
 													echo trim($j->data->seller->username); 
 												}?>
 											</td>
+											<td><?php echo $j->data->advertisement->advertiser->username; ?></td>
 											<td>
 												<?php
 												if($j->data->canceled_at != null){
@@ -106,7 +108,23 @@
 											<td><?php echo $j->data->amount;?></td>
 											<td><?php echo $j->data->amount_btc;?></td>
 											<td><?php echo $j->data->fee_btc;?></td>
-											<td><?php echo $j->data->amount_btc;?></td>
+											<td>
+											<?php
+											// Si la transacción fue mediante aviso del usuario la cuenta de localbitcoins asociada
+											if($myself->data->username == $j->data->advertisement->advertiser->username){
+												// Si la transacción es una venta, sumamos la comisión al importe btc
+												if($j->data->is_selling == true){
+													echo $j->data->amount_btc + $j->data->fee_btc;
+												}else{
+													// Si la transacción es una compra, restamos la comisión al importe btc
+													echo $j->data->amount_btc - $j->data->fee_btc;
+												}
+											}else{
+												// Si la transacción no fue mediante aviso del usuario la cuenta de localbitcoins asociada
+												echo $j->data->amount_btc;
+											}
+											?>
+											</td>
 											<td><?php echo ($j->data->amount/$j->data->amount_btc)."".$j->data->currency;?></td>
 											<td style='text-align: center'>
 												<a class="edit" title="<?php echo $this->lang->line('list_edit_import'); ?>"><i class="fa fa-edit fa-2x"></i></a>
@@ -146,6 +164,7 @@ $(document).ready(function(){
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "none", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
@@ -217,12 +236,12 @@ $(document).ready(function(){
 		var is_buying = $(this).parent().parent().find('td').eq(2).attr('id');
 		var partner = $(this).parent().parent().find('td').eq(3).text();
 		var is_selling = $(this).parent().parent().find('td').eq(3).attr('id');
-		var status = $(this).parent().parent().find('td').eq(4).text();
-		var fiduciary_currency = $(this).parent().parent().find('td').eq(5).text();
-		var amount_btc = $(this).parent().parent().find('td').eq(6).text();
-		var commission = $(this).parent().parent().find('td').eq(7).text();
-		var total_btc = $(this).parent().parent().find('td').eq(8).text();
-		var exchange_rate = $(this).parent().parent().find('td').eq(9).text();
+		var status = $(this).parent().parent().find('td').eq(5).text();
+		var fiduciary_currency = $(this).parent().parent().find('td').eq(6).text();
+		var amount_btc = $(this).parent().parent().find('td').eq(7).text();
+		var commission = $(this).parent().parent().find('td').eq(8).text();
+		var total_btc = $(this).parent().parent().find('td').eq(9).text();
+		var exchange_rate = $(this).parent().parent().find('td').eq(10).text();
 		
 		var json = '{ "reference":"'+reference+'", "d_create":"'+d_create+'", "type_trade":"'+type_trade+'", "is_buying":"'+is_buying+'", "is_selling":"'+is_selling+'", "partner":"'+partner+'", "status":"'+status+'", "fiduciary_currency":"'+fiduciary_currency+'", "amount_btc":"'+amount_btc+'", "commission":"'+commission+'", "total_btc":"'+total_btc+'", "exchange_rate":"'+exchange_rate+'" }';
 		

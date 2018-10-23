@@ -248,9 +248,9 @@ $account_id = $_GET['account_id'];
 											// Si estamos vendiendo, entonces restamos el monto en btc a la cuenta de la api, si no, lo sumamos
 											$amount_btc = 0;
 											if($data->is_buying == ""){
-												$amount_btc = $data->amount_btc*-1;
+												$amount_btc = $data->total_btc*-1;
 											}else{
-												$amount_btc = $data->amount_btc;
+												$amount_btc = $data->total_btc;
 											}
 										?>
 										<input type="text" class="form-control"  name="amount" id="amount" value="<?php echo $amount_btc; ?>">
@@ -269,7 +269,7 @@ $account_id = $_GET['account_id'];
 								<div class="form-group">
 									<label class="col-sm-3 control-label" ><?php echo $this->lang->line('edit_rate_import'); ?> *</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="rate[]" id="rate2" value="<?php echo (float)$data->fiduciary_currency/(float)$data->amount_btc; ?>">
+										<input type="text" class="form-control" name="rate[]" id="rate2" value="<?php echo (float)$data->fiduciary_currency/(float)$data->total_btc; ?>">
 									</div>
 								</div>
 								<div class="form-group">
@@ -327,11 +327,7 @@ $(document).ready(function(){
 
         e.preventDefault();  // Para evitar que se envíe por defecto
 
-        if ($('#user_id').val() == "0") {
-			swal("Disculpe,", "para continuar debe seleccionar el usuario de la transacción fiduciaria");
-			$('#user_id').parent('div').addClass('has-error');
-			
-        } else if ($('#account_id').val() == "0") {
+        if ($('#account_id').val() == "0") {
 			swal("Disculpe,", "para continuar debe seleccionar la cuenta de la transacción fiduciaria");
 			$('#account_id').parent('div').addClass('has-error');
 			
