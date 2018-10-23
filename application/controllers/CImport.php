@@ -33,6 +33,11 @@ class CImport extends CI_Controller {
 			
 			$api_url = $object[0]->url;
 			
+			// Cargamos los datos básicos del usuario de la cuenta de localbitcoins
+			$get_myself = $this->get_myself($hmac_key, $hmac_secret);
+			$get_myself_decode = json_decode($get_myself);
+			$data['myself'] = $get_myself_decode;
+			
 			//~ // Ejecuta el script test_lbcapi.py para importar las transacciones 
 			//~ // de una cuenta determinada de localbitcoins
 			//~ exec('python assets/script/test_lbcapi.py '.$hmac_key.' '.$hmac_secret.' '.$api_url, $output);
@@ -258,6 +263,59 @@ class CImport extends CI_Controller {
 		}
 		
     }
+    
+    
+/**
+ * ------------------------------------------------------
+ * Método público para cargar los datos básicos de la cuenta
+ * de localbitcoin asociada a una cuenta seccionada
+ * ------------------------------------------------------
+ * 
+ * Usa la biblioteca URL Client (curl) de php para cargar los datos 
+ * básicos de la cuenta de localbitcoin asociada a una cuenta seccionada.
+ */
+	public function get_myself($hmac_key, $hmac_secret, $api_endpoint = '/api/myself/') {
+
+		$search = array('.');
+
+		$replace = array('');
+
+		$mt = microtime(true);
+
+		$mt = str_replace($search, $replace, $mt);
+
+		$nonce = $mt;
+
+		$url = 'https://localbitcoins.com'.$api_endpoint;
+
+		$get_or_post_params_urlencoded = '';
+
+		$message = $nonce . $hmac_key . $api_endpoint . $get_or_post_params_urlencoded;
+
+		$message_bytes = utf8_encode($message);
+
+		$signature = mb_strtoupper(hash_hmac('sha256', $message_bytes, $hmac_secret));
+
+		$ch = curl_init('https://localbitcoins.com'.$api_endpoint);
+
+		$options = array(
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTPHEADER => array(
+				'Apiauth-key:'.$hmac_key,
+				'Apiauth-Nonce:'.$nonce,
+				'Apiauth-Signature:'.$signature 
+			)
+		);
+
+		curl_setopt_array($ch, $options);
+
+		$result = curl_exec($ch);
+
+		curl_close($ch);
+
+		return $result;
+	}
     
     
 /**
