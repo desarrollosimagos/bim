@@ -367,10 +367,6 @@ $(document).ready(function(){
 			swal("Disculpe,", "para continuar debe ingresar el status de la transacción fiduciaria");
 			$('#status').parent('div').addClass('has-error');
 			
-        } else if ($('#user_id2').val() == "0") {
-			swal("Disculpe,", "para continuar debe seleccionar el usuario de la transacción en BTC");
-			$('#user_id2').parent('div').addClass('has-error');
-			
         } else if ($('#account_id2').val() == "0") {
 			swal("Disculpe,", "para continuar debe seleccionar la cuenta de la transacción en BTC");
 			$('#account_id2').parent('div').addClass('has-error');
