@@ -140,7 +140,7 @@ $account_id = $_GET['account_id'];
 								<div class="form-group">
 									<label class="col-sm-3 control-label" ><?php echo $this->lang->line('edit_rate_import'); ?> *</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control"  name="rate[]" id="rate" value="<?php echo (float)$data->fiduciary_currency/(float)$data->amount_btc; ?>">
+										<input type="text" class="form-control"  name="rate[]" id="rate" value="<?php echo number_format((float)$data->fiduciary_currency/(float)$data->total_btc, 2, '.', ''); ?>">
 									</div>
 								</div>
 								<div class="form-group">
@@ -269,7 +269,7 @@ $account_id = $_GET['account_id'];
 								<div class="form-group">
 									<label class="col-sm-3 control-label" ><?php echo $this->lang->line('edit_rate_import'); ?> *</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="rate[]" id="rate2" value="<?php echo (float)$data->fiduciary_currency/(float)$data->total_btc; ?>">
+										<input type="text" class="form-control" name="rate[]" id="rate2" value="<?php echo number_format((float)$data->fiduciary_currency/(float)$data->total_btc, 2, '.', ''); ?>">
 									</div>
 								</div>
 								<div class="form-group">
