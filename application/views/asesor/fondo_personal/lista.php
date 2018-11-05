@@ -286,9 +286,14 @@ $(document).ready(function(){
         });
     });
     
+    // Variables globales para la posterior validación del capital aprobado al validar la transacciones
+    var capital_aprobado_global = 0;
+    var coins_global = 0;
     
     // Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
     $.post('https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664', function (coins) {
+		
+		coins_global = coins  // Tasas de conversión global
 		
 		var valor1btc, valor1anycoin, rate = $("#iso_currency_user").val(), rates = [], cryptos;
 		
@@ -398,8 +403,10 @@ $(document).ready(function(){
 				if(fondos[i]['status'] == 'approved'){
 					if(fondos[i]['type'] == 'deposit'){
 						capital_aprobado += trans_usd;
+						capital_aprobado_global += trans_usd;
 					}else{
 						capital_aprobado += trans_usd;
+						capital_aprobado_global += trans_usd;
 					}
 				}
 			});
@@ -417,6 +424,8 @@ $(document).ready(function(){
 		// Usamos la segunda cuenta si la primera falla
 		// Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
 		$.post('https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85', function (coins) {
+			
+			coins_global = coins  // Tasas de conversión global
 			
 			var valor1btc, valor1anycoin, rate = $("#iso_currency_user").val(), rates = [], cryptos;
 			
@@ -526,8 +535,10 @@ $(document).ready(function(){
 					if(fondos[i]['status'] == 'approved'){
 						if(fondos[i]['type'] == 'deposit'){
 							capital_aprobado += trans_usd;
+							capital_aprobado_global += trans_usd;
 						}else{
 							capital_aprobado += trans_usd;
+							capital_aprobado_global += trans_usd;
 						}
 					}
 				});
@@ -558,82 +569,111 @@ $(document).ready(function(){
 
         var tipo = id.split(';');
         tipo = tipo[3];
+        
+        var coin_avr = id.split(';');
+        coin_avr = coin_avr[4];
 
         var id = id.split(';');
         id = id[0];
+        
+        var currency_user = coins_global['rates'][$("#iso_currency_user").val()];  // Tipo de moneda del usuario logueado
+				
+		// Conversión del monto a dólares
+		var currency = coin_avr;  // Tipo de moneda de la transacción
+		//~ alert(currency);
+		var trans_usd = parseFloat(amount)/coins_global['rates'][currency];
+		//~ alert(trans_usd);
+		
+		monto_convertido = trans_usd;
+			
+		monto_convertido = (monto_convertido*currency_user).toFixed(2);
+		
+		//~ alert('approved');
+		
+		//~ alert(monto_convertido);
+		//~ alert(capital_aprobado_global);
+		
+		if(monto_convertido > capital_aprobado_global && tipo == 'withdraw'){
+			
+			alert("El monto a retirar no puede ser superior al capital aprobado");
+			
+		}else{
 
-        swal({
-            title: "Validar transacción",
-            text: "¿Está seguro de valdiar la transacción?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Validar",
-            cancelButtonText: "Denegar",
-            closeOnConfirm: false,
-            closeOnCancel: true
-          },
-        function(isConfirm){
-            if (isConfirm) {
-				
-				//~ alert('approved');
-             
-                $.post('<?php echo base_url(); ?>transactions/validar/', {'id': id, 'account_id': account_id, 'amount': amount, 'tipo': tipo, 'status': 'approved'}, function (response) {
+			swal({
+				title: "Validar transacción",
+				text: "¿Está seguro de valdiar la transacción?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Validar",
+				cancelButtonText: "Denegar",
+				closeOnConfirm: false,
+				closeOnCancel: true
+			  },
+			function(isConfirm){
+				if (isConfirm) {
+					
+					//~ alert('approved');
+				 
+					$.post('<?php echo base_url(); ?>transactions/validar/', {'id': id, 'account_id': account_id, 'amount': amount, 'tipo': tipo, 'coin_avr': coin_avr, 'status': 'approved'}, function (response) {
 
-                    if (response['response'] == 'error') {
-                       
-                         swal({ 
-                           title: "Disculpe,",
-                            text: "No se pudo validar la transacción, por favor consulte con su administrador",
-                             type: "warning" 
-                           },
-                           function(){
-                             
-                         });
-                    }else{
-                         swal({ 
-                           title: "Validado",
-                            text: "Transacción validada con exito",
-                             type: "success" 
-                           },
-                           function(){
-                             window.location.href = '<?php echo base_url(); ?>transactions';
-                         });
-                    }
-                    
-                }, 'json');
-                
-            }else{
-				
-				//~ alert('denied');
-				
-				$.post('<?php echo base_url(); ?>transactions/validar/', {'id': id, 'account_id': account_id, 'amount': amount, 'tipo': tipo, 'status': 'denied'}, function (response) {
+						if (response['response'] == 'error') {
+						   
+							 swal({ 
+							   title: "Disculpe,",
+								text: "No se pudo validar la transacción, por favor consulte con su administrador",
+								 type: "warning" 
+							   },
+							   function(){
+								 
+							 });
+						}else{
+							 swal({ 
+							   title: "Validado",
+								text: "Transacción validada con exito",
+								 type: "success" 
+							   },
+							   function(){
+								 window.location.href = '<?php echo base_url(); ?>transactions';
+							 });
+						}
+						
+					}, 'json');
+					
+				}else{
+					
+					//~ alert('denied');
+					
+					$.post('<?php echo base_url(); ?>transactions/validar/', {'id': id, 'account_id': account_id, 'amount': amount, 'tipo': tipo, 'coin_avr': coin_avr, 'status': 'denied'}, function (response) {
 
-                    if (response['response'] == 'error') {
-                       
-                         swal({ 
-                           title: "Disculpe,",
-                            text: "No se pudo negar la transacción, por favor consulte con su administrador",
-                             type: "warning" 
-                           },
-                           function(){
-                             
-                         });
-                    }else{
-                         swal({ 
-                           title: "Negada",
-                            text: "Transacción negada con exito",
-                             type: "success" 
-                           },
-                           function(){
-                             window.location.href = '<?php echo base_url(); ?>transactions';
-                         });
-                    }
-                    
-                }, 'json');
-				
-			}
-        });
+						if (response['response'] == 'error') {
+						   
+							 swal({ 
+							   title: "Disculpe,",
+								text: "No se pudo negar la transacción, por favor consulte con su administrador",
+								 type: "warning" 
+							   },
+							   function(){
+								 
+							 });
+						}else{
+							 swal({ 
+							   title: "Negada",
+								text: "Transacción negada con exito",
+								 type: "success" 
+							   },
+							   function(){
+								 window.location.href = '<?php echo base_url(); ?>transactions';
+							 });
+						}
+						
+					}, 'json');
+					
+				}
+			});
+			
+		}
+		
     });
     
 });
