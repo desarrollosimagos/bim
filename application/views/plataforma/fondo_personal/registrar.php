@@ -712,11 +712,11 @@ $(document).ready(function(){
 				
 			}, 'json').done(function() {
 				
-				if(monto_convertido > capital_aprobado && $('#type').val().trim() == 'withdraw' && $("#usuario").val().trim() != 1){
+				/*if(monto_convertido > capital_aprobado && $('#type').val().trim() == 'withdraw' && $("#usuario").val().trim() != 1){
 					
 					alert("El monto a retirar no puede ser superior al capital aprobado");
 					
-				}else{
+				}else{*/
 					
 					var formData = new FormData(document.getElementById("form_transactions"));  // Forma de capturar todos los datos del formulario
 			
@@ -760,7 +760,7 @@ $(document).ready(function(){
 						console.log("error ajax");
 					});
 					
-				}
+				/*}*/
 				
 			}).fail(function() {
 				
@@ -781,11 +781,11 @@ $(document).ready(function(){
 					
 				}, 'json').done(function() {
 					
-					if(monto_convertido > capital_aprobado && $('#type').val().trim() == 'withdraw' && $("#usuario").val().trim() != 1){
+					/*if(monto_convertido > capital_aprobado && $('#type').val().trim() == 'withdraw' && $("#usuario").val().trim() != 1){
 						
 						alert("El monto a retirar no puede ser superior al capital aprobado");
 						
-					}else{
+					}else{*/
 						
 						var formData = new FormData(document.getElementById("form_transactions"));  // Forma de capturar todos los datos del formulario
 				
@@ -829,7 +829,7 @@ $(document).ready(function(){
 							console.log("error ajax");
 						});
 						
-					}
+					/*}*/
 					
 				});  // Cierre de la conversión del monto con la segunda cuenta de openexchangerates.org
 				

@@ -521,7 +521,7 @@ class CFondoPersonal extends CI_Controller {
 				$color_style = "color:grey";
 				$title = "";
 			}
-			$validate = "<a class='".$class." a-actions' id='".$row->id.';'.$row->account_id.';'.$row->amount.';'.$row->type."' ".$disabled." style='".$cursor_style.";".$color_style."' ".$title.">";
+			$validate = "<a class='".$class." a-actions' id='".$row->id.';'.$row->account_id.';'.$row->amount.';'.$row->type.';'.$row->coin_avr."' ".$disabled." style='".$cursor_style.";".$color_style."' ".$title.">";
 				$validate .= "<i class='fa ".$class_icon_validar." fa-2x'></i>";
 			$validate .= "</a>";
 			// Mostramos los datos ya filtrados. Tomando en cuenta el perfil del usuario, se eliminan algunas columnas
