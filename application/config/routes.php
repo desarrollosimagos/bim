@@ -67,10 +67,17 @@ $route['profile/delete/(:num)'] = 'CPerfil/delete/$1';
 /*   Users */
 $route['users'] = 'CUser';
 $route['users/register'] = 'CUser/register';
+$route['users/register_public'] = 'CUserPublic/register';
+$route['users/add_public'] = 'CUserPublic/add';
+$route['users/new_passwd'] = 'CUserPublic/new_password';
+$route['users/send_mail_change'] = 'CUserPublic/send_mail_change';
+$route['users/change_password'] = 'CUserPublic/change_password';
 $route['users/edit/(:num)'] = 'CUser/edit/$1';
 $route['users/change_passwd'] = 'CChangePasswd/index';
 $route['users/update_passwd'] = 'CChangePasswd/update_passwd';
 $route['users/update_session'] = 'CUser/transcurrido';
+$route['confirm_mail'] = 'CUserPublic/validar_mail';
+$route['update_password'] = 'CUserPublic/update_password';
 /*   Menús */
 $route['menus'] = 'CMenus';
 $route['menus/register'] = 'CMenus/register';

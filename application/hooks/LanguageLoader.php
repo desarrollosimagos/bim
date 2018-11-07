@@ -29,6 +29,9 @@ class LanguageLoader
             $ci->lang->load('public_home',$siteLang);
             $ci->lang->load('share_profit',$siteLang);
             $ci->lang->load('import',$siteLang);
+            $ci->lang->load('register_public',$siteLang);
+            $ci->lang->load('new_password',$siteLang);
+            $ci->lang->load('change_password',$siteLang);
         } else {
             $ci->lang->load('header','english');
             $ci->lang->load('login','english');
@@ -52,6 +55,9 @@ class LanguageLoader
             $ci->lang->load('public_home','english');
             $ci->lang->load('share_profit','english');
             $ci->lang->load('import','english');
+            $ci->lang->load('register_public','english');
+            $ci->lang->load('new_password','english');
+            $ci->lang->load('change_password','english');
         }
         
         // Área de carga de idiomas disponibles en la tabla 'lang'

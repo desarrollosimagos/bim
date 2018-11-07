@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_table_account_api extends CI_Migration
+class Migration_create_table_user_tokens extends CI_Migration
 {
 	public function up(){
 		
@@ -15,22 +15,12 @@ class Migration_create_table_account_api extends CI_Migration
 					"auto_increment" => TRUE,
 					"null" => FALSE
 				),
-				"account_id" => array(
+				"user_id" => array(
 					"type" => "INT",
 					"constraint" => 11,
 					"null" => TRUE
 				),
-				"url" => array(
-					"type" => "VARCHAR",
-					"constraint" => 100,
-					"null" => FALSE
-				),
-				"hmac_key" => array(
-					"type" => "VARCHAR",
-					"constraint" => 256,
-					"null" => FALSE
-				),
-				"hmac_secret" => array(
+				"token" => array(
 					"type" => "VARCHAR",
 					"constraint" => 256,
 					"null" => FALSE
@@ -53,16 +43,16 @@ class Migration_create_table_account_api extends CI_Migration
 		
 		$this->dbforge->add_key('id', TRUE);  // Establecemos el id como primary_key
 		
-		$this->dbforge->add_key('account_id');  // Establecemos la account_id como key
+		$this->dbforge->add_key('user_id');  // Establecemos la account_id como key
 		
-		$this->dbforge->create_table('account_api', TRUE);
+		$this->dbforge->create_table('user_tokens', TRUE);
 		
 	}
 	
 	public function down(){
 		
-		// Eliminamos la tabla 'account_api'
-		$this->dbforge->drop_table('account_api', TRUE);
+		// Eliminamos la tabla 'user_tokens'
+		$this->dbforge->drop_table('user_tokens', TRUE);
 		
 	}
 	

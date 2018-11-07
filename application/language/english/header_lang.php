@@ -1,4 +1,5 @@
 <?php
+$lang['name_app'] = 'BIM';
 $lang['top_bar_login'] = 'Log in';
 $lang['top_bar_logout'] = 'Log out';
 $lang['nav_static_home'] = 'Home';
