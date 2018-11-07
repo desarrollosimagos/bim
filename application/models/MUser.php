@@ -99,6 +99,12 @@ class MUser extends CI_Model {
 		return $result;
     }
     
+    // Public method to insert the action associated
+    public function insert_token($datos) {
+		$result = $this->db->insert("user_tokens", $datos);
+		return $result;
+    }
+    
     // Public method to insert the actions asociated
     public function update_action($datos) {
 		$this->db->where('user_id', $datos['user_id']);
@@ -125,6 +131,14 @@ class MUser extends CI_Model {
         return $query->result();
     }
 
+    // Public method to obtain the users by id
+    public function getToken($token) {
+        $this->db->where('token', $token);
+        $query = $this->db->get('user_tokens');
+        
+        return $query->result();
+    }
+
     // Public method to update a record 
     public function update($datos) {
         $result = $this->db->where('username =', $datos['username']);
@@ -143,6 +157,13 @@ class MUser extends CI_Model {
     // Public method to update a record 
     public function update_status($datos) {
 		$result = $this->db->where('id', $datos['id']);
+		$result = $this->db->update('users', $datos);
+		return $result;
+	}
+    
+    // Public method to update a record 
+    public function update_passwd($datos) {
+		$result = $this->db->where('username', $datos['username']);
 		$result = $this->db->update('users', $datos);
 		return $result;
 	}

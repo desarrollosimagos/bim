@@ -40,6 +40,8 @@
             
             <?php echo validation_errors('<div class="error" style="color:#D33333;">','</div>');?>
             <?php if(isset($error)) echo "<div class='error' style='color:#D33333;'>$error</div>";?>
+            <?php if(isset($_GET['confirm']) && $_GET['confirm'] == 1) echo "<div class='error' style='color:#3c763d;'>".$this->lang->line('message_alert_confirm')."</div>";?>
+            <?php if(isset($_GET['update_password']) && $_GET['update_password'] == 1) echo "<div class='error' style='color:#3c763d;'>".$this->lang->line('message_alert_update_password')."</div>";?>
             <p></p>
             <!--<p>Inicia sesión.</p>-->
             <form class="m-t" role="form" action="login" method="post">
@@ -51,11 +53,11 @@
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b"><?php echo $this->lang->line('button_value'); ?></button>
 
-                <!--<a href="#"><small>Olvidó tu contraseña?</small></a>
-                <p class="text-muted text-center"><small>No tiene una cuenta?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="#">Contáctenos</a>-->
+                <a href="<?php echo base_url()."users/new_passwd"; ?>"><small><?php echo $this->lang->line('recover_passwd'); ?></small></a>
+                <p class="text-muted text-center"><small><?php echo $this->lang->line('question_account'); ?></small></p>
+                <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url()."users/register_public"; ?>"><?php echo $this->lang->line('add_account'); ?></a>
             </form>
-            <p class="m-t"> <small>Invision &copy; 2018</small> </p>
+            <p class="m-t"> <small><?php echo $this->lang->line('name_app'); ?> &copy; 2018</small> </p>
         </div>
     </div>
 

@@ -530,14 +530,15 @@ $config['proxy_ips'] = '';
 | Configuration for the general identification of the application. Includes title, 
 | arrangement of menus, copy right texts and names of the logos.
 */
-$config['title_app'] = 'bim-developer';
-$config['title_app_login'] = 'bim-developer | Login';
+$config['title_app'] = 'BIM';
+$config['title_app_login'] = 'BIM | Login';
 $config['copyright_footer'] = '';
 $config['copyright_footer_login'] = '';
 $config['logo_login'] = 'logotipo_320x130.png';
 $config['logo_menu_bar'] = 'logotipo_200x50.png';
 $config['logo_menu_admin'] = 'logotipo_50x50.png';
 $config['logo_favicon'] = '';
+$config['email_send'] = 'solorzano202009@gmail.com';
 $config['public_menu'][] = array('Inicio', $config['base_url'].'start', 1);
 //~ $config['public_menu'][] = array('Posibilidades', $config['base_url'].'possibilities', 1);
 $config['public_menu'][] = array('Inversiones', $config['base_url'].'investments', 1);
