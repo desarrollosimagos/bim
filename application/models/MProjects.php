@@ -372,6 +372,18 @@ class MProjects extends CI_Model {
             
     }
     
+    // Public method to obtain the properties by project_id
+    public function obtenerPrecioPropiedades($project_id) {
+		
+        $this->db->select('SUM(current_price) as total_price');
+		$this->db->from('property');
+		$this->db->where('project_id', $project_id);
+		$query = $this->db->get();
+        
+        return $query->result();
+            
+    }
+    
     // Public method to obtain the photos by project_id
     public function obtenerFotos($project_id) {
         $this->db->where('project_id', $project_id);

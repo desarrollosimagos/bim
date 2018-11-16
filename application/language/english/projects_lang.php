@@ -54,6 +54,10 @@ $lang['view_dividend'] = 'Dividend';
 $lang['view_expenses'] = 'Expenses';
 $lang['view_capital_in_project'] = 'Capital in Project';
 
+// Propiedades
+$lang['view_list_properties_title_projects'] = 'Properties';
+$lang['view_list_properties_price_projects'] = 'Total';
+
 // Resumen por moneda
 $lang['view_list_summary_currency_title_projects'] = 'Summary by Currency';
 $lang['view_list_currency_projects'] = 'Currency';

@@ -76,7 +76,7 @@ class CImport extends CI_Controller {
 		
 		$this->load->view('base');
 		$data['ident'] = "Cuentas";
-		$data['ident_sub'] = "Importar_Transacciones";
+		$data['ident_sub'] = "Import_LB";
 		
 		$data['accounts'] = $this->MImport->obtener_cuentas();
 		
@@ -114,7 +114,7 @@ class CImport extends CI_Controller {
 		
 		$this->load->view('base');
 		$data['ident'] = "Cuentas";
-		$data['ident_sub'] = "Importar_Transacciones";
+		$data['ident_sub'] = "Import_LB";
         $data['id'] = $this->uri->segment(3);
         $data['editar'] = $this->input->post();
         $data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group();
