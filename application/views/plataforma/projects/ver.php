@@ -403,7 +403,7 @@ th {
 				<tbody>
 					<tr style="text-align: center">
 						<td>
-							<?php echo $total_price_properties[0]->total_price; ?>
+							<?php echo number_format($total_price_properties[0]->total_price, $total_price_properties[0]->coin_decimals, '.', '') . ' ' .$total_price_properties[0]->coin_avr; ?>
 						</td>
 					</tr>
 				</tbody>

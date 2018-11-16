@@ -375,8 +375,12 @@ class MProjects extends CI_Model {
     // Public method to obtain the properties by project_id
     public function obtenerPrecioPropiedades($project_id) {
 		
-        $this->db->select('SUM(current_price) as total_price');
-		$this->db->from('property');
+		$select = 'SUM(current_price) as total_price, cn.description as coin, cn.abbreviation as coin_avr, ';
+		$select .= 'cn.symbol as coin_symbol, cn.decimals as coin_decimals';
+        $this->db->select($select);
+		$this->db->from('property p');
+		$this->db->join('projects pj', 'pj.id = p.project_id');
+		$this->db->join('coins cn', 'cn.id = pj.coin_id');
 		$this->db->where('project_id', $project_id);
 		$query = $this->db->get();
         
