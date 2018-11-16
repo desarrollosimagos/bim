@@ -481,6 +481,7 @@ class CProjects extends CI_Controller {
         $data['documentos_asociados'] = $this->MProjects->obtenerDocumentos($data['id']);
         $data['lecturas_asociadas'] = $this->MProjects->obtenerLecturas($data['id']);
         $data['project_types'] = $this->MProjects->obtenerTipos();
+        $data['properties'] = $this->MProjects->obtenerPropiedades($data['id']);
         $data['total_price_properties'] = $this->MProjects->obtenerPrecioPropiedades($data['id']);
         $data['project_transactions'] = $this->MProjects->obtenerTransacciones($data['id']);
         $data['project_transactions_coins'] = $this->fondos_json_coins($data['id']);

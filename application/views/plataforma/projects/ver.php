@@ -329,6 +329,29 @@ th {
 							
 						</div>
 						
+						<!-- Sección del monto de propiedades -->
+						<?php if ($total_price_properties[0]->total_price > 0) { ?>
+						<div class="row m-t-sm">
+							
+							<div class="col-lg-12">
+								
+								<div class="col-lg-3">
+									<div class="ibox">
+										<div class="ibox-content">
+											<h5><?php echo $this->lang->line('view_list_properties_price_projects'); ?></h5>
+											<h1 class="no-margins" style="font-size:25px;">
+											<?php echo number_format($total_price_properties[0]->total_price, $total_price_properties[0]->coin_decimals, '.', '') . ' ' .$total_price_properties[0]->coin_avr; ?>
+											</h1>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							
+						</div>
+						<?php } ?>
+						<!-- Cierre de sección del monto de propiedades -->
+						
 					</div>
 					
 				</div>
@@ -368,58 +391,6 @@ th {
 		
 	</div>
 	<!-- Cierre de sección de resumen general -->
-	
-	<!-- Cuerpo de la sección de propiedades -->
-	<div class="ibox float-e-margins">
-		<div class="ibox-title">
-			<h5><?php echo $this->lang->line('view_list_properties_title_projects'); ?></h5>
-
-			<div class="ibox-tools">
-				<a class="collapse-link">
-					<i class="fa fa-chevron-up"></i>
-				</a>
-				<a class="close-link">
-					<i class="fa fa-times"></i>
-				</a>
-			</div>
-		</div>
-		<div class="ibox-content">
-			
-			<div class="col-sm-4 col-md-offset-8">
-				<div class="input-group">
-					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_properties">
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
-					</span>
-				</div>
-			</div>
-			
-			<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter_properties>
-				<thead>
-					<tr style="text-align: center">
-						<th><?php echo $this->lang->line('view_list_properties_price_projects'); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr style="text-align: center">
-						<td>
-							<?php echo number_format($total_price_properties[0]->total_price, $total_price_properties[0]->coin_decimals, '.', '') . ' ' .$total_price_properties[0]->coin_avr; ?>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td class='text-center' colspan='1'>
-							<ul class='pagination'></ul>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-			
-		</div>
-		
-	</div>
-	<!-- Cierre del cuerpo de la sección de propiedades -->
 	
 	<!-- Cuerpo de la sección de montos agrupados por moneda -->
 	<div class="ibox float-e-margins">
@@ -895,6 +866,80 @@ th {
 	<!-- Cierre del cuerpo de la sección de transacciones por usuario -->
 	
 	<?php } ?>
+	
+	<!-- Cuerpo de la sección de propiedades -->
+	<?php if (count($properties) > 0) { ?>
+	<div class="ibox float-e-margins">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('view_list_properties_title_projects'); ?></h5>
+
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_properties">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			
+			<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter_properties>
+				<thead>
+					<tr style="text-align: center">
+						<th><?php echo $this->lang->line('view_list_property_reference_projects'); ?></th>
+						<th><?php echo $this->lang->line('view_list_property_name_projects'); ?></th>
+						<th><?php echo $this->lang->line('view_list_property_type_projects'); ?></th>
+						<th><?php echo $this->lang->line('view_list_property_description_projects'); ?></th>
+						<th><?php echo $this->lang->line('view_list_property_current_price_projects'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php $i = 1; ?>
+				<?php foreach ($properties as $property) { ?>
+					<tr style="text-align: center">
+						<td>
+							<?php echo $property->reference; ?>
+						</td>
+						<td>
+							<?php echo $property->name; ?>
+						</td>
+						<td>
+							<?php echo $property->type; ?>
+						</td>
+						<td>
+							<?php echo $property->description; ?>
+						</td>
+						<td>
+							<?php echo number_format($property->current_price, $property->coin_decimals, '.', '') . ' ' .$property->coin_avr; ?>
+						</td>
+					</tr>
+					<?php $i++ ?>
+				<?php } ?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='5'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+		</div>
+		
+	</div>
+	<?php } ?>
+	<!-- Cierre del cuerpo de la sección de propiedades -->
 
 </div>
 
