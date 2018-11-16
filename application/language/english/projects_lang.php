@@ -54,9 +54,8 @@ $lang['view_dividend'] = 'Dividend';
 $lang['view_expenses'] = 'Expenses';
 $lang['view_capital_in_project'] = 'Capital in Project';
 
-// Propiedades
-$lang['view_list_properties_title_projects'] = 'Properties';
-$lang['view_list_properties_price_projects'] = 'Total';
+// Precio total de las propiedades
+$lang['view_list_properties_price_projects'] = 'Amount of Properties';
 
 // Resumen por moneda
 $lang['view_list_summary_currency_title_projects'] = 'Summary by Currency';
@@ -100,6 +99,14 @@ $lang['view_list_users_dividend_projects'] = 'Dividend';
 $lang['view_list_users_capital_in_project_projects'] = 'Capital in Project';
 $lang['view_list_users_pending_invest_projects'] = 'Pending Invest';
 $lang['view_list_users_pending_withdraw_projects'] = 'Pending Withdraw';
+
+// Propiedades del proyecto
+$lang['view_list_properties_title_projects'] = 'Properties';
+$lang['view_list_property_reference_projects'] = 'Reference';
+$lang['view_list_property_name_projects'] = 'Name';
+$lang['view_list_property_type_projects'] = 'Type';
+$lang['view_list_property_description_projects'] = 'Description';
+$lang['view_list_property_current_price_projects'] = 'Current Price';
 
 
 /* PÁGINA DE REGISTRO DE PROYECTOS */
