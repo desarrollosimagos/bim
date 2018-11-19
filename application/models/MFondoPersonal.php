@@ -28,6 +28,7 @@ class MFondoPersonal extends CI_Model {
  */
 	var $select_column = array(
 		"f_p.id", 
+		"f_p.date", 
 		"f_p.account_id", 
 		"f_p.type", 
 		"f_p.description", 

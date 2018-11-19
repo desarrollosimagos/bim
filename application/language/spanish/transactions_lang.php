@@ -13,6 +13,7 @@ $lang['btn_registry'] = 'Agregar';
 // Listado de transacciones
 $lang['list_title'] = 'Listado de Transacciones';
 $lang['list_approved_capital'] = 'Capital aprobado';
+$lang['list_date'] = 'Fecha';
 $lang['list_user'] = 'Usuario';
 $lang['list_type'] = 'Tipo';
 $lang['list_amount'] = 'Monto';

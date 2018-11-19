@@ -55,22 +55,23 @@
                         <table id="tab_transactions" class="table table-striped table-bordered dt-responsive table-hover dataTables-example" >
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th><?php echo $this->lang->line('list_user'); ?></th>
-                                    <th><?php echo $this->lang->line('list_type'); ?></th>
-                                    <th><?php echo $this->lang->line('list_description'); ?></th>
-                                    <th><?php echo $this->lang->line('list_amount'); ?></th>
-                                    <th><?php echo $this->lang->line('list_status'); ?></th>
-                                    <th><?php echo $this->lang->line('list_account'); ?></th>
-                                    <th><?php echo $this->lang->line('list_reference'); ?></th>
-                                    <th><?php echo $this->lang->line('list_observations'); ?></th>
-                                    <th><?php echo $this->lang->line('list_real'); ?></th>
-                                    <th><?php echo $this->lang->line('list_rate'); ?></th>
-                                    <th><?php echo $this->lang->line('list_document'); ?></th>
+                                    <th class="">ID</th>
+                                    <th class="bigdesktop meddesktop smalldesktop"><?php echo $this->lang->line('list_date'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_user'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_type'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_description'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_amount'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_status'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_account'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_reference'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_observations'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_real'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_rate'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_document'); ?></th>
                                     <!--<th><?php echo $this->lang->line('list_edit'); ?></th>
                                     <th><?php echo $this->lang->line('list_delete'); ?></th>
                                     <th><?php echo $this->lang->line('list_validate'); ?></th>-->
-                                    <th><?php echo $this->lang->line('list_actions'); ?></th>
+                                    <th class=""><?php echo $this->lang->line('list_actions'); ?></th>
                                 </tr>
                             </thead>
                             <!--<tbody>
@@ -218,6 +219,19 @@ $(document).ready(function(){
 		],
 		//Nuevo
         "oLanguage": {"sUrl": "<?= assets_url() ?>js/es.txt"},
+        responsive: {  // Personalización para ocultar ciertas columnas según el tamaño de la pantalla
+			breakpoints: [
+			  {name: 'bigdesktop', width: Infinity},
+			  {name: 'meddesktop', width: 1480},
+			  {name: 'smalldesktop', width: 1280},
+			  {name: 'medium', width: 1188},
+			  {name: 'tabletl', width: 1024},
+			  {name: 'btwtabllandp', width: 848},
+			  {name: 'tabletp', width: 768},
+			  {name: 'mobilel', width: 480},
+			  {name: 'mobilep', width: 320}
+			]
+		},
         "aoColumns": [
             {"sClass": "registro center", "sWidth": "5%"},
             {"sClass": "registro center", "sWidth": "10%"},
@@ -225,15 +239,14 @@ $(document).ready(function(){
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "registro center", "sWidth": "10%"},
+            {"sClass": "registro center", "sWidth": "10%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
             {"sClass": "none", "sWidth": "30%"},
-            //~ {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
-            //~ {"sWidth": "3%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
-            {"sWidth": "10%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
+            {"sWidth": "15%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
              
