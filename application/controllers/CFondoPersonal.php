@@ -524,8 +524,10 @@ class CFondoPersonal extends CI_Controller {
 			$validate = "<a class='".$class." a-actions' id='".$row->id.';'.$row->account_id.';'.$row->amount.';'.$row->type.';'.$row->coin_avr."' ".$disabled." style='".$cursor_style.";".$color_style."' ".$title.">";
 				$validate .= "<i class='fa ".$class_icon_validar." fa-2x'></i>";
 			$validate .= "</a>";
+			$date = new DateTime($row->date);
 			// Mostramos los datos ya filtrados. Tomando en cuenta el perfil del usuario, se eliminan algunas columnas
 			$sub_array[] = $row->id;
+			$sub_array[] = $date->format('d-m-Y');
 			if($this->session->userdata('logged_in')['profile_id'] != 3){
 				$sub_array[] = $usuario;
 			}
