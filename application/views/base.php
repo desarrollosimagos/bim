@@ -126,7 +126,7 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 						</div>
 						<div class="logo-element">
 							<!--IN+-->
-							<img src="<?php echo assets_url('img/logos/'.$this->config->item('logo_menu_admin')); ?>">
+							<img class="hidden-xs" src="<?php echo assets_url('img/logos/'.$this->config->item('logo_menu_admin')); ?>">
 						</div>
 					</li>
 					
@@ -278,32 +278,15 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 				
 				// Función añadida manualmente para alternar entre mini-barra y barra de menú completa u ocultar en dispositivos móviles
 				// .navbar-minimalize = clase del botón de acción
-				// .md-skin = clase de la etiqueta body asignada automáticamente por los plugins de la plantilla
 				$(".navbar-minimalize").on('click', function(){
-					var cadena1 = "md-skin fixed-nav no-skin-config pace-done pace-done";
-					var cadena1_small = "md-skin fixed-nav no-skin-config body-small pace-done pace-done";
-					var cadena2 = "md-skin fixed-nav no-skin-config pace-done pace-done mini-navbar";
-					var cadena2_small = "md-skin fixed-nav no-skin-config body-small pace-done pace-done mini-navbar";
-					if($(".md-skin").attr("class") == cadena1 || $(".md-skin").attr("class") == cadena1_small){
-						$(".md-skin").addClass("mini-navbar");
-					}else if($(".md-skin").attr("class") == cadena2 || $(".md-skin").attr("class") == cadena2_small){
-						$(".md-skin").removeClass("mini-navbar");
+					// Añadimos o quitamos la clase 'mini-navbar' al body
+					if($("body").attr("class").indexOf("mini-navbar") > -1){
+						$("body").removeClass("mini-navbar");
+					}else{
+						$("body").addClass("mini-navbar");
 					}
+					
 				});
-				
-				//~ // Metodo de verificación de tiempo de sesión cada media hora
-				//~ setInterval(function(){ if($("#active_session").val().trim() != ""){ 
-					//~ $.post('<?php echo base_url(); ?>users/update_session', {'time_session':$("#time_session").val().trim()}, function (response) {
-						//~ 
-					//~ }, 'json').done(function(response2) {
-						//~ 
-						//~ if(response2['update'] == "ok"){
-							//~ alert('El tiempo de su sesión a caducado, inicie sesión nuevamente...');
-							//~ window.location.href = '<?php echo base_url(); ?>logout';
-						//~ }
-						//~ 
-					//~ });
-				//~ } }, 1800000);
 				
 			});
 			
