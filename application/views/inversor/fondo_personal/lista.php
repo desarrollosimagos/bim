@@ -55,19 +55,31 @@
                         <table id="tab_transactions" class="table table-striped table-bordered dt-responsive table-hover dataTables-example" >
                             <thead>
                                 <tr>
-                                    <th class="">ID</th>
+                                    <th class="bigdesktop meddesktop smalldesktop medium tabletl btwtabllandp tabletp mobilel mobilep">
+										ID
+									</th>
                                     <th class="bigdesktop meddesktop smalldesktop"><?php echo $this->lang->line('list_date'); ?></th>
-                                    <th class=""><?php echo $this->lang->line('list_type'); ?></th>
-                                    <th class=""><?php echo $this->lang->line('list_description'); ?></th>
-                                    <th class=""><?php echo $this->lang->line('list_amount'); ?></th>
-                                    <th class=""><?php echo $this->lang->line('list_status'); ?></th>
+                                    <th class="bigdesktop meddesktop smalldesktop">
+										<?php echo $this->lang->line('list_type'); ?>
+									</th>
+                                    <th class="bigdesktop meddesktop smalldesktop medium tabletl btwtabllandp tabletp">
+										<?php echo $this->lang->line('list_description'); ?>
+									</th>
+                                    <th class="bigdesktop meddesktop smalldesktop medium tabletl btwtabllandp tabletp">
+										<?php echo $this->lang->line('list_amount'); ?>
+									</th>
+                                    <th class="bigdesktop meddesktop smalldesktop medium tabletl btwtabllandp tabletp">
+										<?php echo $this->lang->line('list_status'); ?>
+									</th>
                                     <th class=""><?php echo $this->lang->line('list_account'); ?></th>
                                     <th class=""><?php echo $this->lang->line('list_reference'); ?></th>
                                     <th class=""><?php echo $this->lang->line('list_observations'); ?></th>
                                     <th class=""><?php echo $this->lang->line('list_real'); ?></th>
                                     <th class=""><?php echo $this->lang->line('list_rate'); ?></th>
                                     <th class=""><?php echo $this->lang->line('list_document'); ?></th>
-                                    <th class=""><?php echo $this->lang->line('list_actions'); ?></th>
+                                    <th class="bigdesktop meddesktop smalldesktop tabletp mobilel mobilep">
+										<?php echo $this->lang->line('list_actions'); ?>
+									</th>
                                 </tr>
                             </thead>
                             <!--<tbody>
