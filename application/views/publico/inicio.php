@@ -11,8 +11,8 @@
 	
 	.texto-encima-centrado {
 		position: absolute;
-		top: 50%;
-		left: 25%;
+		top: 70%;
+		left: 38% !important;
 		transform: translate(-50%, -50%);
 		font-size: 20px;
 	}
@@ -26,7 +26,7 @@
 	}
 	
 	@media screen and (max-height: 480px) {
-	  .texto-encima-centrado {font-size: 10px;left: 28%;}
+	  .texto-encima-centrado {font-size: 10px;left: 26% !important;}
 	  .texto-chico {font-size: 10px;}
 	}
 </style>

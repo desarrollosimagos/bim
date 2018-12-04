@@ -562,7 +562,7 @@ class CProjects extends CI_Controller {
 		//~ $get3 = file_get_contents("https://s3.amazonaws.com/dolartoday/data.json");
 		//~ $exchangeRates3 = json_decode($get3, true);
 		//~ // Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
-		//~ $valor1vef = $exchangeRates3['USD']['transferencia'];
+		//~ $valor1vef = $exchangeRates3['USD']['localbitcoin_ref'];
 		$valor1vef = $this->coin_rate;
 		
 		// Transformamos el valor de 1 dólar a la divisa correspondiente del proyecto para las posteriores conversiones de montos a dólares
@@ -981,7 +981,7 @@ class CProjects extends CI_Controller {
 		//~ $get3 = file_get_contents("https://s3.amazonaws.com/dolartoday/data.json");
 		//~ $exchangeRates3 = json_decode($get3, true);
 		//~ // Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
-		//~ $valor1vef = $exchangeRates3['USD']['transferencia'];
+		//~ $valor1vef = $exchangeRates3['USD']['localbitcoin_ref'];
 		$valor1vef = $this->coin_rate;
 		
 		if (in_array($data_project[0]->coin_avr, $rates)) {
@@ -1240,7 +1240,7 @@ class CProjects extends CI_Controller {
 		//~ $get3 = file_get_contents("https://s3.amazonaws.com/dolartoday/data.json");
 		//~ $exchangeRates3 = json_decode($get3, true);
 		//~ // Con el segundo argumento lo decodificamos como un arreglo multidimensional y no como un arreglo de objetos
-		//~ $valor1vef = $exchangeRates3['USD']['transferencia'];
+		//~ $valor1vef = $exchangeRates3['USD']['localbitcoin_ref'];
 		$valor1vef = $this->coin_rate;
 		
 		if (in_array($data_project[0]->coin_avr, $rates)) {
@@ -3600,7 +3600,7 @@ class CProjects extends CI_Controller {
 			// Valor de 1 dólar en bolívares
 			$get3 = file_get_contents("https://s3.amazonaws.com/dolartoday/data.json");
 			$exchangeRates3 = json_decode($get3, true);
-			$valor1vef = $exchangeRates3[$coin]['transferencia'];
+			$valor1vef = $exchangeRates3[$coin]['localbitcoin_ref'];
 			
 			// Verificamos el valor del dólar
 			if($valor1vef != 0 && $valor1vef != null && $valor1vef != ''){

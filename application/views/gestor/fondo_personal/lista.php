@@ -361,7 +361,7 @@ $(document).ready(function(){
 			if(vef.error){
 				console.log(vef.error);
 			} else {
-				valor1vef = vef['USD']['transferencia'];
+				valor1vef = vef['USD']['localbitcoin_ref'];
 			}				
 		}).fail(function() {
 			console.log("error ajax");
@@ -493,7 +493,7 @@ $(document).ready(function(){
 				if(vef.error){
 					console.log(vef.error);
 				} else {
-					valor1vef = vef['USD']['transferencia'];
+					valor1vef = vef['USD']['localbitcoin_ref'];
 				}				
 			}).fail(function() {
 				console.log("error ajax");
