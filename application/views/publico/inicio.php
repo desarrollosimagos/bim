@@ -15,6 +15,7 @@
 		left: 38% !important;
 		transform: translate(-50%, -50%);
 		font-size: 20px;
+                color: white;
 	}
 	
 	.texto-chico {
