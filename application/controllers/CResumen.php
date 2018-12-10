@@ -3911,7 +3911,7 @@ class CResumen extends CI_Controller {
         
         $resumen_users = array();  // Para el resultado final (Listado de usuarios con sus respectivos resúmenes)
         
-        list ($transactions, $project_transactions) = $this->MResumen->fondos_json_users();  // Listados de transacciones y transacciones por proyecto
+        $transactions = $this->MResumen->fondos_json_users();  // Listados de transacciones
         
         $ids_users = array();  // Para almacenar los ids de los usuarios que han registrado fondos
         
@@ -4159,7 +4159,7 @@ class CResumen extends CI_Controller {
         
         $resumen_users = array();  // Para el resultado final (Listado de usuarios con sus respectivos resúmenes)
         
-        list ($transactions, $project_transactions) = $this->MResumen->fondos_json_users();  // Listados de transacciones y transacciones por proyecto
+        $transactions = $this->MResumen->fondos_json_users();  // Listados de transacciones
         
         $ids_users = array();  // Para almacenar los ids de los usuarios que han registrado fondos
         

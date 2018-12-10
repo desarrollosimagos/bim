@@ -128,6 +128,12 @@ class CFondoPersonal extends CI_Controller {
 		
 		$amount = $this->input->post('amount');
 		
+		if(($this->input->post('type') == 'deposit' || $this->input->post('type') == 'profit') && $amount < 0){
+			$amount = $amount * -1;
+		}else if(($this->input->post('type') == 'expense' || $this->input->post('type') == 'withdraw') && $amount > 0){
+			$amount = $amount * -1;
+		}
+		
 		$real = $this->input->post('real');
 		
 		if((string)$real == 'on'){
@@ -273,6 +279,12 @@ class CFondoPersonal extends CI_Controller {
 		}
 		
 		$amount = $this->input->post('amount');
+		
+		if(($this->input->post('type') == 'deposit' || $this->input->post('type') == 'profit') && $amount < 0){
+			$amount = $amount * -1;
+		}else if(($this->input->post('type') == 'expense' || $this->input->post('type') == 'withdraw') && $amount > 0){
+			$amount = $amount * -1;
+		}
 		
 		$real = $this->input->post('real');
 		
