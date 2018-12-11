@@ -193,6 +193,76 @@ foreach($find_transactions as $transact) {
 		</div>
 	</div>
 	<!-- Cierre del cuerpo de la sección de cintillo de montos -->
+	
+	<!-- Cuerpo de la sección de transacciones por proyecto -->
+	<div class="ibox float-e-margins">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('view_summary_project_title_accounts'); ?></h5>
+
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_project">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			
+			<table class="footable table table-stripped" data-page-size="50" data-filter=#filter_project>
+				<thead>
+					<tr>
+						<th><?php echo $this->lang->line('view_summary_project_name'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_summary_project_approved'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_summary_project_waiting'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_summary_project_denied'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					<?php $i = 1; ?>
+					<?php foreach ($summary_by_project as $transact) { ?>
+						<tr style="text-align: center;">
+							<td>
+								<?php if($transact->project_id == 0){ echo "PLATAFORMA"; }else{ echo $transact->name; } ?>
+							</td>
+							<td>
+								<?php echo $transact->approved;; ?>
+							</td>
+							<td>
+								<?php echo $transact->waiting; ?>
+							</td>
+							<td>
+								<?php echo $transact->denied; ?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+					
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='4'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+		</div>
+		
+	</div>
+	<!-- Cierre del cuerpo de la sección de transacciones por proyecto -->
 
 	<!-- Cuerpo de la sección de transacciones -->
 	<div class="ibox float-e-margins">
@@ -203,15 +273,6 @@ foreach($find_transactions as $transact) {
 				<a class="collapse-link">
 					<i class="fa fa-chevron-up"></i>
 				</a>
-				<!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="fa fa-wrench"></i>
-				</a>
-				<ul class="dropdown-menu dropdown-user">
-					<li><a href="#">Config option 1</a>
-					</li>
-					<li><a href="#">Config option 2</a>
-					</li>
-				</ul>-->
 				<a class="close-link">
 					<i class="fa fa-times"></i>
 				</a>
@@ -227,8 +288,6 @@ foreach($find_transactions as $transact) {
 					</span>
 				</div>
 			</div>
-			
-			<!--<input type="text" class="form-control input-sm m-b-xs"  placeholder="">-->
 			
 			<table class="footable table table-stripped" data-page-size="50" data-filter=#filter1>
 				<thead>
@@ -315,53 +374,6 @@ foreach($find_transactions as $transact) {
 						<?php if($transact->status == 'approved'){ $total += $transact->amount; } ?>
 					<?php } ?>
 					<!-- Fin de Transacciones de la tabla 'transactions' -->
-					
-					<!-- Transacciones de la tabla 'project_transactions' -->
-					<?php //foreach ($find_transactions_project as $transact_project) { ?>
-						<?php //$background_color = "";?>
-						<?php //$relations = $this->MCuentas->buscar_project_transaction_relation($transact_project->id); ?>
-						<?php //if(count($relations) == 0){ ?>
-							<?php //if($transact_project->type == "profit" || $transact_project->type == "expense"){ ?>
-							<?php //$background_color = "background-color: #0DD9E9;";?>
-							<?php //} ?>
-						<?php //} ?>
-						<!--<tr style="text-align: center;<?php //echo $background_color; ?>">
-							<td>
-								<?php //echo $transact_project->date; ?>
-							</td>
-							<td>
-								<?php //echo $transact_project->name_user; ?>
-							</td>
-							<td>
-								<?php //echo $transact_project->type; ?>
-							</td>
-							<td>
-								<?php //echo $transact_project->description; ?>
-							</td>
-							<td>
-								<?php //echo $transact_project->monto."  ".$transact_project->coin_avr; ?>
-							</td>
-							<td>
-								<?php //echo $transact_project->name_project; ?>
-							</td>
-							<td>
-								<?php
-								//~ if($transact_project->status == "approved"){
-									//~ echo "<i class='fa fa-check text-navy'></i>";
-								//~ }else if($transact_project->status == "waiting"){
-									//~ echo "<i class='fa fa-check text-warning'></i>";
-								//~ }else if($transact_project->status == "denied"){
-									//~ echo "<i class='fa fa-times text-danger'></i>";
-								//~ }else{
-									//~ echo "";
-								//~ }
-								?>
-							</td>
-						</tr>-->
-						<?php //$i++ ?>
-						<?php //if($transact_project->status == 'approved'){ $total += $transact_project->monto; } ?>
-					<?php //} ?>
-					<!-- Fin de Transacciones de la tabla 'project_transactions' -->
 					
 				</tbody>
 				<tfoot>

@@ -335,9 +335,13 @@ class CCuentas extends CI_Controller {
         // Proceso de búsqueda de transacciones asociadas a la cuenta para calcular los montos totales y parciales
 		// Suma general de las tablas 'transactions' y 'project_transactions'
 		$find_transactions = $this->MCuentas->buscar_transacciones($data['id'], 'transactions t');
-		//~ $find_transactions_project = $this->MCuentas->buscar_transacciones($data['id'], 'project_transactions t');
 		$data['find_transactions'] = $find_transactions;
-		//~ $data['find_transactions_project'] = $find_transactions_project;
+		// Resumen por Proyecto
+		$data['summary_by_project'] = $this->MCuentas->resumenProyectos($data['id']);
+		// Resumen por Usuario
+		//~ print_r($data['summary_by_project']);
+		//~ exit();
+		
 		
 		// Filtro para cargar las vistas según el perfil del usuario logueado
 		$perfil_id = $this->session->userdata('logged_in')['profile_id'];

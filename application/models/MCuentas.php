@@ -41,14 +41,6 @@ class MCuentas extends CI_Model {
 		
 		$this->db->select($select);
 		$this->db->distinct();
-		//~ $this->db->from('accounts f_p');
-		//~ $this->db->join('users u', 'u.id = f_p.user_id');
-		//~ $this->db->join('coins c', 'c.id = f_p.coin_id');
-		//~ $this->db->join('account_type t_c', 't_c.id = f_p.type');
-		//~ // Si el usuario corresponde al de un administrador quitamos el filtro de usuario
-        //~ if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
-			//~ $this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
-		//~ }
 		// Si el usuario logueado es de perfil administrador tomamos todas las cuentas de todos los grupos de inversores
 		// Si el usuario logueado es de perfil plataforma tomamos todas las cuentas asociadas a su grupo de inversores
 		// Si el usuario logueado es de perfil inversor tomamos todas las cuentas asignadas al usuario
@@ -258,16 +250,6 @@ class MCuentas extends CI_Model {
 		
 		$this->db->select('t.id, t.date, t.project_id, p.name as name_project, t.user_id, t.type, t.amount, t.real, t.rate, t.description, t.status, u.profile_id, u.name as name_user, cn.abbreviation as coin_avr');
 		$this->db->distinct();
-		//~ $this->db->from($tabla);
-		//~ $this->db->join('users u', 'u.id = t.user_id', 'left');
-		//~ $this->db->join('accounts a', 'a.id = t.account_id');
-		//~ $this->db->join('coins c', 'c.id = a.coin_id');
-		//~ $this->db->join('projects p', 'p.id = t.project_id', 'left');
-		//~ $this->db->where('t.account_id', $account_id);
-		//~ // Si el usuario corresponde al de un gestor tomamos sólo las transacciones propias
-		//~ if($this->session->userdata('logged_in')['profile_id'] == 5){
-			//~ $this->db->where('t.user_create_id =', $this->session->userdata('logged_in')['id']);
-		//~ }
 		
 		// Si el usuario logueado es de perfil administrador tomamos todas las transacciones.
 		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
@@ -346,6 +328,34 @@ class MCuentas extends CI_Model {
 		//~ 
         //~ return $query->result();
     //~ }
+    
+    // Método público para obterner todas las transacciones por proyecto
+    public function resumenProyectos($account_id) {
+		
+		$select = "t.project_id, p.name, ";
+		$select .= "sum(case t.status when 'approved' then t.amount else 0 end) as approved, ";
+		$select .= "sum(case t.status when 'waiting' then t.amount else 0 end) as waiting, ";
+		$select .= "sum(case t.status when 'denied' then t.amount else 0 end) as denied, ";
+		$select .= "a.alias, a.coin_id, cn.description as coin, cn.abbreviation as coin_avr, ";
+		$select .= "cn.symbol as coin_symbol, cn.decimals as coin_decimals";
+		
+		$this->db->select($select);
+		$this->db->from('transactions t');
+		$this->db->join('accounts a', 'a.id = t.account_id', 'left');
+		$this->db->join('coins cn', 'cn.id = a.coin_id', 'left');
+		$this->db->join('projects p', 'p.id = t.project_id', 'left');
+		$this->db->where('t.account_id', $account_id);
+		$this->db->group_by("t.project_id");
+		$this->db->order_by("p.name", "desc");
+		$query = $this->db->get();
+		
+		//~ echo $this->db->last_query();
+		//~ 
+		//~ exit();
+		
+		return $query->result();
+		
+	}
 
     // Public method to update a record  
     public function update($datos) {

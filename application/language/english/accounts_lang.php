@@ -32,6 +32,13 @@ $lang['view_capital_available_accounts'] = 'Total Available Capital';
 $lang['view_capital_in_count'] = 'Capital in Account';
 $lang['view_capital_in_project'] = 'Capital in Projects';
 
+// Resumen por proyecto
+$lang['view_summary_project_title_accounts'] = 'Summary by Project';
+$lang['view_summary_project_name'] = 'Name of Project';
+$lang['view_summary_project_approved'] = 'Approved';
+$lang['view_summary_project_waiting'] = 'Waiting';
+$lang['view_summary_project_denied'] = 'Denied';
+
 // Lista de transacciones
 $lang['view_list_title_accounts'] = 'Transactions';
 $lang['view_list_date_accounts'] = 'Date';
