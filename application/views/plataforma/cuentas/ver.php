@@ -237,13 +237,13 @@ foreach($find_transactions as $transact) {
 								<?php if($transact->project_id == 0){ echo "PLATAFORMA"; }else{ echo $transact->name; } ?>
 							</td>
 							<td>
-								<?php echo $transact->approved;; ?>
+								<?php echo $transact->approved."  ".$transact->coin_avr; ?>
 							</td>
 							<td>
-								<?php echo $transact->waiting; ?>
+								<?php echo $transact->waiting."  ".$transact->coin_avr; ?>
 							</td>
 							<td>
-								<?php echo $transact->denied; ?>
+								<?php echo $transact->denied."  ".$transact->coin_avr; ?>
 							</td>
 						</tr>
 						<?php $i++ ?>
@@ -263,6 +263,76 @@ foreach($find_transactions as $transact) {
 		
 	</div>
 	<!-- Cierre del cuerpo de la sección de transacciones por proyecto -->
+	
+	<!-- Cuerpo de la sección de transacciones por usuario -->
+	<div class="ibox float-e-margins">
+		<div class="ibox-title">
+			<h5><?php echo $this->lang->line('view_summary_user_title_accounts'); ?></h5>
+
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			
+			<div class="col-sm-4 col-md-offset-8">
+				<div class="input-group">
+					<input type="text" placeholder="Search in table" class="input-sm form-control" id="filter_project">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-sm btn-primary"> Go!</button>
+					</span>
+				</div>
+			</div>
+			
+			<table class="footable table table-stripped" data-page-size="50" data-filter=#filter_project>
+				<thead>
+					<tr>
+						<th><?php echo $this->lang->line('view_summary_user_name'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_summary_user_approved'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_summary_user_waiting'); ?></th>
+						<th data-hide="phone,tablet"><?php echo $this->lang->line('view_summary_user_denied'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					<?php $i = 1; ?>
+					<?php foreach ($summary_by_user as $transact) { ?>
+						<tr style="text-align: center;">
+							<td>
+								<?php if($transact->user_id == 0){ echo "PLATAFORMA"; }else{ echo $transact->name; } ?>
+							</td>
+							<td>
+								<?php echo $transact->approved."  ".$transact->coin_avr; ?>
+							</td>
+							<td>
+								<?php echo $transact->waiting."  ".$transact->coin_avr; ?>
+							</td>
+							<td>
+								<?php echo $transact->denied."  ".$transact->coin_avr; ?>
+							</td>
+						</tr>
+						<?php $i++ ?>
+					<?php } ?>
+					
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='text-center' colspan='4'>
+							<ul class='pagination'></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+		</div>
+		
+	</div>
+	<!-- Cierre del cuerpo de la sección de transacciones por usuario -->
 
 	<!-- Cuerpo de la sección de transacciones -->
 	<div class="ibox float-e-margins">
