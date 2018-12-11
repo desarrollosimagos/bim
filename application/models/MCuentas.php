@@ -356,6 +356,34 @@ class MCuentas extends CI_Model {
 		return $query->result();
 		
 	}
+    
+    // Método público para obterner todas las transacciones por proyecto
+    public function resumenUsuarios($account_id) {
+		
+		$select = "t.user_id, u.name, ";
+		$select .= "sum(case t.status when 'approved' then t.amount else 0 end) as approved, ";
+		$select .= "sum(case t.status when 'waiting' then t.amount else 0 end) as waiting, ";
+		$select .= "sum(case t.status when 'denied' then t.amount else 0 end) as denied, ";
+		$select .= "a.alias, a.coin_id, cn.description as coin, cn.abbreviation as coin_avr, ";
+		$select .= "cn.symbol as coin_symbol, cn.decimals as coin_decimals";
+		
+		$this->db->select($select);
+		$this->db->from('transactions t');
+		$this->db->join('accounts a', 'a.id = t.account_id', 'left');
+		$this->db->join('coins cn', 'cn.id = a.coin_id', 'left');
+		$this->db->join('users u', 'u.id = t.user_id', 'left');
+		$this->db->where('t.account_id', $account_id);
+		$this->db->group_by("t.user_id");
+		$this->db->order_by("u.name", "desc");
+		$query = $this->db->get();
+		
+		//~ echo $this->db->last_query();
+		//~ 
+		//~ exit();
+		
+		return $query->result();
+		
+	}
 
     // Public method to update a record  
     public function update($datos) {

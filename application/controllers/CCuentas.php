@@ -339,6 +339,7 @@ class CCuentas extends CI_Controller {
 		// Resumen por Proyecto
 		$data['summary_by_project'] = $this->MCuentas->resumenProyectos($data['id']);
 		// Resumen por Usuario
+		$data['summary_by_user'] = $this->MCuentas->resumenUsuarios($data['id']);
 		//~ print_r($data['summary_by_project']);
 		//~ exit();
 		

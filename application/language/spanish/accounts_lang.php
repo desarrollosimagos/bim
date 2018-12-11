@@ -39,6 +39,13 @@ $lang['view_summary_project_approved'] = 'Aprobado';
 $lang['view_summary_project_waiting'] = 'En espera';
 $lang['view_summary_project_denied'] = 'Denegado';
 
+// Resumen por usuario
+$lang['view_summary_user_title_accounts'] = 'Resumen por Usuario';
+$lang['view_summary_user_name'] = 'Nombre del Usuario';
+$lang['view_summary_user_approved'] = 'Aprobado';
+$lang['view_summary_user_waiting'] = 'En espera';
+$lang['view_summary_user_denied'] = 'Denegado';
+
 // Lista de transacciones
 $lang['view_list_title_accounts'] = 'Transacciones';
 $lang['view_list_date_accounts'] = 'Fecha';
