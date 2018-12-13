@@ -51,7 +51,7 @@ h5 {
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-  background-color: #676867;
+  background-color: #003661;
   color: white;
 }
 .nav .open > a,
@@ -169,17 +169,17 @@ h5 {
 }
 .nav-header {
   padding: 33px 25px;
-  background-color: #676867;
+  background-color: #003661;
 }
 .pace-done .nav-header {
   transition: all 0.4s;
 }
 ul.nav-second-level {
-  background: #676867;
+  background: #003661;
 }
 .nav > li.active {
-  border-left: 2px solid #5B5B59;
-  background: #676867;
+  border-left: 2px solid #1b426c;
+  background: #003661;
 }
 .nav.nav-second-level > li.active {
   border: none;
@@ -3477,7 +3477,7 @@ body.tour-open .animated {
 }
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #5B5B59;
+  background-color: #1b426c;
   font-size: 13px;
   color: #676a6c;
   overflow-x: hidden;
