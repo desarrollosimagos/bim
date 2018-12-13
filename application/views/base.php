@@ -101,7 +101,7 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 		<nav class="navbar-default navbar-static-side" role="navigation">
 			<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
-					<li class="nav-header" style="background-color:#1b426c !important">
+					<li class="nav-header" style="background-color:#222323 !important">
 						<div class="dropdown profile-element">
 							<!--<span>
 								<img alt="image" class="img-circle" src="<?php echo assets_url('img/profile_small.jpg'); ?>" />
@@ -144,7 +144,7 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 
 		<div id="page-wrapper" class="gray-bg">
 			<div class="row border-bottom">
-				<nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color:#1b426c !important">
+				<nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0; background-color:#222323 !important">
 					<div class="navbar-header">
 						<?php if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welcome'){ ?>
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary hidden-md hidden-lg" href="#"><i class="fa fa-bars"></i> </a>
@@ -163,9 +163,9 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 						<?php foreach($this->config->item('public_menu') as $public_menu){ ?>
 							<?php $public_menu[0] = $this->lang->line('menu_bar_menu'.$i); ?>
 							<?php if(!isset($this->session->userdata['logged_in']) && $public_menu[2] == 2){ ?>
-								<li style="display:none;" class="hidden-xs hidden-sm"><a class="page-scroll" href="<?php echo $public_menu[1] ?>"><?php echo $public_menu[0] ?></a></li>
+								<li style="display:none;" class="hidden-xs hidden-sm"><a class="page-scroll" style="background-color:#222323 !important" href="<?php echo $public_menu[1] ?>"><?php echo $public_menu[0] ?></a></li>
 							<?php }else{ ?>
-								<li class="hidden-xs hidden-sm"><a class="page-scroll" href="<?php echo $public_menu[1] ?>"><?php echo $public_menu[0] ?></a></li>
+								<li class="hidden-xs hidden-sm"><a class="page-scroll" style="background-color:#222323 !important" href="<?php echo $public_menu[1] ?>"><?php echo $public_menu[0] ?></a></li>
 							<?php } ?>
                         <?php $i++; } ?>
 						<!--<li class="dropdown">
@@ -223,7 +223,7 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 						</li>-->
 						
 						<li class="dropdown hidden-xs hidden-sm" id="li_language">
-							<a class="dropdown-toggle count-info page-scroll" data-toggle="dropdown" href="#" title="Idioma">
+							<a class="dropdown-toggle count-info page-scroll" data-toggle="dropdown" href="#" title="Idioma" style="background-color:#222323 !important">
 								<i class="fa fa-language"></i> <span class="label label-warning" id="span_num_respuestas"></span>
 							</a>
 							<ul class="dropdown-menu">
@@ -247,14 +247,14 @@ if(isset($this->session->userdata['logged_in']) && $this->router->class != 'Welc
 			
 						<?php if(isset($this->session->userdata['logged_in'])){ ?>
 						<li>
-							<a class="page-scroll" href="<?php echo base_url();?>logout">
+							<a class="page-scroll" style="background-color:#222323 !important" href="<?php echo base_url();?>logout">
 								<i class="fa fa-sign-out hidden-xs"></i> <?php echo $this->lang->line('top_bar_logout'); ?>
 							</a>
 						</li>
 						
 						<?php } else { ?>
 						<li>
-							<a class="page-scroll" href="<?php echo base_url();?>login">
+							<a class="page-scroll" style="background-color:#222323 !important" href="<?php echo base_url();?>login">
 								<i class="fa fa-sign-in hidden-xs"></i> <?php echo $this->lang->line('top_bar_login'); ?>
 							</a>
 						</li>
