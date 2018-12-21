@@ -53,6 +53,7 @@ class MImport extends CI_Model {
 			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
 			$this->db->join('accounts f_p', 'f_p.id = ig_a.account_id', 'right');
 			$this->db->join('account_type t_c', 't_c.id = f_p.type', 'right');
+			$this->db->join('account_api a_c', 'a_c.account_id = f_p.id');
 			$this->db->join('users u', 'u.id = f_p.user_id');
 			$this->db->join('coins c', 'c.id = f_p.coin_id');
 		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
@@ -61,6 +62,7 @@ class MImport extends CI_Model {
 			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
 			$this->db->join('accounts f_p', 'f_p.id = ig_a.account_id', 'right');
 			$this->db->join('account_type t_c', 't_c.id = f_p.type', 'right');
+			$this->db->join('account_api a_c', 'a_c.account_id = f_p.id');
 			$this->db->join('users u', 'u.id = f_p.user_id');
 			$this->db->join('coins c', 'c.id = f_p.coin_id');
 			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
@@ -69,6 +71,7 @@ class MImport extends CI_Model {
 			$this->db->join('users u', 'u.id = f_p.user_id');
 			$this->db->join('coins c', 'c.id = f_p.coin_id');
 			$this->db->join('account_type t_c', 't_c.id = f_p.type');
+			$this->db->join('account_api a_c', 'a_c.account_id = f_p.id');
 			$this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
 		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
 			$this->db->from('investorgroups ig');
@@ -76,6 +79,7 @@ class MImport extends CI_Model {
 			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
 			$this->db->join('accounts f_p', 'f_p.id = ig_a.account_id', 'right');
 			$this->db->join('account_type t_c', 't_c.id = f_p.type', 'right');
+			$this->db->join('account_api a_c', 'a_c.account_id = f_p.id');
 			$this->db->join('users u', 'u.id = f_p.user_id');
 			$this->db->join('coins c', 'c.id = f_p.coin_id');
 			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
@@ -84,6 +88,7 @@ class MImport extends CI_Model {
 			$this->db->join('users u', 'u.id = f_p.user_id');
 			$this->db->join('coins c', 'c.id = f_p.coin_id');
 			$this->db->join('account_type t_c', 't_c.id = f_p.type');
+			$this->db->join('account_api a_c', 'a_c.account_id = f_p.id');
 			$this->db->where('f_p.user_id =', $this->session->userdata('logged_in')['id']);
 		}
 		$this->db->order_by("f_p.id", "desc");

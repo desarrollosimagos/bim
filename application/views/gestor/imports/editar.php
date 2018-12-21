@@ -83,7 +83,16 @@ $account_id = $_GET['account_id'];
 								<div class="form-group">
 									<label class="col-sm-3 control-label" ><?php echo $this->lang->line('edit_type_import'); ?> *</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="type[]" maxlength="200" id="type" value="<?php echo "deposit"; ?>">
+										<?php
+											// Si estamos vendiendo, entonces sumamos el monto fiduciario a la cuenta seleccionada, si no, lo restamos
+											$type = "";
+											if($data->is_buying == ""){
+												$type = "deposit";
+											}else{
+												$type = "withdraw";
+											}
+										?>
+										<input type="text" class="form-control" name="type[]" maxlength="200" id="type" value="<?php echo $type; ?>">
 									</div>
 								</div>
 								<div class="form-group">
@@ -212,7 +221,16 @@ $account_id = $_GET['account_id'];
 								<div class="form-group">
 									<label class="col-sm-3 control-label" ><?php echo $this->lang->line('edit_type_import'); ?> *</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control"  name="type[]" maxlength="200" id="type2" value="<?php echo "withdraw"; ?>">
+										<?php
+											// Si estamos vendiendo, entonces sumamos el monto fiduciario a la cuenta seleccionada, si no, lo restamos
+											$type = "";
+											if($data->is_buying == ""){
+												$type = "withdraw";
+											}else{
+												$type = "deposit";
+											}
+										?>
+										<input type="text" class="form-control"  name="type[]" maxlength="200" id="type2" value="<?php echo $type; ?>">
 									</div>
 								</div>
 								<div class="form-group">
