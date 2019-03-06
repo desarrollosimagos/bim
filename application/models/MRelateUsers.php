@@ -53,6 +53,7 @@ class MRelateUsers extends CI_Model {
     public function obtener_asesores() {
 		
 		$this->db->where('profile_id', 4);
+		$this->db->where('status', 1);
         $query = $this->db->get('users');
         //~ $query = $this->db->get('user_relations');
 
@@ -67,6 +68,7 @@ class MRelateUsers extends CI_Model {
     public function obtener_inversores() {
 		
 		$this->db->where('profile_id', 3);
+		$this->db->where('status', 1);
         $query = $this->db->get('users');
         //~ $query = $this->db->get('user_relations');
 
