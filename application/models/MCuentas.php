@@ -32,6 +32,27 @@ class MCuentas extends CI_Model {
             return $query->result();
     }
 
+    // Método público para obterner todas las cuentas activas
+    public function listar_activas() {
+        $select = 'f_p.id, f_p.owner, f_p.alias, f_p.number, f_p.type, f_p.description, f_p.amount, f_p.status, f_p.d_create, ';
+		$select .= 'u.username as usuario, c.description as coin, c.abbreviation as coin_avr, c.symbol as coin_symbol, ';
+		$select .= 'c.decimals as coin_decimals, t_c.name as tipo_cuenta';
+		
+		$this->db->select($select);
+		$this->db->from('accounts f_p');
+		$this->db->join('account_type t_c', 't_c.id = f_p.type', 'right');
+		$this->db->join('users u', 'u.id = f_p.user_id');
+		$this->db->join('coins c', 'c.id = f_p.coin_id');
+		$this->db->where('f_p.status', 1);
+		$this->db->order_by("f_p.id", "desc");
+		$query = $this->db->get();
+
+        if ($query->num_rows() > 0)
+            return $query->result();
+        else
+            return $query->result();
+    }
+
     //Public method to obtain the accounts
     public function obtener() {
 		
