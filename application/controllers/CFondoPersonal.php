@@ -75,7 +75,7 @@ class CFondoPersonal extends CI_Controller {
 		$data['ident'] = "Cuentas";
 		$data['ident_sub'] = "Transacciones";
 		$data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group();
-		$data['usuarios'] = $this->MUser->obtener();
+		$data['usuarios'] = $this->MUser->obtener_activos();
 		$data['projects'] = $this->MFondoPersonal->obtener_proyectos_group();
 		
 		// Filtro para cargar las vistas según el perfil del usuario logueado
@@ -227,7 +227,7 @@ class CFondoPersonal extends CI_Controller {
         $data['id'] = $this->uri->segment(3);
         $data['editar'] = $this->MFondoPersonal->obtenerFondoPersonal($data['id']);
         $data['accounts'] = $this->MFondoPersonal->obtener_cuentas_group();
-        $data['usuarios'] = $this->MUser->obtener();
+        $data['usuarios'] = $this->MUser->obtener_activos();
         $data['projects'] = $this->MFondoPersonal->obtener_proyectos_group();
         
         // Filtro para cargar las vistas según el perfil del usuario logueado

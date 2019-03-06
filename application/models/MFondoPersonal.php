@@ -204,12 +204,14 @@ class MFondoPersonal extends CI_Model {
 			$this->db->join('projects pj', 'pj.id = ig_p.project_id');
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
 			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('pj.status', 1);
 			$this->db->where('ig_u.user_id', $this->session->userdata('logged_in')['id']);
 		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
 			$this->db->from('projects pj');
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
 			$this->db->join('transactions f_p', 'f_p.project_id = pj.id');
 			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('pj.status', 1);
 			$this->db->where('f_p.user_id', $this->session->userdata('logged_in')['id']);
 		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
 			$this->db->from('investorgroups ig');
@@ -218,11 +220,13 @@ class MFondoPersonal extends CI_Model {
 			$this->db->join('projects pj', 'pj.id = ig_p.project_id');
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
 			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('pj.status', 1);
 			$this->db->where('ig_u.user_id', $this->session->userdata('logged_in')['id']);
 		}else{
 			$this->db->from('projects pj');
 			$this->db->join('project_types p_t', 'p_t.id = pj.type');
 			$this->db->join('coins c', 'c.id = pj.coin_id');
+			$this->db->where('pj.status', 1);
 		}
 		$this->db->order_by("pj.id", "desc");
 		$query = $this->db->get();
