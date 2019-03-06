@@ -46,6 +46,32 @@ class MUser extends CI_Model {
             return $query->result();
             
     }
+
+    // Public method to obtain the users
+    public function obtener_activos() {
+		
+		$this->db->select('u.id, u.username, u.name, u.alias, u.profile_id, u.admin, u.status, u.image, c.description as coin, c.abbreviation as coin_avr, p.name as perfil, l.id as lang_id, l.name as lang_name');
+		$this->db->from('users u');
+		$this->db->join('profile p', 'p.id = u.profile_id');
+		$this->db->join('coins c', 'c.id = u.coin_id');
+		$this->db->join('lang l', 'l.id = u.lang_id');
+		$this->db->where('u.status', 1);
+		// Si el usuario corresponde al de un administrador quitamos el filtro de usuario
+        if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+			if(in_array($this->session->userdata('logged_in')['profile_id'], array(3, 4, 5))){
+				$this->db->where('u.user_create_id =', $this->session->userdata('logged_in')['id']);
+			}
+		}
+		$this->db->order_by("u.id", "desc");
+        $query = $this->db->get();
+        //~ $query = $this->db->get('users');
+
+        if ($query->num_rows() > 0)
+            return $query->result();
+        else
+            return $query->result();
+            
+    }
     
     // Public method to obtain the permissions asociated
     public function obtener_permisos() {
