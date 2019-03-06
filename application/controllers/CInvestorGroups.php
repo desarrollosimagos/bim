@@ -55,11 +55,11 @@ class CInvestorGroups extends CI_Controller {
 		$data['ident'] = "Usuarios";
 		$data['ident_sub'] = "Grupos_de_Inversionistas";  // Se añade el caracter "_" para suplantar los espacios y dar compatibilidad con la función de marcador de menú
 		//~ $data['projects'] = $this->MProjects->obtener();
-		$data['projects'] = $this->MProjects->listar();
+		$data['projects'] = $this->MProjects->listar_activos();
 		//~ $data['inversores'] = $this->MRelateUsers->obtener_inversores();
-		$data['inversores'] = $this->MUser->obtener();
+		$data['inversores'] = $this->MUser->obtener_activos();
 		//~ $data['accounts'] = $this->MCuentas->obtener();
-		$data['accounts'] = $this->MCuentas->listar();
+		$data['accounts'] = $this->MCuentas->listar_activas();
 		
 		// Filtro para cargar las vistas según el perfil del usuario logueado
 		$perfil_id = $this->session->userdata('logged_in')['profile_id'];
@@ -142,11 +142,11 @@ class CInvestorGroups extends CI_Controller {
         $data['group_users'] = $this->MInvestorGroups->obtener_usuarios_id($data['id']);
         $data['group_accountss'] = $this->MInvestorGroups->obtener_cuentas_id($data['id']);
         //~ $data['projects'] = $this->MProjects->obtener();
-        $data['projects'] = $this->MProjects->listar();
+        $data['projects'] = $this->MProjects->listar_activos();
         //~ $data['inversores'] = $this->MRelateUsers->obtener_inversores();
-        $data['inversores'] = $this->MUser->obtener();
+        $data['inversores'] = $this->MUser->obtener_activos();
 		//~ $data['accounts'] = $this->MCuentas->obtener();
-		$data['accounts'] = $this->MCuentas->listar();
+		$data['accounts'] = $this->MCuentas->listar_activas();
         // Lista de proyectos asociados al grupo
         $ids_projects = "";
         $query_projects = $this->MInvestorGroups->obtener_proyectos_id($data['id']);

@@ -26,6 +26,22 @@ class MProjects extends CI_Model {
             return $query->result();
     }
 
+    // Método público para obterner todos los proyectos activos
+    public function listar_activos() {
+        $this->db->select('pj.id, pj.name, pj.description, p_t.type as type, pj.valor, pj.amount_r, pj.amount_min, pj.amount_max, pj.date, pj.date_r, pj.date_v, pj.public, pj.status, c.description as coin, c.abbreviation as coin_avr, c.symbol as coin_symbol');
+		$this->db->from('projects pj', 'pj.id = ig_p.project_id');
+		$this->db->join('project_types p_t', 'p_t.id = pj.type');
+		$this->db->join('coins c', 'c.id = pj.coin_id');
+		$this->db->where('pj.status', 1);
+		$this->db->order_by("pj.id", "desc");
+		$query = $this->db->get();
+
+        if ($query->num_rows() > 0)
+            return $query->result();
+        else
+            return $query->result();
+    }
+
     //Public method to obtain the projects
     public function obtener() {
 		
