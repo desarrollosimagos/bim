@@ -9,6 +9,8 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 
+system/*
+
 application/config/database.php
 application/config/config.php
 
@@ -24,6 +26,7 @@ application/language/english/public_home_lang.php
 *.htaccess
 index.php
 
+assets/publico/*
 assets/img/logos/*
 assets/img/projects/*
 assets/documents/*

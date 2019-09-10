@@ -324,7 +324,7 @@ $(document).ready(function(){
     var coins_global = 0;
     
     // Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
-    $.post('https://openexchangerates.org/api/latest.json?app_id=65148900f9c2443ab8918accd8c51664', function (coins) {
+    $.post('https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0', function (coins) {
 		
 		coins_global = coins  // Tasas de conversión global
 		
@@ -456,7 +456,7 @@ $(document).ready(function(){
 		
 		// Usamos la segunda cuenta si la primera falla
 		// Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
-		$.post('https://openexchangerates.org/api/latest.json?app_id=1d8edbe4f5d54857b1686c15befc4a85', function (coins) {
+		$.post('https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b', function (coins) {
 			
 			coins_global = coins  // Tasas de conversión global
 			
