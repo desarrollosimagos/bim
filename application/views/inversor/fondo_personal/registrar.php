@@ -238,11 +238,11 @@ $(document).ready(function(){
 				currency_account = currency_account[2].trim();
 				
 				// Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
-				//~ $.post('https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0', function (coins) {
+				//~ $.post('https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8', function (coins) {
 				$.ajax({
 					type: "post",
 					//~ dataType: "json",
-					url: 'https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0',
+					url: 'https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8',
 					async: false
 				}).done(function(coins) {
 					if(coins.error){
@@ -407,7 +407,7 @@ $(document).ready(function(){
 	var capital_pendiente = 0;
 	var capital_aprobado = 0;
     // Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
-    $.post('https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0', function (coins) {
+    $.post('https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8', function (coins) {
 		
 		var valor1btc, valor1anycoin, rate = $("#iso_currency_user").val(), rates = [], cryptos;
 		
@@ -697,7 +697,7 @@ $(document).ready(function(){
 			
 			var monto_convertido;
 	
-			$.post('https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0', function (coins) {
+			$.post('https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8', function (coins) {
 		
 				var currency_user = coins['rates'][$("#iso_currency_user").val()];  // Tipo de moneda del usuario logueado
 				

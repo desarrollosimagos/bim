@@ -529,9 +529,9 @@ class CProjects extends CI_Controller {
 		
 		// Obtenemos el valor en dólares de las distintas divisas
 		//~ // Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 		//~ if($ct){
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ } else {
@@ -940,9 +940,9 @@ class CProjects extends CI_Controller {
 		
 		// Obtenemos el valor en dólares de las distintas divisas
 		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 		//~ if($ct){
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ } else {
@@ -1205,9 +1205,9 @@ class CProjects extends CI_Controller {
 		
 		// Obtenemos el valor en dólares de las distintas divisas
 		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+		//~ $ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 		//~ if($ct){
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ } else {
@@ -3660,11 +3660,11 @@ class CProjects extends CI_Controller {
 		$exchangeRates = array();
 		
 		// Con el uso de @ evitamos la impresión forzosa de errores que hace file_get_contents()
-		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+		$ct = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 		
 		if($ct){
 			
-			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=3d8e50df9c9546a88d0839ad75a975a0");
+			$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=54ae35a1762246f3bc44da052763c4c8");
 			//~ // Se decodifica la respuesta JSON
 			$exchangeRates = json_decode($get, true);
 			
