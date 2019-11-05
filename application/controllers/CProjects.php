@@ -535,7 +535,7 @@ class CProjects extends CI_Controller {
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ } else {
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b");
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=8429882a1363444b9744542391eabbcd");
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ }
@@ -946,7 +946,7 @@ class CProjects extends CI_Controller {
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ } else {
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b");
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=8429882a1363444b9744542391eabbcd");
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ }
@@ -1211,7 +1211,7 @@ class CProjects extends CI_Controller {
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ } else {
-			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b");
+			//~ $get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=8429882a1363444b9744542391eabbcd");
 			// Se decodifica la respuesta JSON
 			//~ $exchangeRates = json_decode($get, true);
 		//~ }
@@ -3674,11 +3674,11 @@ class CProjects extends CI_Controller {
 		} else {
 			
 			// Si ha fallado la carga de la api con la key primaria intentamos con la key secundaria
-			$ct2 = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b");
+			$ct2 = @file_get_contents("https://openexchangerates.org/api/latest.json?app_id=8429882a1363444b9744542391eabbcd");
 			
 			if($ct2){
 				
-				$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b");
+				$get = file_get_contents("https://openexchangerates.org/api/latest.json?app_id=8429882a1363444b9744542391eabbcd");
 				//~ // Se decodifica la respuesta JSON
 				$exchangeRates = json_decode($get, true);
 				

@@ -450,7 +450,7 @@ $(document).ready(function(){
 		
 		// Usamos la segunda cuenta si la primera falla
 		// Proceso de conversión de moneda (captura del equivalente a 1 dólar en las distintas monedas)
-		$.post('https://openexchangerates.org/api/latest.json?app_id=9584f7e442ce45cb8599c754dec7357b', function (coins) {
+		$.post('https://openexchangerates.org/api/latest.json?app_id=8429882a1363444b9744542391eabbcd', function (coins) {
 			
 			coins_global = coins  // Tasas de conversión global
 			
