@@ -490,25 +490,63 @@ class MProjects extends CI_Model {
 		$select = 'pt.id, pt.project_id, pt.user_id, pt.user_create_id, pt.date, pt.type, pt.description, pt.amount, pt.real, pt.rate, pt.status, u.username, c.alias, ';
 		$select .= 'cn.description as coin, cn.abbreviation as coin_avr, cn.symbol as coin_symbol, cn.decimals as coin_decimals, u.name, u.alias as user_alias';
 		
-		$this->db->select($select);
-		$this->db->from('transactions pt');
-		$this->db->join('accounts c', 'c.id = pt.account_id');
-		$this->db->join('coins cn', 'cn.id = c.coin_id');
-		$this->db->join('users u', 'u.id = pt.user_id', 'left');
-		// Si el usuario logueado es de perfil inversor tomamos sólo las transacciones asignadas a él.
-		// Si el usuario logueado es de perfil gestor tomamos sólo las transacciones generadas por él.
-		// Si el usuario logueado es de perfil asesor tomamos sólo las transacciones generadas por él y los usuarios asociados a él.
-		if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
-			if($this->session->userdata('logged_in')['profile_id'] == 3){
-				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
-			}else if($this->session->userdata('logged_in')['profile_id'] == 5){
-				$this->db->where('pt.user_create_id', $this->session->userdata('logged_in')['id']);
-			}else if($this->session->userdata('logged_in')['profile_id'] == 4){
-				$this->db->where_in('pt.user_id', $ids);
-			}else{
-				$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
-			}
+		$this->db->select($select);$this->db->distinct();
+		// Si el usuario logueado es de perfil administrador tomamos todas las transacciones.
+		// Si el usuario logueado es de perfil plataforma tomamos todas las transacciones asociadas a su grupo de inversores.
+		// Si el usuario logueado es de perfil inversor tomamos todas las transacciones asociadas a él.
+		// Si el usuario logueado es de perfil gestor tomamos todas las transacciones generadas por él.
+		if($this->session->userdata('logged_in')['profile_id'] == 1){
+			$this->db->from('transactions pt');
+			$this->db->join('users u', 'u.id = pt.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = pt.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+		}else if($this->session->userdata('logged_in')['profile_id'] == 2){
+			$this->db->from('investorgroups ig');
+			$this->db->join('investorgroups_accounts ig_a', 'ig_a.group_id = ig.id');
+			$this->db->join('investorgroups_users ig_u', 'ig_u.group_id = ig.id');
+			$this->db->join('accounts c', 'c.id = ig_a.account_id', 'right');
+			$this->db->join('account_type t_c', 't_c.id = c.type', 'right');
+			$this->db->join('transactions pt', 'pt.account_id = c.id');
+			$this->db->join('users u', 'u.id = pt.user_id', 'left');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('ig_u.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 3){
+			$this->db->from('transactions pt');
+			$this->db->join('users u', 'u.id = pt.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = pt.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+		}else if($this->session->userdata('logged_in')['profile_id'] == 5){
+			$this->db->from('transactions pt');
+			$this->db->join('users u', 'u.id = pt.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = pt.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('pt.user_create_id =', $this->session->userdata('logged_in')['id']);
+		}else{
+			$this->db->from('transactions pt');
+			$this->db->join('users u', 'u.id = pt.user_id', 'left');
+			$this->db->join('accounts c', 'c.id = pt.account_id');
+			$this->db->join('coins cn', 'cn.id = c.coin_id');
+			$this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
 		}
+		//~ $this->db->from('transactions pt');
+		//~ $this->db->join('accounts c', 'c.id = pt.account_id');
+		//~ $this->db->join('coins cn', 'cn.id = c.coin_id');
+		//~ $this->db->join('users u', 'u.id = pt.user_id', 'left');
+		//~ // Si el usuario logueado es de perfil inversor tomamos sólo las transacciones asignadas a él.
+		//~ // Si el usuario logueado es de perfil gestor tomamos sólo las transacciones generadas por él.
+		//~ // Si el usuario logueado es de perfil asesor tomamos sólo las transacciones generadas por él y los usuarios asociados a él.
+		//~ if($this->session->userdata('logged_in')['profile_id'] != 1 && $this->session->userdata('logged_in')['profile_id'] != 2){
+			//~ if($this->session->userdata('logged_in')['profile_id'] == 3){
+				//~ $this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			//~ }else if($this->session->userdata('logged_in')['profile_id'] == 5){
+				//~ $this->db->where('pt.user_create_id', $this->session->userdata('logged_in')['id']);
+			//~ }else if($this->session->userdata('logged_in')['profile_id'] == 4){
+				//~ $this->db->where_in('pt.user_id', $ids);
+			//~ }else{
+				//~ $this->db->where('pt.user_id =', $this->session->userdata('logged_in')['id']);
+			//~ }
+		//~ }
 		$this->db->where('pt.project_id', $project_id);
 		$this->db->order_by("pt.date", "desc");
 		$query = $this->db->get();
