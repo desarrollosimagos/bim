@@ -381,7 +381,8 @@ class MFondoPersonal extends CI_Model {
 			}else if($_POST["search"]["value"] == "Venta" || $_POST["search"]["value"] == "venta"){
 				$_POST["search"]["value"] = "sell";
 			}
-			$condicionales_like = "(u.name LIKE '%".$_POST["search"]["value"]."%' OR ";
+			$condicionales_like = "(f_p.id LIKE '%".$_POST["search"]["value"]."%' OR ";
+			$condicionales_like .= "u.name LIKE '%".$_POST["search"]["value"]."%' OR ";
 			$condicionales_like .= "f_p.type LIKE '%".$_POST["search"]["value"]."%' OR ";
 			$condicionales_like .= "f_p.amount LIKE '%".$_POST["search"]["value"]."%' OR ";
 			$condicionales_like .= "f_p.status LIKE '%".$_POST["search"]["value"]."%' OR ";
